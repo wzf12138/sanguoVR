@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 2026-08-10（状态单一事实源治理优化）
+
+- 用户确认全局优化"状态多处复制"问题：动态任务状态改为只由 `execution/active/STATUS.json` 唯一声明，其他文件一律链接、不复制状态值。
+- 变更：`.trae/README.md`、`.trae/index.md` 的"当前执行状态"段落改为指向 `STATUS.json`；`execution/active/TASK.md`、`execution/M00/T004-VROpenXRPicoBaseline.md` 头部状态字段改为引用 `STATUS.json`；`manifest.yaml`、`integrity.yaml` 的 `active_gate.status` 改为 `status_source` 引用；`CHECKS.md` 状态描述改为以 `STATUS.json` 为准。
+- 保留：`STATUS.json`（唯一权威）、`registers/07-task-register.md`（任务登记册，按职责登记各任务状态，非复制）。
+- 说明双任务定义成因：`execution/M00/T004-*.md`（里程碑正式详规）与 `execution/active/TASK.md`（活动任务包五件套之一）为历史双轨规划遗留，职责不同（档案 vs 执行包），本次仅去除其重复的动态状态字段，不合并文件本体。
+
 ## 2026-08-10（决策模型复核修正）
 
 - 命名规范修正：`AVRSanguoBootstrapComponent`（继承 `AActor`）按 UE 规范更名为 `AVRSanguoBootstrapActor`，文件同步改为 `VRSanguoBootstrapActor.h/.cpp`；删除模板残留 `MyClass.h/.cpp`；`EnvironmentSetup.md`、`M00-T003.md` 中相关描述同步更新。

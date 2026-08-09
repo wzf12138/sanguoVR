@@ -32,7 +32,7 @@ active_gate:
   checks_file: ".trae/execution/active/CHECKS.md"
   milestone: M00
   task_id: M00-T004
-  status: blocked
+  status_source: ".trae/execution/active/STATUS.json"
   allowlist_entries: 14
 collections:
   standards_indexed: 10

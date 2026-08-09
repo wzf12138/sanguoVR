@@ -1,6 +1,6 @@
 # M00-T004 VR/OpenXR/PICO 基线
 
-- 状态：blocked（2026-08-10 更新：V-005 PICO Neo3 真机验证失败，设备不兼容，待用户决策换设备或降级引擎）
+- 状态：见 `../active/STATUS.json`（本详规不复制动态状态）
 - 优先级：P0
 - 目标：补齐 Android SDK/NDK，配置 UE Android 构建环境，通过 Launch on Device 和 Standalone APK 两种方式在 PICO Neo3 真机上验证 VR 模板运行。
 

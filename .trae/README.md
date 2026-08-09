@@ -34,4 +34,4 @@
 
 ## 当前执行状态
 
-当前任务为 `M00-T004`，状态为 `blocked`（2026-08-10 更新）。Step 1-3 编辑器 VR 核验已通过（V-004）；Android 工具链与 APK 构建成功；PICO Neo3 真机验证 V-005 失败（UE5.8 与 Neo3 OpenXR 运行时硬不兼容），工程配置对 PICO 4+ 可直接运行；阻塞原因：待用户决策换设备或降级引擎。
+当前任务与状态以 [`execution/active/STATUS.json`](execution/active/STATUS.json) 为唯一权威，本入口不复制动态状态内容；任务进度历史见 [`registers/07-task-register.md`](registers/07-task-register.md)。
