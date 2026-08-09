@@ -6,7 +6,7 @@
 
 ## 步骤
 
-1. 核对 UE5.8 安装、UBT、Visual Studio/MSVC、Windows SDK 与 Android SDK/NDK/JDK；Git 按本轮约束跳过，不安装、不执行。
+1. 核对 UE5.8 安装、UBT、Visual Studio/MSVC、Windows SDK 与 Android SDK/NDK/JDK；Git 已由 M00-T002 安装启用，本任务不含 Git 操作。
 2. 读取 `.uproject`，确认模块、插件与目标平台。
 3. 生成项目文件。
 4. 清理编译 `VRSanguoYanWuchangEditor Win64 Development`。

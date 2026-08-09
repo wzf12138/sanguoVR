@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 2026-08-10（Git 状态语句清理）
+
+- 清理过时的"Git 未安装/不执行"表述（Git 已于 2026-08-09 安装并推送远程）：`execution/reports/tasks/README.md` 更新说明；`execution/M00/T003-UE58ToolchainBaseline.md` 步骤中 Git 约束改为"已由 M00-T002 安装启用"；`registers/02-risk-register.md` RSK-011 标记为已缓解（差异与回滚可用 `git diff`/`git restore`）。
+- 历史审计记录（CHANGELOG 历史条目、`M00-DOC-001.md` 报告）保留原文不改。
+
 ## 2026-08-10（状态单一事实源治理优化）
 
 - 用户确认全局优化"状态多处复制"问题：动态任务状态改为只由 `execution/active/STATUS.json` 唯一声明，其他文件一律链接、不复制状态值。
