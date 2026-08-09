@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 2026-08-10（决策模型复核修正）
+
+- 命名规范修正：`AVRSanguoBootstrapComponent`（继承 `AActor`）按 UE 规范更名为 `AVRSanguoBootstrapActor`，文件同步改为 `VRSanguoBootstrapActor.h/.cpp`；删除模板残留 `MyClass.h/.cpp`；`EnvironmentSetup.md`、`M00-T003.md` 中相关描述同步更新。
+- 任务状态修正：M00-T004 实际已推进到 APK 构建成功、PICO Neo3 真机验证失败（V-005 设备不兼容），但 STATUS/登记仍停留在"Android SDK 准备"。已按真实进度将 `STATUS.json`、`07-task-register.md`、`manifest.yaml`、`integrity.yaml`、`.trae/README.md`、`.trae/index.md`、`TASK.md` 统一更新为 `blocked`（待用户决策换设备或降级引擎）。
+- 源码改动未重新编译验证，标记为"已实现未验证"；UE 编辑器/编译验证需用户或后续任务执行。
+
 ## 2026-08-10（发布前修正）
 
 - 发布前审核修正（用户确认）：同步 `.trae/README.md`、`.trae/index.md` 任务状态为 `M00-T004 / ready`（原仍写 blocked，与 STATUS.json 矛盾）；`integrity.yaml` 的 git 限制更新为已安装已推送；`governance/README.md` 与 `execution/README.md` 同步 Git 实施状态；`DecisionModel.md` 引用从已删除的 `governance/manifest.json` 改为 `.trae/manifest.yaml`。

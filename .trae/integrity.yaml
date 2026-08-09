@@ -25,7 +25,7 @@ verification:
       expected: 1
       passed: 1
     active_gate:
-      status: ready
+      status: blocked
       task_id: M00-T004
       allowlist_entries: 14
     local_markdown_links:

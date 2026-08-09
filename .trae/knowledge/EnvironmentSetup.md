@@ -18,7 +18,7 @@
 - Windows SDK：`10.0.26100.0`（另有 10.0.22621.0），位于 `C:\Program Files (x86)\Windows Kits\10`；UBT 实际使用 `10.0.22621.0`。
 - `.uproject` 核对：OpenXR、PICOController（Win64/Linux/Android）、OpenXREyeTracker、OpenXRHandTracking、ModelContextProtocol、AllToolsets 六个插件均启用，TargetPlatforms 含 Android。
 - MCP 连接器：`list_toolsets` 调用成功，返回约 40 个工具集；编辑器日志类别可枚举，`LogLoad` 无错误，`LogTemp` 仅引擎自带 UnifiedErrorTest 测试条目。
-- **清理编译（2026-08-09）：成功**。`Rebuild.bat VRSanguoYanWuchangEditor Win64 Development`，`Result: Succeeded`，总耗时 33.35 秒（UBA 本地执行器 30.29 秒，10 个动作）；源码含 `VRSanguoYanWuchang.cpp`、`VRSanguoBootstrapComponent.cpp`、`MyClass.cpp`，输出二进制 `D:\AWork\Unreal\App\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe`。
+- **清理编译（2026-08-09）：成功**。`Rebuild.bat VRSanguoYanWuchangEditor Win64 Development`，`Result: Succeeded`，总耗时 33.35 秒（UBA 本地执行器 30.29 秒，10 个动作）；源码含 `VRSanguoYanWuchang.cpp`、`VRSanguoBootstrapActor.cpp`（原 `VRSanguoBootstrapComponent.cpp`，2026-08-10 按 UE 命名规范更名），输出二进制 `D:\AWork\Unreal\App\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe`。
 - 生成项目文件：UE5.8 的 `Engine\Build\BatchFiles\` 已无 `GenerateProjectFiles.bat`，UBT 构建时自动生成 makefile（"Creating makefile"），无需单独执行。
 - Android SDK/NDK/JDK 版本及路径：未验证（UBT 无法运行识别，保持待验证）。
 - PICO Neo3 系统版本和连接结果：未验证（本任务不含真机）。

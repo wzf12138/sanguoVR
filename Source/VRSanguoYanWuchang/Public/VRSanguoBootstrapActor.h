@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "VRSanguoBootstrapComponent.generated.h"
+#include "VRSanguoBootstrapActor.generated.h"
 
 UCLASS()
-class VRSANGUOYANWUCHANG_API AVRSanguoBootstrapComponent : public AActor
+class VRSANGUOYANWUCHANG_API AVRSanguoBootstrapActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AVRSanguoBootstrapComponent();
+	AVRSanguoBootstrapActor();
 
 protected:
 	// Called when the game starts or when spawned

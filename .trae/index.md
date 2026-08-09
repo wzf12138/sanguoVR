@@ -55,7 +55,7 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 - [active 检查](execution/active/CHECKS.md)
 - [M00 正式任务详规](execution/M00/)
 
-当前 active 任务为 `M00-T004`，状态为 `ready`（2026-08-09 用户确认解除冻结），状态快照见 `execution/active/STATUS.json`。
+当前 active 任务为 `M00-T004`，状态为 `blocked`（2026-08-10 更新：V-005 PICO Neo3 真机验证失败，UE5.8 与 Neo3 运行时不兼容，待用户决策换设备或降级引擎），状态快照见 `execution/active/STATUS.json`。
 
 ## M00-M06
 
