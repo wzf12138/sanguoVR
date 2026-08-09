@@ -1,0 +1,8 @@
+管理员脚本目标路径：D:\AWork\TraeAdmin\VRSanguoYanWuchang\Set-TraeGovernanceAcl.ps1
+当前环境的文件工具只允许写入所选项目范围，无法直接写入项目外目录；项目外目录已创建但脚本未能复制。
+源脚本临时位于项目根：Set-TraeGovernanceAcl.ps1。
+请将该脚本复制到上述项目外目标路径后，从项目根删除源脚本。
+以管理员 PowerShell 运行：
+  Audit:   powershell -ExecutionPolicy Bypass -File "D:\AWork\TraeAdmin\VRSanguoYanWuchang\Set-TraeGovernanceAcl.ps1" -Mode Audit
+  Apply:   powershell -ExecutionPolicy Bypass -File "D:\AWork\TraeAdmin\VRSanguoYanWuchang\Set-TraeGovernanceAcl.ps1" -Mode Apply
+  Restore: powershell -ExecutionPolicy Bypass -File "D:\AWork\TraeAdmin\VRSanguoYanWuchang\Set-TraeGovernanceAcl.ps1" -Mode Restore

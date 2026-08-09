@@ -1,0 +1,41 @@
+schema_version: "1.1"
+project: VRSanguoYanWuchang
+verified_root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae"
+forbidden_root: "D:/AWork/Unreal/Project/.trae"
+verification:
+  method: "absolute_path_read_and_local_link_check"
+  status: passed
+  updated: "2026-08-09"
+  checks:
+    lowercase_indexes:
+      expected: 5
+      passed: 5
+      readme_files_remaining: 0
+      paths:
+        - ".trae/standards/index.md"
+        - ".trae/vr/index.md"
+        - ".trae/systems/index.md"
+        - ".trae/registers/index.md"
+        - ".trae/knowledge/Design/index.md"
+    systems_guides:
+      expected: 7
+      passed: 7
+      requirement: "标题明确工程实现指引并链接 knowledge/Design 权威产品详规"
+    skill_frontmatter:
+      expected: 1
+      passed: 1
+    active_gate:
+      status: ready
+      task_id: M00-T004
+      allowlist_entries: 14
+    local_markdown_links:
+      checked: 100
+      broken: 0
+      note: "M00-DOC-001 合并后新增引用（registers 09 指向 standards 10、standards 10 指向 registers 09、systems index 指向 standards 04 等）已逐份回读核验存在；删除 15 个旧文件后复核无断链"
+    files_read_back: 15
+limitations:
+  git: not_installed_not_run
+  duplicate_document_consolidation: completed
+  compile: not_run
+  editor: not_run
+  pico_device: not_run

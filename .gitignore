@@ -1,0 +1,76 @@
+# Unreal Engine generated
+Binaries/
+Build/*/FileOpenOrder/
+DerivedDataCache/
+Intermediate/
+Saved/
+.vs/
+.vscode/
+.idea/
+*.VC.db
+*.VC.opendb
+*.sdf
+*.sln
+*.suo
+*.opensdf
+*.xcodeproj
+*.xcworkspace
+
+# User and local settings
+*.user
+*.userprefs
+*.pidb
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Unreal transient/autosave
+Content/Developers/
+Content/Collections/
+Content/__ExternalActors__/
+Content/__ExternalObjects__/
+
+# Build/package outputs
+ArchivedBuilds/
+Builds/
+Releases/
+StagedBuilds/
+*.apk
+*.aab
+*.ipa
+*.obb
+
+# Android/Signing secrets and local config
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.pem
+*.key
+local.properties
+keystore.properties
+SigningConfig.xml
+
+# Crash/profiling captures
+Crashes/
+Profiling/
+*.ue4stats
+*.utrace
+
+# Environment/secrets
+.env
+.env.*
+!.env.example
+
+# Keep project governance and source assets tracked
+!.trae/**
+!Config/**
+!Content/**
+!Plugins/**
+!Source/**

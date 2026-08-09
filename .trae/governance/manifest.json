@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "project": "VRSanguoYanWuchang",
+  "projectRoot": "D:/AWork/Unreal/Project/VRSanguoYanWuchang",
+  "status": "blocked",
+  "singleActiveTask": true,
+  "protectedFiles": [
+    ".trae/README.md",
+    ".trae/governance/policy.md",
+    ".trae/governance/manifest.json",
+    ".trae/skills/three-kingdoms-vr-arena/SKILL.md",
+    ".trae/knowledge/GameMasterPlan.md",
+    ".trae/knowledge/DirectoryConvention.md",
+    ".trae/execution/README.md"
+  ],
+  "controlledRoots": [
+    ".trae/knowledge",
+    ".trae/execution/M00",
+    ".trae/standards",
+    ".trae/vr",
+    ".trae/systems",
+    ".trae/registers"
+  ],
+  "writableRoots": [
+    ".trae/execution/active",
+    ".trae/execution/reports",
+    ".trae/execution/requests"
+  ],
+  "adminToolRoot": "D:/AWork/TraeAdmin/VRSanguoYanWuchang",
+  "gitStatus": "not_installed",
+  "hashes": {},
+  "note": "hashes 由项目外管理员工具在锁定前生成，执行 Agent 不得更新。"
+}

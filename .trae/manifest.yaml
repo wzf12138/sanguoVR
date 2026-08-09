@@ -1,0 +1,42 @@
+schema_version: "1.1"
+project: VRSanguoYanWuchang
+root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang"
+trae_root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae"
+source_of_truth: ".trae/index.md"
+updated: "2026-08-09"
+indexes:
+  standards: ".trae/standards/index.md"
+  vr: ".trae/vr/index.md"
+  systems: ".trae/systems/index.md"
+  registers: ".trae/registers/index.md"
+  design: ".trae/knowledge/Design/index.md"
+governance_contracts:
+  - ".trae/governance/policy.md"
+  - ".trae/governance/change-request-template.md"
+  - ".trae/governance/definition-of-done.md"
+  - ".trae/governance/responsibility-matrix.md"
+operation_models:
+  - ".trae/governance/DecisionModel.md"
+  - ".trae/governance/ExecutionModel.md"
+  - ".trae/governance/ReviewProtocol.md"
+  - ".trae/governance/SessionCommands.md"
+rules:
+  authoritative: ".trae/rules/project_rules.md"
+  absolute_paths_only: true
+  prohibit_engine_root_writes: true
+active_gate:
+  status_file: ".trae/execution/active/STATUS.json"
+  allowlist_file: ".trae/execution/active/ALLOWLIST.txt"
+  task_file: ".trae/execution/active/TASK.md"
+  inputs_file: ".trae/execution/active/INPUTS.md"
+  checks_file: ".trae/execution/active/CHECKS.md"
+  milestone: M00
+  task_id: M00-T004
+  status: ready
+  allowlist_entries: 14
+collections:
+  standards_indexed: 10
+  vr_indexed: 5
+  systems_guides: 7
+  registers_core: 9
+  standards_backlog: 1
