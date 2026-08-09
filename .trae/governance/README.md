@@ -14,4 +14,4 @@
 - [审核协议](ReviewProtocol.md)
 - [新会话短指令](SessionCommands.md)
 
-历史命名文件仅用于兼容既有链接，不得作为新的可编辑治理事实源。所有治理变更必须同步 `.trae/index.md`、相关登记册和 `.trae/CHANGELOG.md`。
+历史驼峰命名文件（`GovernancePolicy.md`、`DefinitionOfDone.md`、`ResponsibilityMatrix.md`、`ChangeControl.md`）已删除，不再保留兼容入口。所有治理变更必须同步 `.trae/index.md`、相关登记册和 `.trae/CHANGELOG.md`。

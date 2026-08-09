@@ -1,9 +1,8 @@
 # M00-T002 Git 与仓库基线
 
-- 状态：规范文件已建档；Git 未安装、未执行
+- 状态：已实施（Git for Windows + Git LFS 已安装，仓库已初始化并推送远程，2026-08-09 用户确认）
 - 优先级：P0
 - 目标：建立适用于 UE5.8 与大二进制资产的版本控制边界。
-- 当前约束：本轮不得安装 Git、不得执行任何 Git 或 Git LFS 命令。
 
 ## 交付
 
@@ -11,12 +10,15 @@
 - `.gitattributes`：文本归一化与 UE/媒体资产 Git LFS 规则。
 - `.editorconfig`：编码、换行和基础格式。
 - `.lfsconfig`：允许锁定验证。
-- `.trae/standards/GitStandard.md`。
+- `.trae/standards/10-git-standard.md`。
 
-## 后续执行（本轮禁止）
+## 实施记录（2026-08-09）
 
-以下步骤仅保留为未来获批后的计划，本轮不执行：确认 Git/Git LFS、初始化仓库、安装本地 LFS、检查属性匹配及提交前复查。
+- Git for Windows 与 Git LFS 已安装（用户执行）。
+- 仓库已初始化，`master` 分支已推送远程 `origin`（用户确认）。
+- `.gitignore`、`.gitattributes`、`.editorconfig`、`.lfsconfig` 已落盘并被 git 跟踪。
 
 ## 验收
 
-当前仅验证规范文件可读取；Git 状态、LFS 命中和仓库初始化均未执行、未验证。
+- Git 安装、仓库初始化与远程推送已完成（用户确认）。
+- LFS 跟踪规则与文本归一化以真实 `.gitattributes` 为准，命中率待后续提交复核。

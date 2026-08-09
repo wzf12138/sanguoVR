@@ -5,7 +5,7 @@
 | 任务 | 名称 | 状态 | 交付物 |
 |---|---|---|---|
 | M00-T001 | 治理与事实源基线 | 已验证（ACL 待管理员应用） | governance、rules、索引、登记册 |
-| M00-T002 | Git 与仓库基线 | 已实现未验证 | `.gitignore`、`.gitattributes`、`.editorconfig`、`.lfsconfig` |
+| M00-T002 | Git 与仓库基线 | 已实施（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认） | `.gitignore`、`.gitattributes`、`.editorconfig`、`.lfsconfig`；Git for Windows + Git LFS 已安装（用户执行）；仓库已初始化并推送远程 |
 | M00-T003 | UE5.8 工程与工具链基线 | approved | 编译成功、编辑器启动验证通过、MCP 连通性已记录 |
 | M00-T004 | VR/OpenXR/PICO 基线 | ready | Step 1-3 编辑器核验已完成；可继续 Android SDK、UE Android 配置、Launch on Device 与 Standalone APK 真机验证 |
 | M00-T005 | 系统骨架与数据驱动边界 | 已批准 | 系统目录、接口与数据资产骨架 |

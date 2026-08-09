@@ -34,14 +34,23 @@
 - 组件补齐：SDK 组件已由用户经 sdkmanager 真实安装并验证（platforms android-34/35、build-tools 35.0.1、ndk 27.2.12479018）。注意：执行终端为沙箱视图，系统级安装/文件落盘操作须由用户在真实 PowerShell 执行，AI 终端结果仅作参考。
 - 历史记录：任务 Step 0 原写 NDK `25.1.8937393`（r25b，UE5.4 旧要求），已按 UE5.8 官方要求修正为 `27.2.12479018`。
 
+## 2026-08-09 M00-T004 Android 构建与真机调试（晚间）
+
+- **APK 构建链路打通**：`BuildCookRun ... -package -archive` BUILD SUCCESSFUL（约 2-6 分钟增量）；APK 产物 `ArchivedBuilds\Android\VRSanguoYanWuchang-arm64.apk`（159.8MB，arm64，minSdk 26，targetSdk 35，数据内置 APK）。
+- **Gradle**：发行版 8.7 已由国内镜像下载并预置 `D:\AWork\.gradle\wrapper\dists\gradle-8.7-all\<hash>\gradle-8.7-all.zip`；`GRADLE_USER_HOME=D:\AWork\.gradle` 使其缓存落 D 盘（不占 C 盘）。hash 目录由 wrapper 首次运行创建，zip 放错目录会导致重新联网下载超时。
+- **无线 adb**：PICO 已启用（`adb tcpip 5555` + `adb connect 192.168.31.76:5555`），AI 终端可直接调试设备（日志抓取、安装、启动）。
+- **PowerShell 执行策略**：TRAE 命令终端调用宿主机 PowerShell，因 ExecutionPolicy=Restricted 曾无法执行任何命令；已设 `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` 修复。
+- **Git（M00-T002）**：用户已完成 Git for Windows + Git LFS 安装、仓库初始化与远程推送（2026-08-09 确认）。
+- **真机结论**：PICO Neo3 与 UE5.8 不兼容（设备层硬限制，详见 `PicoNeo3BuildGuide.md` 与 `DeviceConfigurationMatrix.md`、`TechnicalDecisions.md`）；工程配置已达理论正确，对 PICO 4+ 应可直接运行。
+
 ## 后续执行顺序
 
 1. ~~系统重启后确认 vswhere 与 UE5.8 能识别 VS2026。~~ ✅ 编译已通过（M00-T003）
 2. ~~使用现有工程执行一次清理编译。~~ ✅ 已通过（M00-T003）
-3. 补齐 Android SDK：android-34/35 平台 + NDK r27c（M00-T004 Step 0）
-4. 验证 JDK 21 兼容性~~；若不兼容，安装 JDK 17（UE5.8 推荐）~~ ✅ UE5.8 官方要求 OpenJDK 21.0.3+，我们的 21.0.10 完全匹配
-5. 安装 Git，初始化 Git + Git LFS 并创建基线提交。
-6. 连接 PICO Neo3，通过 Launch on Device 或 Standalone APK 验证（M00-T004 Step 5）
+3. ~~补齐 Android SDK：android-34/35 平台 + NDK r27c（M00-T004 Step 0）。~~ ✅ 已装并构建成功
+4. ~~验证 JDK 21 兼容性~~ ✅ UE5.8 官方要求 OpenJDK 21.0.3+，我们的 21.0.10 完全匹配
+5. ~~安装 Git，初始化 Git + Git LFS 并创建基线提交。~~ ✅ 已完成并推送（2026-08-09）
+6. 接入新设备（PICO 4+）后：按 `DeviceConfigurationMatrix.md` 恢复高性能配置 → 重新构建 → 真机验证（M00-T004 Step 5）
 
 ## 记录要求
 

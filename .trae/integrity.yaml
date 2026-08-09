@@ -34,7 +34,7 @@ verification:
       note: "M00-DOC-001 合并后新增引用（registers 09 指向 standards 10、standards 10 指向 registers 09、systems index 指向 standards 04 等）已逐份回读核验存在；删除 15 个旧文件后复核无断链"
     files_read_back: 15
 limitations:
-  git: not_installed_not_run
+  git: installed_and_pushed_2026-08-09
   duplicate_document_consolidation: completed
   compile: not_run
   editor: not_run

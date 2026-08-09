@@ -19,7 +19,7 @@
 
 1. `.trae/README.md`
 2. `.trae/governance/policy.md`
-3. `.trae/governance/manifest.json`
+3. `.trae/manifest.yaml`
 4. `.trae/knowledge/GameMasterPlan.md`
 5. 当前里程碑、风险、决策、任务和验证登记
 6. 真实工程状态

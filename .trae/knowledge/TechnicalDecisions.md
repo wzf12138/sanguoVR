@@ -34,6 +34,15 @@
 - **结论**：UE5.8 与 PICO Neo3 环境不兼容，无引擎级配置开关绕过。
 - **候选方向（待用户决策）**：A. 换 PICO 4/新设备（Android 12+，UE5.8 原生支持）；B. 降级 UE 5.4/5.5/5.6 + PICO 官方 OpenXR 插件（官方支持组合，对 Neo3 兼容）；C. 深挖引擎源码改造 Swappy（高投入）。
 
+## 真机调试进展：三处配置修复 + 最终卡点（2026-08-09 深夜，M00-T004）
+
+- **修复 1 - Swappy 崩溃**：启用 ASIS（`[/Script/AndroidSingleInstanceServiceEditor.AndroidSingleInstanceServiceRuntimeSettings] bEnableASISPlugin=True`）→ 编译宏 `USE_ANDROID_STANDALONE=1` → Swappy 默认禁用；另加 CVar `a.UseSwappyForFramePacing=0` 双保险。Swappy 不再初始化，引擎日志开始正常写入。
+- **修复 2 - GLES framebuffer 崩溃**（`Framebuffer not complete 0x8cd6`，OpenGLBase.h:317）：关闭 `vr.MobileMultiView`（多视图 layered framebuffer 附件与 Neo3 驱动不兼容）。修复后引擎初始化完成、画面渲染（2D 模式）。
+- **修复 3 - OpenXR 未启用**（引擎判定 "not packaged for OpenXR"）：ASIS 启用后 UE 不再生成 MAIN/LAUNCHER intent-filter（`UEDeployAndroid.cs:2850 bNeedMainIntent = !bShowLaunchImage && !bASISEnabled`），且 OpenXR APL 的 `IMMERSIVE_HMD` category 添加失效。经项目附加文件 `Build/Android/ManifestActivityAdditions.txt` 为 GameActivity 手动添加 `MAIN + LAUNCHER + org.khronos.openxr.intent.category.IMMERSIVE_HMD` intent-filter。OpenXR 成功启用（Pico XRT runtime 3.0.1，xrCreateInstance succeeded）。
+- **最终卡点**：`xrCreateSession` 返回 `XR_ERROR_INITIALIZATION_FAILED`（PICO 合成器 `No 3D activity resumed`），应用停在 LOADING。PICO Neo3 系统 OpenXR 运行时（3.0.1，老版本）拒绝 UE5.8 的 session 请求——**引擎/运行时组合层不兼容，非配置可解**。
+- **最终根因（PICO 日志开关确认，2026-08-09 深夜）**：应用进程日志 `Failed to make EGL context current` → `Failed to create an egl client compositor` → `ipc_compositor_destroy_session`。Neo3 OpenXR 运行时（3.0.1）创建 GLES compositor 时 EGL 上下文失败。两条渲染路径均验证：Vulkan = 老驱动无法编译 UE5.8 SPIR-V shader；OpenGLES = 运行时 EGL compositor 失败。**结论：Neo3 系统 OpenXR 运行时/GPU 驱动过老，与 UE5.8 渲染栈不兼容，设备层面硬限制**。
+- **结论**：工程配置已达理论正确（对更新的设备如 PICO 4 应可直接运行）；Neo3 上需换设备或降级引擎（同前候选方向 A/B）。
+
 - **发现**：`Config/DefaultEngine.ini` 的 `[/Script/AndroidRuntimeSettings.AndroidRuntimeSettings]` 为 Meta Quest 配置（`bPackageForMetaQuest=True`、`ExtraApplicationSettings` 含 `com.oculus.supportedDevices` 与 `libopenxr.google.so`、`MinSDKVersion=32`、`TargetSDKVersion=32`），与本项目 PICO Neo3 目标设备决策不一致。
 - **影响**：`MinSDKVersion=32` 高于 PICO Neo3 系统版本（Android 10 / API 29），将导致 APK 安装失败；Quest 打包内容对 PICO 无意义。
 - **处理**（用户指挥，经 MCP `ConfigSettingsToolset.SetSectionProperties` 于 2026-08-09 完成，项目已保存）：`bPackageForMetaQuest=False`、`extraApplicationSettings` 清空 Quest 内容、`bPackageDataInsideApk=True`、`MinSDKVersion=26`（官方最低安装 26，兼容 API 29 设备）、`TargetSDKVersion=35`（官方推荐）；保留 `bPackageForOpenXRImmersive=True`（PICO 走内置 OpenXR）。

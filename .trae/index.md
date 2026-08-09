@@ -32,6 +32,7 @@
 
 ## 产品与工程入口
 
+- [知识库总入口](knowledge/README.md)（技术决策、环境配置、构建指南、设备配置矩阵等）
 - [产品总纲](knowledge/GameMasterPlan.md)
 - [Design 权威产品详规](knowledge/Design/index.md)
 - [Standards 工程标准](standards/index.md)
@@ -54,7 +55,7 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 - [active 检查](execution/active/CHECKS.md)
 - [M00 正式任务详规](execution/M00/)
 
-当前 active 任务为 `M00-T004`，状态已冻结为 `blocked`。在治理入口清点完成前，不得执行或恢复任务。
+当前 active 任务为 `M00-T004`，状态为 `ready`（2026-08-09 用户确认解除冻结），状态快照见 `execution/active/STATUS.json`。
 
 ## M00-M06
 
@@ -72,5 +73,5 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 
 - 本项目资料只在 `D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae` 内维护。
 - `D:/AWork/Unreal/Project/.trae` 不属于本项目，不得写入。
-- Git 未安装、未执行；Git 状态、LFS 与提交结论保持未验证。
+- Git 状态：已于 2026-08-09 安装 Git for Windows + Git LFS，仓库已初始化并推送远程（用户确认）；完整记录见 `CHANGELOG.md` 与 `knowledge/EnvironmentSetup.md`。
 - 完整性结果以实际绝对路径读取、链接检查和 active 门禁检查为准。

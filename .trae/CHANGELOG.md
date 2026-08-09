@@ -1,5 +1,14 @@
 # ChangeLog
 
+## 2026-08-10（发布前修正）
+
+- 发布前审核修正（用户确认）：同步 `.trae/README.md`、`.trae/index.md` 任务状态为 `M00-T004 / ready`（原仍写 blocked，与 STATUS.json 矛盾）；`integrity.yaml` 的 git 限制更新为已安装已推送；`governance/README.md` 与 `execution/README.md` 同步 Git 实施状态；`DecisionModel.md` 引用从已删除的 `governance/manifest.json` 改为 `.trae/manifest.yaml`。
+- 遗留清理：删除根级 `Set-TraeGovernanceAcl.ps1`（已复制到项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\`）与 `AdminScriptDeployment.txt`；删除根级旧 `Design/` 目录（5 个废弃详规）；删除 `governance/` 旧驼峰命名文件（GovernancePolicy/ChangeControl/DefinitionOfDone/ResponsibilityMatrix）与旧 `manifest.json`。
+- 冗余路由清理（用户要求不留已废弃占位）：删除 standards/vr/systems/registers 下全部旧命名重复文件（S0x、VR0x、SYS0x、驼峰命名、小写命名）与旧 register 文件，权威仅保留各目录编号正文与 `index.md`。
+- 任务体系清理：删除 `execution/milestones/` 旧任务目录（6 个文件）、`execution/active/` 下 10 个 0 字节空文件与 `M00/` 空目录、`.trae/tasks/` 旧任务体系（5 个文件）；删除 `archive/LegacyDocs.md`、`archive/LegacyRoot.md`（旧树说明已并入 `archive/README.md`）。
+- 更新 `execution/M00/T002-GitRepositoryBaseline.md`：交付项引用改为 `standards/10-git-standard.md`，状态更新为已实施（Git 已装、仓库已推）。
+- 经 grep 复核：被删文件名在当前保留正文中无残留引用；唯一 Skill、四份治理契约、四份操作模型、Design 详规与编号标准入口保持完整。
+
 ## 2026-08-09
 
 - 用户确认解除冻结；结构核验通过后将 M00-T004、manifest、integrity 和任务登记恢复为 `ready`。后续可由执行模型继续 Android SDK/UE Android 配置、PICO 部署与 Standalone APK 验证。
@@ -13,6 +22,8 @@
 - 执行 M00-T004 VR/OpenXR/PICO 基线（Step 1-3），状态曾置为 `in_progress`：Step 1-3 通过（VR 模板资产、插件与平台声明、OpenXR 运行时 `xrCreateInstance succeeded`）；`PicoValidationMatrix.md` 更新文件/编辑器列，修复其指向 `VerificationRegister.md` 的旧引用为 `09-verification-register.md`；V-004 更新为已验证（编辑器）。
 - 发现并记录偏差：UE5.8 官方要求 NDK r27c（`27.2.12479018`，见引擎 `Android_SDK.json`）与 SDK 推荐 35，任务 Step 0 原写 NDK r25b 为 UE5.4 旧要求；机器无独立 JDK（仅 Android Studio JDK 11），APK 构建前需安装 Temurin JDK 17；`EnvironmentSetup.md` 已补录 Android 环境检查结论。
 - Android 构建链路打通：安装 Temurin JDK 21（`D:\AWork\Android_SDK\jdk-21.0.12+8`）、SDK platforms 34/35、build-tools 35.0.1、NDK r27c 27.2.12479018（全部真实落盘并验证）；经 MCP 修正项目 PICO 打包配置（`bPackageForMetaQuest=False`、`bPackageDataInsideApk=True`、`MinSDKVersion=26`、`TargetSDKVersion=35`、`NDKAPILevelOverride=android-26`）；Gradle 8.7 发行版以国内镜像下载并预置 wrapper 缓存（`D:\AWork\.gradle`）；`BuildCookRun -package` 构建 **BUILD SUCCESSFUL**（350s，arm64 APK，包名 com.YourCompany.VRSanguoYanWuchang）；验证矩阵 Android 构建列更新为通过，V-005 部分验证。待办：PICO Neo3 真机安装与 6DoF/双控制器验证。
+- 深夜真机调试（M00-T004）：经无线 adb 全程自主调试（PICO 无线连接、UE 日志文件定位、三轮配置修复：ASIS 禁用 Swappy / 关闭 MobileMultiView 修复 framebuffer / 附加 manifest 修复 OpenXR 启用）；OpenXR 运行时加载成功但 `xrCreateSession` 被拒，PICO 日志确认根因 `Failed to make EGL context current / create egl client compositor`（Neo3 运行时 3.0.1 过老）；V-005 最终判定：UE5.8 与 PICO Neo3 不兼容（设备层硬限制），工程配置对 PICO 4+ 可直接运行；M00-T002 已实施（用户完成 Git 安装/初始化/推送）。
+- 知识库维护（2026-08-09 深夜）：新增 `knowledge/DeviceConfigurationMatrix.md`（设备配置矩阵与新设备改回清单）；重写 `PicoNeo3BuildGuide.md`（构建/部署/调试全流程）；更新 `EnvironmentSetup.md`、`index.md`、`knowledge/README.md` 索引；删除无用的 Spatial SDK 6.0 语料（`knowledge/pico-sdk/`）；经 PICO 官网 UE 说明书确认官方插件支持矩阵（PICOOpenXR 仅 UE 5.6/5.7 + Vulkan + PICO OS 6 设备，UE5.8 不在官方矩阵），已提炼写入 `PicoNeo3BuildGuide.md`。
 
 ## 2026-08-09（M00-T003）
 

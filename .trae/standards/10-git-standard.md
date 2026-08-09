@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-Git 未安装、未执行；本文件仅作为后续 Git 基线启用的规范依据，不代表已完成 Git 验证。Git 启用与验证结论由对应任务登记，见 `../registers/09-verification-register.md`（V-002）。
+Git for Windows 与 Git LFS 已安装，仓库已初始化并推送远程（2026-08-09 用户确认，详见 `../registers/09-verification-register.md` V-002 与 `../knowledge/EnvironmentSetup.md`）。实际主分支为 `master`，与远程 `origin/master` 同步。
 
 ## 分支与提交
 

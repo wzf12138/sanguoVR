@@ -22,4 +22,4 @@
 
 M01 的 1v1 是底层验证，不是一期开售范围。任何里程碑裁剪都不得改变 [`../knowledge/GameMasterPlan.md`](../knowledge/GameMasterPlan.md) 的完成定义。
 
-本轮 Git 不安装、不执行，T002 的命令验证保持未执行。
+Git 已安装并推送远程（2026-08-09 用户确认），`origin/master` 与本地同步；后续提交遵循 `../standards/10-git-standard.md`。

@@ -34,4 +34,4 @@
 
 ## 当前执行状态
 
-当前任务为 `M00-T004`，但因治理入口和状态快照存在不同步，已冻结为 `blocked`。冻结期间不得进入执行模式、安装 Android 依赖、构建 APK 或进行 PICO 真机操作；先完成 active 五件套和状态快照的只读清点。
+当前任务为 `M00-T004`，状态为 `ready`（2026-08-09 用户确认解除冻结）。Step 1-3 编辑器 VR 核验已完成；后续执行 Android SDK/UE Android 配置、PICO 部署与 Standalone APK 验证。
