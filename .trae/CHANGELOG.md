@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 2026-08-10（报告清理与空目录删除）
+
+- 用户确认删除 5 个记号级任务报告（`reports/tasks/M00-T001.md`、`M00-T002.md`、`M00-T004.md`、`M00-T005.md`、`M00-T006.md`）：内容仅 4 行"完成 xx 文档"，与任务本体（T005 系统骨架、T006 自动化门禁）不符或信息已被 `07-task-register.md`、`09-verification-register.md` 覆盖；T004 正式报告将在任务执行时重新生成。
+- 删除废弃的 `.trae/tasks/` 空目录（含 `active/M00`，旧第二套任务体系残留，git 已无跟踪文件）。
+- 更新 `reports/tasks/README.md` 索引：仅保留 M00-T003、M00-T004-structure-integrity、M00-DOC-001 报告链接，并注明删除原因。
+- 保留：`execution/active/TASK.md`、`CHECKS.md`、`M00/T005-SystemSkeleton.md` 中的报告路径引用（指向未来执行时写入位置，非已删文件）。
+
 ## 2026-08-10（Git 状态语句清理）
 
 - 清理过时的"Git 未安装/不执行"表述（Git 已于 2026-08-09 安装并推送远程）：`execution/reports/tasks/README.md` 更新说明；`execution/M00/T003-UE58ToolchainBaseline.md` 步骤中 Git 约束改为"已由 M00-T002 安装启用"；`registers/02-risk-register.md` RSK-011 标记为已缓解（差异与回滚可用 `git diff`/`git restore`）。
