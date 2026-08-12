@@ -13,6 +13,32 @@
 
 武器差异通过数据与组件组合表达，不复制平行战斗系统。所有权变更必须原子化；死亡、重置、销毁和追踪异常先解除约束，再回收对象。表现反馈不得写回伤害结果。
 
+## 接口契约（规划级）
+
+以下为 M00 规划阶段的接口契约框架，具体签名在 M00-T005 C++ 骨架中实现并以此为准。
+
+**武器接口**：
+- 接口 `IVRWeapon`：提供 `GetWeaponType()`, `GetTrajectorySource()`, `GetGrabPoints()`
+- 接口 `IGrabbable`：提供 `TryGrab(EHand Hand)`, `Release(EHand Hand)`, `SwitchHand(EHand Target)`
+
+**核心服务**：
+- `GrabWeapon(AActor* Weapon, EHand Hand)` → `bool`
+- `ReleaseWeapon(EHand Hand, EReleaseReason Reason)`
+- `GetOwnedWeapon(EHand Hand)` → `AVRWeaponBase*`
+
+**事件广播**：
+- `OnWeaponGrabbed(AActor* Weapon, EHand Hand)`
+- `OnWeaponReleased(AActor* Weapon, EReleaseReason Reason)`
+- `OnWeaponDropped(AActor* Weapon)`（脱手事件）
+
+**数据结构**：
+- `FWeaponTrajectorySample`：`FVector Position; FVector Velocity; FQuat Rotation; float Timestamp;`
+- `EReleaseReason`：`Manual | Collision | Timeout | Reset`
+
+**依赖接口**：
+- Combat: 接收武器轨迹和接触候选
+- Diagnostics: 报告武器生命周期事件
+
 ## 接口与验证
 
 向战斗系统提供攻击窗口、轨迹与接触候选，向流程和诊断系统报告生命周期事件。验证覆盖双手竞争、切手、掉落恢复、重置残留、对象池上限和玩家/AI 共用接口；产品参数从权威详规读取。

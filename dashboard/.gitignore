@@ -1,0 +1,5 @@
+__pycache__/
+# 生成的静态看板文件（由 GitHub Actions 在 push 时自动生成）
+status.json
+integrity.json
+index.html

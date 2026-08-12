@@ -74,3 +74,16 @@ Profiling/
 !Content/**
 !Plugins/**
 !Source/**
+
+# Re-ignore generated files within tracked dirs (overrides ! rules above)
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+Plugins/**/*.pdb
+Content/__ExternalActors__/
+Content/__ExternalObjects__/
+Content/Developers/
+Content/Collections/
+
+# Trae workspace temp
+.trae-html-share-packages/
+architecture-assessment.html

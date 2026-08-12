@@ -4,11 +4,11 @@
 
 | 项目 | 决策 |
 |---|---|
-| 引擎 | UE5.8 安装版 |
+| 引擎 | **UE 5.6 安装版（2026-08-10 决定，替代原 UE5.8）**：PICO OpenXR Plugin（OS 5）官方支持 UE 5.6/5.7 + Neo3；UE5.8 不在 PICO 官方支持矩阵，且 UE5.8 内置 OpenXR 对 Neo3 已实测不兼容（xrCreateSession 失败）。 |
 | 工程方式 | 全新 C++ 工程，不升级旧 UE4 项目 |
-| 基础模板 | 以 UE5.8 官方 VR 模板为功能基准；用户将于 2026-08-09 基于官方 VR 模板手动重建项目，替换当前 C++ 空模板骨架，之后在模板能力上补齐本项目战斗与系统内容 |
+| 基础模板 | 以 UE5.6 官方 VR 模板为功能基准（2026-08-10 更新，原 UE5.8 因 PICO 不兼容已弃用）；待用户基于 UE5.6 官方 VR 模板重建项目，之后在模板能力上补齐本项目战斗与系统内容 |
 | 目标设备 | PICO Neo3 普通版 |
-| XR 基础 | 优先使用 UE5.8 内置 OpenXR |
+| XR 基础 | 优先使用 UE5.6 内置 OpenXR + PICO OpenXR Plugin（OS 5）|
 | PICO 外部插件 | 第一里程碑前不安装，真机缺失能力时再评估 |
 | 编程方式 | C++ 核心规则 + 蓝图表现与配置 |
 | 输入 | Enhanced Input |
@@ -47,6 +47,19 @@
 - **影响**：`MinSDKVersion=32` 高于 PICO Neo3 系统版本（Android 10 / API 29），将导致 APK 安装失败；Quest 打包内容对 PICO 无意义。
 - **处理**（用户指挥，经 MCP `ConfigSettingsToolset.SetSectionProperties` 于 2026-08-09 完成，项目已保存）：`bPackageForMetaQuest=False`、`extraApplicationSettings` 清空 Quest 内容、`bPackageDataInsideApk=True`、`MinSDKVersion=26`（官方最低安装 26，兼容 API 29 设备）、`TargetSDKVersion=35`（官方推荐）；保留 `bPackageForOpenXRImmersive=True`（PICO 走内置 OpenXR）。
 - 修改后需重新构建 APK 并在 PICO Neo3 真机验证。
+
+## UE5.6 迁移执行与 swapchain 补丁（2026-08-11，M00-T004 执行中）
+
+用户已决策降级 UE5.6 + PICO OpenXR Plugin（OS 5）并执行：
+
+- **项目重建**：基于 UE5.6 官方 VR 模板重建项目，`Content/VRTemplate`、`Content/Characters/MannequinsXR`、`Content/LevelPrototyping`、`Content/Weapons` 已落盘；`Source/VRSanguoYanWuchang`（C++ 模块 + BootstrapActor）与 `Config/`（Engine/Game/Input/Android）按 5.6 规范重配。
+- **PICO 插件迁移**：PICO OpenXR Plugin v1.6.1 从引擎 `Engine/Plugins/Marketplace/` 迁移至项目 `Plugins/PICOOpen174f9f81d266V8`（官方文档也支持"复制到项目 Plugins/"）；引擎目录原插件已改名 `.disabled` 防冲突。
+  - **原因**：安装版引擎中 Marketplace 插件必以 precompiled 模式处理（`bUsePrecompiled = IsEngineInstalled()`），要求 `.precompiled` manifest，且增量构建无法检测源码变化（用 `git status` 判断 working set，引擎目录不在 git 仓库）。迁移到项目 Plugins 后 `bReadOnly=false`，从源码编译，补丁必然生效。
+  - **配套修改**：全部 11 个 PICO 模块 `Build.cs` 加 `PrecompileForTargets = PrecompileTargetsType.Any`；`PICOOpenXR.uplugin` 的 `"Installed": false`。
+- **swapchain 补丁（关键）**：Neo3 系统 OpenXR 运行时（R2.1.12.0）Vulkan swapchain 创建失败——`xrCreateSwapchain` 传 format list（`XR_KHR_vulkan_swapchain_format_list`）触发 `ion : ioctl ENOTTY (Not a typewriter)` 原生崩溃。补丁：`PICO_HMD.cpp` 拦截 `xrCreateSwapchain`，剥离 format list 扩展，只传单一 `B8G8R8A8_SRGB`（43）格式。
+  - **验证**：libUnreal.so 符号确认含 `PICOLayerCreateSwapchain`（共 3 个 PICOLayer 符号）；Neo3 真机场景可见，日志 `Swapchain format not supported (50), falling back to runtime preferred format (43)` 后正常创建。
+- **真机遗留（进行中）**：手柄模型未显示（VRPawn 仍用官方 MannequinsXR 手部模型，PICO 官方要求挂载插件自带 `Meshes/PicoNeo3/SM_PICONeo3_L/R`）；输入映射不可用（IMC 需按官方文档绑定 PICO Touch 按键；OpenXR Input 项目设置缺 `PlayerMappableInputConfig`；`DefaultInput.ini` 曾指向不存在的 `/Game/XRFramework/Input/` 已修复为 `/Game/VRTemplate/Input/`）。
+- **构建系统经验（防再踩坑）**：详见 `PicoNeo3BuildGuide.md`「构建环境（UE5.6）」与「已知构建坑」。
 
 ## 代码边界
 

@@ -32,7 +32,9 @@
 
 ## 产品与工程入口
 
-- [知识库总入口](knowledge/README.md)（技术决策、环境配置、构建指南、设备配置矩阵等）
+- [知识库总入口](knowledge/README.md)（技术决策、环境配置、构建指南、设备配置矩阵、引擎技术参考、实现模式库等）
+- [引擎技术参考](knowledge/EngineReference.md)（VR/OpenXR/Enhanced Input/IK/性能/AI/碰撞）
+- [实现模式库](knowledge/Patterns/README.md)（可复用实现模式，M01+ 逐步填充）
 - [产品总纲](knowledge/GameMasterPlan.md)
 - [Design 权威产品详规](knowledge/Design/index.md)
 - [Standards 工程标准](standards/index.md)
@@ -46,16 +48,16 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 ## Execution 基线
 
 - [Execution 索引](execution/README.md)
-- [任务包模板](execution/task-template.md)
-- [变更请求目录](execution/requests/README.md)
+- [任务包模板（代码）](execution/task-template.md)
+- [任务包模板（资产）](execution/task-template-asset.md)
+- [任务包模板（关卡）](execution/task-template-level.md)
+- [变更请求模板](governance/change-request-template.md)
 - [active 状态](execution/active/STATUS.json)
-- [active 白名单](execution/active/ALLOWLIST.txt)
-- [active 任务](execution/active/TASK.md)
-- [active 输入](execution/active/INPUTS.md)
-- [active 检查](execution/active/CHECKS.md)
+- [M00-T004 任务包](execution/active/M00-T004/)
+- [M00-T005 任务包](execution/active/M00-T005/)
 - [M00 正式任务详规](execution/M00/)
 
-当前 active 任务与状态以 [`execution/active/STATUS.json`](execution/active/STATUS.json) 为唯一权威，此处不复制动态状态；任务进度历史见 `registers/07-task-register.md`。
+当前 active 任务与状态以 [`execution/active/STATUS.json`](execution/active/STATUS.json) 为唯一权威，此处不复制动态状态；任务进度历史见 `registers/07-task-register.md`。active 五件套位于各任务子目录 `active/{taskId}/` 下。
 
 ## M00-M06
 

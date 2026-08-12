@@ -1,8 +1,8 @@
 # M00-T005 系统骨架与数据驱动边界
 
-- 状态：已批准
+- 状态：见 `../active/STATUS.json`（本详规不复制动态状态）
 - 优先级：P0
-- 前置任务：M00-T004（VR/OpenXR/PICO 基线完成）
+- 前置任务：M00-T004（VR/OpenXR/PICO 基线，当前 blocked；T005 已获批准并发启动，不依赖 T004 完成）
 - 目标：建立 Combat、Weapon、CharacterState、Movement、FullBodyIK、SquadAI、GameModeFlow 与 Diagnostics 的最小代码边界。
 
 ---
@@ -14,7 +14,7 @@
   T001 治理基线 ✅ → 项目怎么管，定了
   T002 Git 基线 ✅   → 代码怎么存，定了
   T003 编译基线 ✅   → 代码能编译、编辑器能跑、MCP 通了
-  T004 VR/PICO 基线 🔄 → 游戏能在 PICO 上跑起来（进行中）
+  T004 VR/PICO 基线 🚫 → PICO 设备阻塞，转为 blocked；T005 并发启动
 
 本任务 T005：
   搭 C++ 模块骨架、核心接口、Data Asset 基类、流程状态机和诊断日志
@@ -240,7 +240,7 @@ None → Calibration → Preparation → Spawning → Combat → Resolution → 
 
 | 依赖 | 状态 | 说明 |
 |------|------|------|
-| T004 完成 | 进行中 | 等待 Android SDK 安装和 PICO 真机验证通过 |
+| T004 完成 | blocked（PICO 设备） | T005 可在 T004 完成前并行执行，仅依赖编译环境与 VR 模板资产 |
 | VS2026 + MSVC | ✅ | T003 已验证 |
 | UBT 编译环境 | ✅ | T003 已验证 |
 | VR 模板完整 | ✅ | T004 Phase 3 已核验资产完整性 |

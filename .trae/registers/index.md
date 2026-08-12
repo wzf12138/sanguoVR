@@ -13,6 +13,8 @@
 | `07-task-register.md` | 项目任务状态与交付物 |
 | `08-permission-register.md` | NTFS ACL 目标策略与应用状态 |
 | `09-verification-register.md` | 验证层级、状态与证据 |
+| `10-asset-register.md` | 资产登记册 |
+| `11-tech-debt-register.md` | 技术债登记与偿还追踪 |
 | [`standards-backlog.md`](standards-backlog.md) | M00-M06 标准完善待办、触发条件与完成定义 |
 
 登记状态按对应登记册约定维护，每次变更保留日期、责任角色和证据链接。

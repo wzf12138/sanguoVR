@@ -1,0 +1,10 @@
+{
+  "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
+  "taskId": "M00-T005",
+  "milestone": "M00",
+  "status": "ready",
+  "claimedBy": null,
+  "startedAt": null,
+  "updatedAt": "2026-08-11",
+  "info": "系统骨架与数据驱动边界。T004 因 PICO 设备阻塞，用户批准并发启动。"
+}

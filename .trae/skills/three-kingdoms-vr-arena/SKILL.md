@@ -41,8 +41,11 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 3. `.trae/rules/project_rules.md`
 4. 与用户意图对应的操作模型
 5. `.trae/knowledge/GameMasterPlan.md`、相关 `knowledge/Design/` 权威产品详规
-6. 相关 standards、vr、systems 工程实现指引与 registers
-7. 当前 active 任务包和真实工程证据
+6. `.trae/knowledge/EngineReference.md`（引擎技术参考，VR/OpenXR/Enhanced Input/IK/性能优化）
+7. `.trae/knowledge/Production/` 生产规格（资产任务时必读：`ArtStyleGuide.md`、`AnimationSpec.md`、`LevelDesignSpec.md`）
+8. 相关 standards、vr、systems 工程实现指引（含接口契约）与 registers（含技术债登记册 `11-tech-debt-register.md`）
+9. `.trae/knowledge/Patterns/README.md` 实现模式库（M01+ 逐步填充，执行时查阅同类模式）
+10. 当前 active 任务包和真实工程证据
 
 ## 写前校验
 
@@ -64,13 +67,17 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 执行模式必须逐份读取并同时满足：
 
-1. `.trae/execution/active/STATUS.json`：`status` 必须为 `ready`，且 `taskId` 指向唯一活动任务。
-2. `.trae/execution/active/ALLOWLIST.txt`：至少一行非空、非注释的明确相对路径。
-3. `.trae/execution/active/TASK.md`：目标、范围、步骤、停止条件、回退和报告路径完整。
-4. `.trae/execution/active/INPUTS.md`：所需事实源与输入可读。
-5. `.trae/execution/active/CHECKS.md`：验证方法与门禁可执行。
+1. `.trae/execution/active/STATUS.json`（根 STATUS.json，任务状态唯一权威）：`activeTasks` 数组中至少存在一个 `status` 为 `ready` 或 `in_progress` 的任务。
+2. 认领目标任务后，`.trae/execution/active/{taskId}/ALLOWLIST.txt`：至少一行非空、非注释的明确相对路径（路径相对于项目根目录 `VRSanguoYanWuchang/`）。
+3. `.trae/execution/active/{taskId}/TASK.md`：目标、范围、步骤、停止条件、回退和报告路径完整。
+4. `.trae/execution/active/{taskId}/INPUTS.md`：所需事实源与输入可读。
+5. `.trae/execution/active/{taskId}/CHECKS.md`：验证方法与门禁可执行。
 
-当前活动任务的唯一详细定义是 `.trae/execution/active/TASK.md`；`taskId` 只用于关联报告和登记册，不要求在 `active/` 下另建同名任务文件。里程碑任务详规从 `.trae/execution/M00/` 等正式目录读取，不在 `active/` 下复制。任一五件套文件缺失、状态不是 `ready`、`taskId` 为空或白名单无有效路径时立即停止，不自行激活、补写或扩大任务。
+任务目录下的 `STATUS.json` 为本地便利副本，冲突时以根 STATUS.json 为准。里程碑任务详规从 `.trae/execution/M00/` 等正式目录读取，不在 `active/` 下复制。任一五件套文件缺失、根 STATUS.json 中状态不是 `ready` 或 `in_progress`、`taskId` 为空或白名单无有效路径时立即停止，不自行激活、补写或扩大任务。
+
+### 并发安全
+
+认领任务前必须检查与其它 `in_progress` 任务的白名单无重叠（共享文件除外）。认领后将根 STATUS.json 中对应条目的 `status` 更新为 `in_progress`，`claimedBy` 填写会话标识（格式 `"session-{YYYYMMDD}-{序号}"`）。
 
 ## 文件与事实边界
 

@@ -13,6 +13,29 @@
 
 流程状态使用单一所有者；阶段切换必须可追踪、可中止并支持幂等重置。生成、计时、异步加载和临时对象通过明确生命周期管理，失败时返回安全状态并提供诊断原因。
 
+## 接口契约（规划级）
+
+以下为 M00 规划阶段的接口契约框架，具体签名在 M00-T005 C++ 骨架中实现并以此为准。
+
+**状态机**：
+- 枚举 `EGameSessionPhase`：`Calibration | Ready | Generate | Combat | Settlement | Reset`
+- 状态迁移必须经过 `RequestPhaseTransition(EGameSessionPhase Target)` 统一入口
+
+**核心服务**：
+- `StartMatch(const FMatchRuleSet& Rules)` → `bool`（成功进入 Ready）
+- `EndMatch(EMatchEndReason Reason)` → 触发 Settlement
+- `ResetMatch()` → 幂等重置，清理所有临时对象
+
+**事件广播**：
+- `OnPhaseChanged(EGameSessionPhase Old, EGameSessionPhase New)`
+- `OnMatchEnded(EMatchEndReason Reason, const FMatchResult& Result)`
+
+**依赖接口**（本系统调用其他系统）：
+- Combat: `ResolveAttack()`
+- AI: `UpdateSquadTactics()`
+- Movement: `RequestMovement()`
+- Save: `SaveMatchResult()`
+
 ## 接口与验证
 
 依赖战斗、AI、交互、移动、UI 和保存系统的事件或服务接口，不直接写入其内部状态。验证覆盖合法迁移、重复结束、连续重开、加载失败、XR 失焦和输入失联；具体产品结果以权威详规为准。

@@ -1,5 +1,178 @@
 # ChangeLog
 
+## 2026-08-12（M00-T004：输入映射按 PICO 官方文档绑定完成）
+
+- 编辑器内配置（用户执行，AI 核验）：
+  - 5 个 IMC 全部按 PICO 官方文档（developer.picoxr.com Input mappings）绑定 PICO Neo3 键：IMC_Default（Move/Turn/Grab_L/R/Menu_Toggle）、IMC_Hands（Grasp/IndexCurl/Point/ThumbUp 共 10 键）、IMC_Menu（Interact Trigger + Cursor Thumbstick 2D）、IMC_Weapon_Left/Right（Shoot Trigger Axis）。
+  - 插件按键命名确认：`PICONeo3_*`（显示名 "PICO Neo3 Controller" 分类），非官方文档中的 "PICO Touch" 命名。
+  - 二进制核验：5 个 IMC 资产均已包含对应 `PICONeo3_*` 键（IMC_Default 6 键、IMC_Hands 10 键、IMC_Menu 4 键、Weapon×2 各 1 键）。
+- 任务状态同步：STATUS.json（updatedAt 2026-08-12，note 更新）、07-task-register.md、11-tech-debt-register.md（TD-007 部分偿还标注）。
+- 遗留（下次会话继续）：VRPawn 挂载 Neo3 手柄模型（需在 Motion Controller 下新增 StaticMesh 组件挂 `SM_PICONeo3_L/R`，隐藏原 SkeletalMesh 手部）、OpenXR Input PlayerMappableInputConfig 配置、真机复测输入。
+
+## 2026-08-11（M00-T004 UE5.6 迁移执行：swapchain 补丁生效，真机场景可见）
+
+用户决策并批准执行 UE5.6 + PICO OpenXR Plugin（OS 5）降级路线（替代 UE5.8），任务状态从 `blocked` 恢复为 `in_progress`。
+
+**工程执行（项目外治理文档同步）：**
+
+- 项目已基于 UE5.6 官方 VR 模板重建（`Content/VRTemplate`、`Characters/MannequinsXR`、`LevelPrototyping`、`Weapons`；`Config/` 重配；`Source/VRSanguoYanWuchang`）。
+- PICO OpenXR Plugin v1.6.1 从引擎 Marketplace 迁移至项目 `Plugins/`（源码编译），11 个模块 Build.cs 加 `PrecompileForTargets=Any`、uplugin `Installed=false`；引擎原插件改名 `.disabled`。
+- **swapchain 补丁**：`PICO_HMD.cpp` 拦截 `xrCreateSwapchain` 剥离 `XR_KHR_vulkan_swapchain_format_list`（Neo3 运行时 ION ENOTTY 崩溃）；符号 `PICOLayerCreateSwapchain` 已确认编译进 libUnreal.so；Neo3 真机场景可见（V-008）。
+- 修复 `Config/DefaultInput.ini`：IMC 路径从不存在的 `/Game/XRFramework/Input/` 改为 `/Game/VRTemplate/Input/`（v3 日志确认 IMC 加载成功）。
+- 补丁包落位：swapchain 补丁备份与恢复脚本迁移至项目内 `Build/Patches/PICOOpenXR/`（随 git 提交，避免项目外临时目录丢失）。
+- 构建系统坑已解决并记录：引擎 BuildRules 误删恢复（Epic Launcher 验证/修复）、插件增量构建盲区（迁移项目 Plugins）、规则 DLL 缓存清理、源码时间戳强制重编。
+
+**治理文档同步：**
+
+- `execution/active/STATUS.json`：M00-T004 `blocked` → `in_progress`（claimedBy session-20260811-execution）。
+- `registers/07-task-register.md`：M00-T004 状态与交付物同步。
+- `registers/09-verification-register.md`：V-005 标注 UE5.8 路线；新增 V-008（UE5.6 真机部分验证）。
+- `knowledge/TechnicalDecisions.md`：追加「UE5.6 迁移执行与 swapchain 补丁」。
+- `knowledge/PicoNeo3BuildGuide.md`：构建环境切 UE5.6、新增 8 项已知构建坑、插件迁移说明、真机结论与待办。
+- `knowledge/DeviceConfigurationMatrix.md`：更新 UE5.6 配置基线；UE5.8 兼容配置降为历史参考。
+- `vr/PicoValidationMatrix.md`：回填 Android 构建通过、真机部分通过。
+- `registers/11-tech-debt-register.md`：新增 TD-005~TD-009。
+- `registers/02-risk-register.md`：新增 RSK-018~RSK-020。
+
+**遗留（待用户编辑器操作）：** IMC 绑定 PICO Touch 按键、OpenXR Input PlayerMappableInputConfig、VRPawn 挂载 Neo3 手柄模型（SM_PICONeo3_L/R）。
+
+## 2026-08-11（架构审核修复）
+
+用户批准：对全部架构进行完整审核后，修复发现的 10 项问题。
+
+**修复中级别问题（4 项）：**
+
+- `governance/policy.md`：第 6 节新增"审核结论与任务状态映射"，将 `requires_changes`→`in_progress`、`rejected`→`blocked` 显式定义。
+- `execution/README.md`：新增"任务包目录结构"段落，文档化五件套（TASK.md + ALLOWLIST.txt + INPUTS.md + CHECKS.md + STATUS.json）结构。
+- `execution/task-template.md`：从 10 行扁平字段升级为 9 章结构化模板，含验收标准 checkbox、白名单代码块、禁止路径列表、验证方法 checkbox、停止条件、用户确认流程，与资产/关卡模板结构一致。
+- `registers/07-task-register.md`：T004 状态描述从"引擎已降级"修正为"降级路线已建议待执行"，与 TD-001(open)、V-005(待决策)、CHECKS.md(需用户先决策) 一致。
+
+**修复中级别问题（2 项）：**
+
+- `vr/index.md`：补充 `PicoValidationMatrix.md` 索引条目（文件已存在但未纳入索引）。
+- `standards/05-event-and-interface-standard.md`：新增 C++ 接口声明代码示例，覆盖全部 6 个核心接口（IInteractable/IWeaponSource/IDamageable/IDefenseProvider/IMovementMode/IBattleParticipant）。
+
+**修复低级别问题（4 项）：**
+
+- `governance/DecisionModel.md`：必读列表第 1 项补充 `.trae/index.md`，与 SKILL.md 必读顺序一致。
+- `governance/SessionCommands.md`：技术债登记册引用从裸文件名改为完整相对路径 markdown 链接。
+- `knowledge/TechnicalDecisions.md`：基础模板和 XR 基础从 UE5.8 修正为 UE5.6，消除版本引用矛盾。
+- `execution/active/STATUS.json` + `execution/active/M00-T004/STATUS.json`：T004 阻塞描述从"PICO 真机模拟卡住"修正为"PICO Neo3 与 UE5.8 运行时不兼容，等待用户决策降级引擎或更换设备"。
+
+**未修复（已有 backlog 跟踪）：**
+
+- P-003：`06-performance-standard.md` 缺具体数值目标——standards-backlog.md M06 P1 已跟踪。
+- P-005：无独立代码组织标准——standards-backlog.md M00 P0 已跟踪。
+
+**元数据同步：**
+
+- `integrity.yaml`：`local_markdown_links` 更新为 115。
+
+## 2026-08-11（archcore 方法论评估与架构改进）
+
+用户批准：以 archcore 插件方法论为参照，评估项目架构并实施改进，目标是更好地支持游戏开发。分两轮完成，架构一次性到位。
+
+### 第一轮：文档完整性与治理工具补全
+
+**新增文件（1 个）：**
+
+- `registers/11-tech-debt-register.md`：技术债登记册，追踪临时实现、占位方案和已知缺陷，含债务管理规则。
+
+**更新文件（12 个）：**
+
+- `registers/01-decision-register.md`：新增"关键决策 ADR 上下文"段落，为 DEC-003/005/006/010/011/013 六条架构级决策补充上下文、备选方案、后果和复审条件。
+- `systems/01-game-flow-system.md`～`07-save-telemetry-and-diagnostics-system.md`：7 份系统指引统一新增"接口契约（规划级）"段落，定义核心服务签名、事件广播、数据结构和依赖接口。
+- `governance/ReviewProtocol.md`：审核内容新增第 8 项"文档同步验证（漂移检测）"和第 9 项"技术债检查"。
+- `registers/04-requirement-traceability-register.md`：需求追踪表新增"覆盖状态"列（当前全部为"规划"）。
+- `governance/definition-of-done.md`：治理同步条款新增"技术债登记册"。
+- `registers/index.md`：新增 `11-tech-debt-register.md` 条目。
+- `manifest.yaml`：`registers_core` 更新为 11。
+- `integrity.yaml`：新增 `tech_debt_register` 检查项，更新链接计数和说明。
+
+### 第二轮：治理模型同步与模式库骨架
+
+**新增文件（1 个）：**
+
+- `knowledge/Patterns/README.md`：实现模式库骨架，含模式格式、8 个预设类别（战斗结算/武器交互/VR 移动/全身 IK/AI 战斗/竞技场流程/数据驱动/性能优化）和添加规则。
+
+**更新治理模型文件（5 个）：**
+
+- `governance/DecisionModel.md`：必读列表新增技术债登记册和 systems 接口契约（实现约束）。
+- `governance/ExecutionModel.md`：执行规则新增第 5 条——遵守 systems/ 接口契约的签名和语义，如需调整须先提交变更申请。
+- `governance/SessionCommands.md`：决策段新增"登记技术债"短指令。
+- `governance/responsibility-matrix.md`：RACI 矩阵新增"技术债追踪与偿还规划"行。
+- `skills/three-kingdoms-vr-arena/SKILL.md`：必读顺序新增 Patterns 模式库、接口契约和技术债登记册标注。
+
+**更新索引文件（3 个）：**
+
+- `knowledge/README.md`：新增 Patterns/ 实现模式库链接。
+- `index.md`：产品与工程入口新增 Patterns 链接。
+- `systems/index.md`：新增"接口契约"段落，明确接口契约为实现的强制约束。
+
+**更新标准文件（3 个）：**
+
+- `standards/02-naming-and-path-standard.md`：新增五武器、兵种、C++ 类与内容路径的实现示例。
+- `standards/03-blueprint-cpp-boundary-standard.md`：新增蓝图调用 C++、事件广播、DataAsset 消费和反模式的实现示例。
+- `standards/04-data-asset-standard.md`：新增 Schema 版本字段、DataAsset 迁移、保存数据版本化和版本登记规则。
+
+**元数据同步：**
+
+- `manifest.yaml`：`collections` 新增 `pattern_library: 1`。
+- `integrity.yaml`：新增 `pattern_library` 检查项；`local_markdown_links` 更新为 113。
+
+## 2026-08-11（Vibecoding 架构补全）
+
+用户批准：为支持美术、开发、动画、关卡等领域的 Vibecoding 并行工作流，补全资产生产治理体系。
+
+**新增文件（6 个）：**
+
+- `execution/task-template-asset.md`：资产任务模板（模型、骨骼、动画、材质、音效、特效、UI 等），含视觉验收流程。
+- `execution/task-template-level.md`：关卡任务模板（灰盒/正式场景、NavMesh、光照、性能），含 UE 内加载验证流程。
+- `registers/10-asset-register.md`：资产登记册，追踪所有 Content 资产的状态、路径与依赖，防止并发冲突。
+- `knowledge/Production/ArtStyleGuide.md`：美术风格指南（色彩体系、材质语言、角色甲胄、场景类型、武器形制）。
+- `knowledge/Production/AnimationSpec.md`：动画规范（骨架、动画列表、全身 IK 兼容、战斗时机参考、技术规范）。
+- `knowledge/Production/LevelDesignSpec.md`：关卡设计规范（布局指标、VR 舒适度、NavMesh、性能预算、灰盒规范）。
+
+**更新文件（6 个）：**
+
+- `governance/ReviewProtocol.md` §4：区分代码回读验证、UE 编辑器视觉验证、关卡加载验证。
+- `governance/definition-of-done.md` §3：补充资产任务和关卡任务的验收证据要求。
+- `registers/03-dependency-register.md`：新增资产级依赖链（M01 骨架→动画→武器→DataAsset 链路）与并发安全规则。
+- `skills/three-kingdoms-vr-arena/SKILL.md`：必读顺序补充 `knowledge/Production/` 生产规格。
+- `index.md`：Execution 基线补充资产/关卡任务模板链接。
+- `execution/README.md`、`knowledge/Production/README.md`、`registers/index.md`：索引同步新增文件。
+
+**元数据同步：**
+
+- `manifest.yaml`：`collections` 新增 `task_templates: 3`、`production_specs: 6`；`registers_core` 更新为 10。
+- `integrity.yaml`：新增 `task_templates`、`production_specs`、`asset_register` 三项检查。
+
+**核心治理文件零改动**：`policy.md`、`ExecutionModel.md`、`DecisionModel.md`、`SessionCommands.md`、`change-request-template.md`、`responsibility-matrix.md`、`project_rules.md` 均未修改。
+
+## 2026-08-11（冗余文件实际清理）
+
+上轮 CHANGELOG 声称删除但实际未落盘的三份文件，本次完成实际删除：
+
+- 删除 `rules/README.md`（纯重定向，3 行，无引用）。
+- 删除 `execution/reports/tasks/M00-T006.md`（4 行记号级报告，内容已被登记册覆盖）。
+- 删除 `execution/requests/README.md`（空目录说明，目录内无实际变更请求文件）。
+- 更新 `index.md`：`requests/README.md` 链接改为 `governance/change-request-template.md`。
+- 更新 `execution/README.md`：同上。
+- 更新 `09-verification-register.md` V-001 证据列：移除对已删除报告文件的引用，改为引用实际验证的治理文件与报告索引。
+
+## 2026-08-11（多任务并发治理）
+
+- 用户批准：治理模型从单任务改为多任务并发，每个执行模型认领一个任务。
+- `policy.md` §6：从"单任务与状态"改为"多任务与状态"，移除"任一时刻最多一个 in_progress"约束，新增任务认领、文件冲突检测与共享文件协调规则。
+- `ExecutionModel.md`：新增"任务认领"章节，前置门禁增加冲突检测，强制停止条件增加文件冲突。
+- `SKILL.md`：active 门禁路径从单任务改为多任务（`active/{taskId}/` 子目录结构），新增"并发安全"小节。
+- `active/` 目录重构：T004 文件移入 `active/M00-T004/`，新建 `active/M00-T005/` 任务包。
+- `active/STATUS.json`：从单任务对象改为 `activeTasks` 数组，支持多任务状态追踪。
+- M00-T004 状态：`in_progress` → `blocked`（PICO 真机模拟卡住）。
+- M00-T005 状态：`已批准` → `ready`（T004 阻塞期间并发启动）。
+- 全盘审计修复（同日期）：`index.md` 断链修复（active/ 旧路径 → 子目录结构）；`manifest.yaml` 与 `integrity.yaml` 更新多任务结构与统计；`DecisionModel.md` 移除单任务约束；`execution/README.md` 断链修复；`M00/README.md` 状态表同步；T003/T005/T006 里程碑详规硬编码状态改为引用 STATUS.json；`SessionCommands.md` 去"唯一"措辞；`T005-SystemSkeleton.md` 前置任务与依赖表更新为阻塞/并发状态。
+- 执行模型歧义消除（同日期）：`ExecutionModel.md` 重写，补全 `.trae/execution/` 前缀路径、定义 `claimedBy` 格式（`"session-{YYYYMMDD}-{序号}"`）、认领流程改为先检查后更新、新增共享文件更新时序；`SKILL.md` 门禁路径补全前缀、明确根 STATUS.json 为唯一权威；`policy.md` §5 修正"一个活动任务"为"一个认领的任务"；ALLOWLIST.txt 添加路径基准说明；任务目录 STATUS.json 添加便利副本标注。
+
 ## 2026-08-10（防废弃文件加固）
 
 - 用户确认三处加固，防止后续 AI 会话产生新的废弃文件：
@@ -61,6 +234,7 @@
 - Android 构建链路打通：安装 Temurin JDK 21（`D:\AWork\Android_SDK\jdk-21.0.12+8`）、SDK platforms 34/35、build-tools 35.0.1、NDK r27c 27.2.12479018（全部真实落盘并验证）；经 MCP 修正项目 PICO 打包配置（`bPackageForMetaQuest=False`、`bPackageDataInsideApk=True`、`MinSDKVersion=26`、`TargetSDKVersion=35`、`NDKAPILevelOverride=android-26`）；Gradle 8.7 发行版以国内镜像下载并预置 wrapper 缓存（`D:\AWork\.gradle`）；`BuildCookRun -package` 构建 **BUILD SUCCESSFUL**（350s，arm64 APK，包名 com.YourCompany.VRSanguoYanWuchang）；验证矩阵 Android 构建列更新为通过，V-005 部分验证。待办：PICO Neo3 真机安装与 6DoF/双控制器验证。
 - 深夜真机调试（M00-T004）：经无线 adb 全程自主调试（PICO 无线连接、UE 日志文件定位、三轮配置修复：ASIS 禁用 Swappy / 关闭 MobileMultiView 修复 framebuffer / 附加 manifest 修复 OpenXR 启用）；OpenXR 运行时加载成功但 `xrCreateSession` 被拒，PICO 日志确认根因 `Failed to make EGL context current / create egl client compositor`（Neo3 运行时 3.0.1 过老）；V-005 最终判定：UE5.8 与 PICO Neo3 不兼容（设备层硬限制），工程配置对 PICO 4+ 可直接运行；M00-T002 已实施（用户完成 Git 安装/初始化/推送）。
 - 知识库维护（2026-08-09 深夜）：新增 `knowledge/DeviceConfigurationMatrix.md`（设备配置矩阵与新设备改回清单）；重写 `PicoNeo3BuildGuide.md`（构建/部署/调试全流程）；更新 `EnvironmentSetup.md`、`index.md`、`knowledge/README.md` 索引；删除无用的 Spatial SDK 6.0 语料（`knowledge/pico-sdk/`）；经 PICO 官网 UE 说明书确认官方插件支持矩阵（PICOOpenXR 仅 UE 5.6/5.7 + Vulkan + PICO OS 6 设备，UE5.8 不在官方矩阵），已提炼写入 `PicoNeo3BuildGuide.md`。
+- **认知修正**（2026-08-10）：此前混淆了 PICO OpenXR Plugin **OS 6 版**（仅支持 Project Swan 新设备）与 **OS 5 版**（官方支持 Neo3/PICO 4/PICO 4 Ultra）。OS 5 版本要求：UE 5.6/5.7 + Vulkan + 设备系统 ≥ 5.13.0；已修正 `PicoNeo3BuildGuide.md`。路线明确：UE 5.6 + PICO OpenXR Plugin（OS 5）= Neo3 官方组合。
 
 ## 2026-08-09（M00-T003）
 

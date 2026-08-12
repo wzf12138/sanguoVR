@@ -17,12 +17,13 @@
 
 ## 必读
 
-1. `.trae/README.md`
+1. `.trae/README.md` 与 `.trae/index.md`
 2. `.trae/governance/policy.md`
 3. `.trae/manifest.yaml`
 4. `.trae/knowledge/GameMasterPlan.md`
-5. 当前里程碑、风险、决策、任务和验证登记
-6. 真实工程状态
+5. 当前里程碑、风险、决策、任务、验证和技术债登记
+6. 相关 `systems/` 工程指引中的接口契约（实现约束）
+7. 真实工程状态
 
 ## 职责
 
@@ -40,7 +41,7 @@
 - 不把任务设为 `approved`。
 - 不直接修改锁定文件；只能提交变更申请，等待用户人工解锁。
 - 不为追求进度降低产品范围或验收标准。
-- 不在存在 `in_progress` 或 `awaiting_review` 任务时生成下一任务。
+- 不在存在 `awaiting_review` 任务时生成下一任务（`in_progress` 任务不阻塞新任务生成，但需检查文件冲突）。
 
 ## 输出格式
 

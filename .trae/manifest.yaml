@@ -3,7 +3,7 @@ project: VRSanguoYanWuchang
 root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang"
 trae_root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae"
 source_of_truth: ".trae/index.md"
-updated: "2026-08-09"
+updated: "2026-08-11"
 indexes:
   standards: ".trae/standards/index.md"
   vr: ".trae/vr/index.md"
@@ -26,17 +26,21 @@ rules:
   prohibit_engine_root_writes: true
 active_gate:
   status_file: ".trae/execution/active/STATUS.json"
-  allowlist_file: ".trae/execution/active/ALLOWLIST.txt"
-  task_file: ".trae/execution/active/TASK.md"
-  inputs_file: ".trae/execution/active/INPUTS.md"
-  checks_file: ".trae/execution/active/CHECKS.md"
+  task_packages:
+    - task_id: M00-T004
+      status: blocked
+      package_dir: ".trae/execution/active/M00-T004/"
+    - task_id: M00-T005
+      status: ready
+      package_dir: ".trae/execution/active/M00-T005/"
   milestone: M00
-  task_id: M00-T004
-  status_source: ".trae/execution/active/STATUS.json"
-  allowlist_entries: 14
+  concurrency: multi
 collections:
+  task_templates: 3
   standards_indexed: 10
   vr_indexed: 5
   systems_guides: 7
-  registers_core: 9
+  registers_core: 11
+  production_specs: 6
+  pattern_library: 1
   standards_backlog: 1

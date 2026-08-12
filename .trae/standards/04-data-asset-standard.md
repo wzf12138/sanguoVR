@@ -19,3 +19,62 @@
 ## 调参与发布
 
 调试参数可由开发配置覆盖，公开试玩包只读取受控数据资产。任何影响验收阈值的改动必须记录原因、测试场景和回退值。
+
+## Schema 版本与迁移
+
+### 版本字段约定
+
+每个 DataAsset 类和保存结构包含 `int32 SchemaVersion` 字段，初始值为 1。Schema 变更（新增、删除、重命名字段或改变语义）必须递增版本号。
+
+### DataAsset 迁移策略
+
+```cpp
+UCLASS()
+class UVRWeaponDefinition : public UPrimaryDataAsset
+{
+public:
+    UPROPERTY(EditDefaultsOnly, Category = "Schema")
+    int32 SchemaVersion = 1;
+
+    // CDO 加载后自动迁移
+    virtual void PostLoad() override
+    {
+        Super::PostLoad();
+        if (SchemaVersion < CURRENT_WEAPON_SCHEMA_VERSION)
+        {
+            MigrateWeaponSchema(SchemaVersion);
+            SchemaVersion = CURRENT_WEAPON_SCHEMA_VERSION;
+        }
+    }
+
+    void MigrateWeaponSchema(int32 FromVersion);
+};
+```
+
+- 新增字段必须给出安全默认值（`nullptr`、`0`、空数组或占位引用）。
+- 删除字段时保留 `SchemaVersion` 记录，不回退版本号。
+- 重命名字段通过 `PostLoad` 迁移函数将旧值映射到新字段。
+- 迁移函数中标记 `UPROPERTY` 的 `meta=(DeprecatedProperty)` 提示编辑器警告。
+
+### 保存数据版本化
+
+保存结构与 DataAsset 分开版本化：
+
+```cpp
+USTRUCT(BlueprintType)
+struct FSaveData
+{
+    UPROPERTY() int32 SaveSchemaVersion = 1;
+    UPROPERTY() FMatchProgress Progress;
+    UPROPERTY() TMap<FString, FString> Settings;
+    // ... 其他字段
+};
+```
+
+- 加载时检查 `SaveSchemaVersion`，低于当前版本时逐级迁移。
+- 迁移失败时返回安全默认存档，不崩溃。
+- 保存版本独立于 DataAsset SchemaVersion，两者不互相依赖。
+
+### 版本登记
+
+Schema 版本变更必须在 `CHANGELOG.md` 记录：版本号、变更内容、迁移逻辑、影响范围和回退方案。重大 Schema 变更需要变更请求批准。

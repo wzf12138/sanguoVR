@@ -27,6 +27,35 @@ UI 文本不是统计事实源；保存与遥测不反向驱动战斗规则。�
 
 调试功能必须由开发配置或控制台开关控制，发布构建默认关闭。
 
+## 接口契约（规划级）
+
+以下为 M00 规划阶段的接口契约框架，具体签名在 M00-T005 C++ 骨架中实现并以此为准。
+
+**保存服务**：
+- `SaveGame(const FSaveData& Data)` → `FSaveResult`
+- `LoadGame(int32 SlotIndex)` → `FSaveResult`
+- `GetSaveVersion()` → `int32`
+
+**遥测服务**：
+- `RecordEvent(const FTelemetryEvent& Event)`
+- `GetMatchStatistics()` → `FMatchStatistics`
+
+**诊断服务**：
+- `Log(ELogCategory Category, ELogVerbosity Verbosity, const FString& Message, const FLogContext& Context)`
+- `StartDebugSession()` / `EndDebugSession()`
+- `DrawDebugOverlay(EDebugOverlayFlags Flags)`
+
+**数据结构**：
+- `FSaveData`：`int32 Version; FMatchProgress Progress; TMap<FString, FString> Settings; TArray<FAchievementRecord> Achievements;`
+- `FSaveResult`：`bool bSuccess; ESaveFailReason FailReason; int32 MigratedVersion;`
+- `FTelemetryEvent`：`FName EventType; int32 MatchId; float Timestamp; FString ContextJson;`
+- `FLogContext`：`int32 MatchId; int32 AttackId; AActor* Source; AActor* Target;`
+
+**依赖接口**：
+- GameModeFlow: 接收 `OnMatchEnded` 事件触发保存
+- Combat: 接收 `OnHitDealt`, `OnHitBlocked` 事件采集遥测
+- 所有系统: 接收日志写入请求
+
 ## 接口与验证
 
 保存接口返回版本、迁移和失败结果；日志与事件包含战局、攻击或对象上下文。验证覆盖字段缺失、版本升级、损坏恢复、写入失败、日志节流、导出失败和构建裁剪；保存范围与字段定义从权威详规读取。

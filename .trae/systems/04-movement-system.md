@@ -13,6 +13,33 @@
 
 UI 只展示移动查询结果，不自行判定合法性。各移动模式不得相互写入内部状态；后续模式通过接口扩展。越界、几何卡入和追踪恢复统一走安全点服务，不在移动层改变生命或胜负。
 
+## 接口契约（规划级）
+
+以下为 M00 规划阶段的接口契约框架，具体签名在 M00-T005 C++ 骨架中实现并以此为准。
+
+**移动模式**：
+- 枚举 `EMovementMode`：`SmoothLocomotion | TacticalTeleport | None`
+
+**核心服务**：
+- `RequestMovement(EMovementMode Mode, const FMovementTarget& Target)` → `FMovementResult`
+- `CancelMovement(EMovementMode Mode)`
+- `IsLocationValid(const FVector& Location, const FCapsuleSize& Size)` → `bool`（落点合法性查询）
+
+**事件广播**：
+- `OnMovementStarted(EMovementMode Mode)`
+- `OnMovementCompleted(EMovementMode Mode, const FVector& FinalLocation)`
+- `OnMovementFailed(EMovementMode Mode, EMovementFailReason Reason)`
+
+**数据结构**：
+- `FMovementTarget`：`FVector Location; FRotator Rotation; bool bIsTeleport;`
+- `FMovementResult`：`bool bSuccess; EMovementFailReason FailReason; FVector ActualLocation;`
+- `EMovementFailReason`：`None | BlockedByGeometry | BlockedByActor | OutOfRange | OnCooldown | Disabled`
+
+**依赖接口**：
+- CharacterState: 查询角色是否可移动（硬直、失能）
+- FullBodyIK（并入本系统）: 更新 IK 输入
+- Diagnostics: 发布移动结果用于调试
+
 ## 接口与验证
 
 移动请求必须具备唯一标识、明确失败原因和可取消阶段。验证覆盖边界、坡度、占位、连续请求、模式切换、追踪恢复、攻击门控与根组件/IK 一致性；体验规则与参数从权威详规读取。

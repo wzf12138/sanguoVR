@@ -1,0 +1,48 @@
+# M00-T005 白名单
+# 所有路径相对于项目根目录 VRSanguoYanWuchang/
+# C++ 源码（新增文件）
+Source/VRSanguoYanWuchang/Public/Core/VRSTypes.h
+Source/VRSanguoYanWuchang/Private/Core/VRSTypes.cpp
+Source/VRSanguoYanWuchang/Public/Core/VRSLogChannels.h
+Source/VRSanguoYanWuchang/Private/Core/VRSLogChannels.cpp
+Source/VRSanguoYanWuchang/Public/Core/VRSGameplayTags.h
+Source/VRSanguoYanWuchang/Private/Core/VRSGameplayTags.cpp
+# C++ 接口（新增文件）
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSInteractable.h
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSWeaponSource.h
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSDamageable.h
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSDefenseProvider.h
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSMovementMode.h
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSBattleParticipant.h
+Source/VRSanguoYanWuchang/Public/Interfaces/VRSCharacterCapability.h
+# C++ Data Asset 基类（新增文件）
+Source/VRSanguoYanWuchang/Public/Data/VRSWeaponData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSArmorData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSMovementData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSGameRulesData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSAIUnitData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSHeroData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSArenaData.h
+Source/VRSanguoYanWuchang/Public/Data/VRSAvatarData.h
+# C++ 流程与战斗（新增文件）
+Source/VRSanguoYanWuchang/Public/Flow/VRSGameFlowSubsystem.h
+Source/VRSanguoYanWuchang/Private/Flow/VRSGameFlowSubsystem.cpp
+Source/VRSanguoYanWuchang/Public/Combat/VRSCharacterCapabilityComponent.h
+Source/VRSanguoYanWuchang/Private/Combat/VRSCharacterCapabilityComponent.cpp
+Source/VRSanguoYanWuchang/Public/Combat/VRSTestDummy.h
+Source/VRSanguoYanWuchang/Private/Combat/VRSTestDummy.cpp
+# 模块注册（修改现有文件）
+Source/VRSanguoYanWuchang/Private/VRSanguoYanWuchang.cpp
+# 蓝图与关卡（新增）
+Content/VRSanguo/Maps/L_SkeletonTest.umap
+# 编译产物
+Intermediate/**
+Binaries/**
+# .trae 可写文件
+.trae/registers/07-task-register.md
+.trae/execution/reports/tasks/M00-T005.md
+.trae/execution/active/M00-T005/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/CHANGELOG.md
+.trae/integrity.yaml
+# 白名单外：治理锁定文件、Skill、总纲、Design 产品详规、T004 白名单内文件

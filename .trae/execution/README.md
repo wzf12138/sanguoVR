@@ -14,11 +14,27 @@
 
 ## 执行基线
 
-- [任务包模板](task-template.md)
-- 当前活动任务：`active/TASK.md`（状态以 `active/STATUS.json` 为准）
+- [任务包模板（代码）](task-template.md)
+- [任务包模板（资产）](task-template-asset.md)
+- [任务包模板（关卡）](task-template-level.md)
+- 当前活动任务：见 `active/STATUS.json`（任务包位于 `active/{taskId}/` 子目录下）
 - M00 正式任务详规：`M00/`
-- [执行变更请求](requests/README.md)
+- [变更请求模板](../governance/change-request-template.md)
 - [任务报告](reports/tasks/README.md)
+
+## 任务包目录结构
+
+每个活动任务位于 `active/{taskId}/` 子目录下，包含五件套：
+
+| 文件 | 用途 |
+|---|---|
+| `TASK.md` | 任务定义：目标、范围、步骤、停止条件、回退和报告路径 |
+| `ALLOWLIST.txt` | 允许修改的路径列表（相对于项目根目录 `VRSanguoYanWuchang/`） |
+| `INPUTS.md` | 前置输入：所需事实源与输入文件 |
+| `CHECKS.md` | 验证检查：验证方法、门禁条件和禁止事项 |
+| `STATUS.json` | 动态状态副本（根 `active/STATUS.json` 为唯一权威，此为便利副本） |
+
+决策模型生成任务时创建全部五个文件；执行模型认领前必须逐份检查完整性。
 
 M01 的 1v1 是底层验证，不是一期开售范围。任何里程碑裁剪都不得改变 [`../knowledge/GameMasterPlan.md`](../knowledge/GameMasterPlan.md) 的完成定义。
 

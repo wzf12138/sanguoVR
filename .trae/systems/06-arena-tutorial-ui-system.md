@@ -13,6 +13,30 @@
 
 区域与 UI 不直接修改战斗结果、移动合法性或教程核心事件。场景表现与碰撞、导航、可读性和性能边界分离配置。教程完成必须来自系统事件，不从展示文本或停留时间反推。
 
+## 接口契约（规划级）
+
+以下为 M00 规划阶段的接口契约框架，具体签名在 M00-T005 C++ 骨架中实现并以此为准。
+
+**教程服务**：
+- `StartTutorial(ETutorialType Type)` → `bool`
+- `AdvanceStep()` → `bool`（推进到下一步）
+- `ResetTutorial()`
+- `GetCurrentStep()` → `const FTutorialStep&`
+
+**UI 事件订阅**：
+- UI 通过只读视图模型订阅：`OnPhaseChanged`, `OnMatchEnded`, `OnMovementStarted`, `OnWeaponGrabbed`, `OnHitDealt`
+- UI 不直接调用系统服务，只通过 `RequestUIAction(EUIAction Action)` 提交用户意图
+
+**数据结构**：
+- `FTutorialStep`：`FText Instruction; FText Hint; EStepCompleteCondition Condition; float Timeout;`
+- `EStepCompleteCondition`：`WeaponGrabbed | AttackPerformed | BlockSucceeded | TeleportUsed | CustomEvent`
+
+**依赖接口**：
+- GameModeFlow: `OnPhaseChanged` 事件
+- Weapon: `OnWeaponGrabbed` 事件
+- Combat: `OnHitDealt` 事件
+- Movement: `OnMovementCompleted` 事件
+
 ## 接口与验证
 
 界面状态由只读视图模型或事件快照驱动。验证覆盖区域越界、教程重置、重复按钮、连续重开、状态恢复、空间可读性和场景性能；产品内容与统计字段从权威详规读取。

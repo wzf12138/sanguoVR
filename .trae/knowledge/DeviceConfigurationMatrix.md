@@ -1,52 +1,83 @@
 # 设备配置矩阵（Android/OpenXR）
 
 > 用途：记录项目 Android/VR 打包配置的**当前值、设置原因、目标设备影响**，特别是"为兼容 PICO Neo3 而妥协、接入新设备时需恢复"的配置项。
-> 维护：每次改动设备相关配置时更新本表。最后更新：2026-08-09（M00-T004 深夜调试后）。
+> 维护：每次改动设备相关配置时更新本表。最后更新：2026-08-11（M00-T004：已切换 UE5.6 + PICO OpenXR Plugin OS 5，配置基线更新）。
 
 ## 配置位置
 
-- 项目 `Config/DefaultEngine.ini`：`[/Script/AndroidRuntimeSettings.AndroidRuntimeSettings]`、`[/Script/Engine.RendererSettings]`、`[/Script/AndroidSingleInstanceServiceEditor.AndroidSingleInstanceServiceRuntimeSettings]`、`[SystemSettings]`
-- 项目 `Build/Android/ManifestActivityAdditions.txt`：manifest 附加（UE5.8 APL bug 补丁）
+- 项目 `Config/DefaultEngine.ini`：`[/Script/AndroidRuntimeSettings.AndroidRuntimeSettings]`、`[/Script/Engine.RendererSettings]`、`[/Script/AndroidSingleInstanceServiceEditor.AndroidSingleInstanceServiceRuntimeSettings]`、`[/Script/PICOOpenXRRuntimeSettings.PICOOpenXRRuntimeSettings]`、`[SystemSettings]`
+- 项目 `Config/DefaultGame.ini`、`Config/Android/AndroidGame.ini`：Android 设备配置
+- 项目 `Plugins/PICOOpen174f9f81d266V8/`：PICO OpenXR Plugin（OS 5，v1.6.1，含 swapchain 补丁）
 
-## 配置矩阵
+## 配置矩阵（当前：UE5.6 + PICO OpenXR Plugin OS 5 + Neo3）
 
-### ⚠️ 为兼容 PICO Neo3 而改、新设备需恢复（影响效果）
-
-| 配置项 | 当前值 | 设置原因（Neo3） | 新设备（PICO 4 / Quest / 新机型）建议 |
-|---|---|---|---|
-| `bSupportsVulkan` | `False` | Neo3 2022 年 Vulkan 驱动无法编译 UE5.8 SPIR-V shader（Pipeline 创建失败） | **改回 `True`**。新设备 Vulkan 驱动正常，性能优于 GLES |
-| `bSupportsVulkanSM5` | `False` | 随 bSupportsVulkan 关闭 | **改回 `True`**（如需 SM5 渲染特性；移动 VR 通常不需要 SM6） |
-| `vr.MobileMultiView` | `False` | Neo3 多视图 layered framebuffer 附件不兼容（`Framebuffer not complete 0x8cd6`） | **改回 `True`**。多视图显著提升 VR 渲染性能（单通道渲染），新设备驱动支持 |
-| `r.MSAACount` | `0` | 调试排障时关闭（实测 MSAA 非 framebuffer 崩溃元凶，但已关闭） | **改回 `2` 或 `4`**。VR 画面抗锯齿质量，0 会导致明显锯齿 |
-| `a.UseSwappyForFramePacing`（`[SystemSettings]`） | `0` | Neo3 上 Swappy（Android Game SDK 帧率控制）加载 libUnreal.so 失败 | **删除或改回 `1`**。Swappy 改善新设备帧率稳定/延迟 |
-| `NDKAPILevelOverride` | `android-26` | 降到 26 以兼容 Neo3（Android 10/API 29，minSdk 需 ≤29） | **删除**（用引擎默认）。新设备系统新，无需此覆盖 |
-
-### ✅ 永久正确 / 与设备无关（保留）
+### 渲染与兼容（当前有效值）
 
 | 配置项 | 当前值 | 说明 |
 |---|---|---|
-| `bPackageForMetaQuest` | `False` | 本项目目标为 PICO；若改用 Meta Quest 设备需改 `True` |
-| `bPackageForOpenXRImmersive` | `True` | PICO/新设备均走 OpenXR，保留 |
-| `ExtraApplicationSettings` | 空（已清空 Quest 内容） | 删除 `com.oculus.supportedDevices` 与 `libopenxr.google.so` |
-| `bBuildForES31` | `True` | 打包 GLES 3.1 shader；与 Vulkan 并存可作为兼容兜底，建议保留 |
-| `MinSDKVersion` | `26` | UE5.8 官方最低安装版本 |
-| `TargetSDKVersion` | `35` | UE5.8 官方推荐 |
-| `bPackageDataInsideApk` | `True` | 数据内置 APK，单文件安装；项目规模小时保留，大项目可改回 OBB 模式 |
-| `bEnableASISPlugin` | `True` | 一体机单实例服务（宏 `USE_ANDROID_STANDALONE=1`）；同时也是禁用 Swappy 的机制。新设备保留（一体机标准）；若未来用 Meta Quest 官方打包流程，ASIS 由其自动管理，可评估移除本项目手动设置 |
+| 图形接口 | **Vulkan**（PICO OpenXR Plugin OS 5 官方要求；UE5.6 对 Neo3 Vulkan 驱动兼容，与 UE5.8 不同） | 官方路线：Vulkan；勿改回 GLES |
+| `vr.MobileMultiView` | `False`（Neo3 兼容） | Neo3 layered framebuffer 不兼容；新设备可评估改回 `True` 提升性能 |
+| `bPackageForOpenXRImmersive` | `True` | PICO 走 OpenXR |
+| `MinSDKVersion` | `26` | 兼容 Neo3（Android 10/API 29） |
+| `TargetSDKVersion` | `35` | 官方推荐 |
+| `bPackageDataInsideApk` | `True` | 数据内置单文件 APK |
+| `bPackageForMetaQuest` | `False` | 本项目 PICO 目标 |
+| `Disable Separate RHI Thread`（PICO OpenXR 插件设置） | `True` | UE5.6 默认启用 RHI 线程，PICO 要求关闭（启用插件后自动关闭，手动确认） |
 
-### ⚠️ manifest 附加补丁（新设备需验证）
+### ⚠️ swapchain 补丁（当前必须保留，新设备需评估）
 
-| 文件 | 内容 | 说明与建议 |
+| 位置 | 内容 | 说明与建议 |
 |---|---|---|
-| `Build/Android/ManifestActivityAdditions.txt` | GameActivity 添加 `<intent-filter><action MAIN/><category LAUNCHER/><category org.khronos.openxr.intent.category.IMMERSIVE_HMD/></intent-filter>` | 绕过 UE5.8 OpenXR APL bug（ASIS 启用后 UE 不再生成 LAUNCHER filter，且 APL 的 IMMERSIVE_HMD category 添加失效）。**新设备打包后先验证 manifest 是否已含所需 filter；若引擎修复或 Quest 打包自动添加，删除本文件避免重复 intent-filter** |
+| `Plugins/PICOOpen174f9f81d266V8/Source/PICOOpenXRHMD/Private/PICO_HMD.cpp` | 拦截 `xrCreateSwapchain`，剥离 `XR_KHR_vulkan_swapchain_format_list` 扩展，只传单一 `B8G8R8A8_SRGB`（43）格式 | Neo3 系统 OpenXR 运行时（R2.1.12.0）对 format list 触发 ION ENOTTY 崩溃（2026-08-11 实测并修复）。**新设备（PICO 4+/Quest）接入时评估是否仍需要**：若新版运行时支持 format list，可移除补丁恢复引擎默认行为；升级 PICO 插件后须重打补丁（备份 `Build/Patches/PICOOpenXR/`，恢复脚本 `restore_pico_patch.ps1`） |
+
+### UE5.8 遗留（已弃用，保留参考）
+
+| 配置项 | 值 | 说明 |
+|---|---|---|
+| `a.UseSwappyForFramePacing` | `0` | UE5.8 时代禁用 Swappy（ASIS 已覆盖）；UE5.6 下由 PICO 插件管理，无需手动 |
+| `NDKAPILevelOverride` | `android-26` | UE5.8 时代覆盖；UE5.6 用官方默认 |
+| `Build/Android/ManifestActivityAdditions.txt` | MAIN+LAUNCHER+IMMERSIVE_HMD | UE5.8 时代 APL bug 补丁；**UE5.6 + PICO OpenXR Plugin 自动处理 manifest，此文件不再需要**（确认已移除/不生效） |
+| `bSupportsVulkan` / `bSupportsVulkanSM5` | 见引擎默认 | UE5.6 官方 Vulkan 路线，无需手工关闭 |
+
+## 历史参考：UE5.8 时代的 Neo3 兼容配置（已弃用，2026-08-09）
+
+> UE5.8 路线已废弃（Neo3 与 UE5.8 不兼容，已降级 UE5.6）。以下为当时"为兼容 Neo3 而改"的记录，仅作历史参考，**不得直接应用于 UE5.6 项目**（UE5.6 已走 Vulkan 官方路线）。
+
+- `bSupportsVulkan=False` / `bSupportsVulkanSM5=False`：Neo3 2022 Vulkan 驱动无法编译 UE5.8 SPIR-V → 改 GLES（UE5.6 无需，Vulkan 官方支持）。
+- `vr.MobileMultiView=False`：Neo3 layered framebuffer 附件不兼容（`Framebuffer not complete 0x8cd6`）——**UE5.6 下仍保留 False**（见上表）。
+- `r.MSAACount=0`：调试排障关闭；新设备恢复 2/4。
+- `a.UseSwappyForFramePacing=0`：Neo3 上 Swappy 加载 libUnreal.so 失败；UE5.6 下由 PICO 插件管理。
+- `NDKAPILevelOverride=android-26`：降级以兼容 Neo3；UE5.6 用官方默认。
+- `Build/Android/ManifestActivityAdditions.txt`：UE5.8 APL bug 补丁（MAIN+LAUNCHER+IMMERSIVE_HMD）；**UE5.6 + PICO OpenXR Plugin 自动处理 manifest，不再需要**。
+- `bEnableASISPlugin=True`：一体机单实例服务；UE5.6 保留（一体机标准）。
 
 ## 新设备接入检查清单
 
-1. 恢复高性能配置：`bSupportsVulkan=True`、`bSupportsVulkanSM5=True`、`vr.MobileMultiView=True`、`r.MSAACount=2/4`、删除 `a.UseSwappyForFramePacing=0` 与 `NDKAPILevelOverride`。
-2. 确认目标设备打包类型：PICO → `bPackageForMetaQuest=False`；Meta Quest → `True`。
-3. 验证 manifest：新设备安装前 `aapt dump badging <apk>` 检查 `launchable-activity` 与 OpenXR category 是否符合预期；确认后可删除 `ManifestActivityAdditions.txt`。
-4. 若改回 Vulkan：确认目标设备 Vulkan 驱动支持 UE5.8 SPIR-V（PICO 4 / 新机型：是）。
-5. 重新构建 + 真机验证（流程见 `PicoNeo3BuildGuide.md`）。
+> 当前已处于 UE5.6 + PICO OpenXR Plugin（OS 5）路线（2026-08-11 迁移完成）。以下清单覆盖：新 PICO 设备接入、以及未来升级引擎的恢复。
+
+### 当前状态（UE5.6 + Neo3，2026-08-11 已完成）
+
+1. ✅ 项目已基于 UE5.6 官方 VR 模板重建（Content/Source/Config 已迁移）。
+2. ✅ PICO OpenXR Plugin（OS 5）v1.6.1 已迁移至项目 `Plugins/`（源码编译，含 swapchain 补丁）。
+3. ✅ RHI 线程关闭（PICO 插件要求）。
+4. ✅ Vulkan 官方路线（UE5.6 对 Neo3 驱动兼容）。
+5. ✅ Neo3 系统 5.13.7.S ≥ 官方要求 5.13.0。
+6. ✅ swapchain 补丁已编译生效、真机场景可见（V-008）。
+7. ⏳ 遗留：IMC 绑定 PICO Touch 按键、OpenXR Input PlayerMappableInputConfig、Neo3 手柄模型挂载（见 PicoNeo3BuildGuide「待办」）。
+
+### 新设备接入（PICO 4 / 4 Ultra / 新机型）
+
+1. 验证 swapchain 补丁是否仍需要：新版系统 OpenXR 运行时若支持 `XR_KHR_vulkan_swapchain_format_list`，移除补丁恢复引擎默认（备份在 `Build/Patches/PICOOpenXR/`）。
+2. `vr.MobileMultiView` 评估改回 `True`（提升渲染性能）；`r.MSAACount` 恢复 2/4。
+3. 确认系统版本与引擎/插件组合：UE 5.7 不支持 PICO 4 系列（Neo3 可用）；PICO 4 Ultra 支持。
+4. 重新构建 + 真机验证（流程见 `PicoNeo3BuildGuide.md`）。
+
+### 未来升级引擎（UE5.6 → 更新版本，若将来换）
+
+1. 评估 PICO OpenXR Plugin 新版本兼容矩阵（官方文档 developer.picoxr.com）。
+2. 升级插件后按 TD-005 重打 swapchain 补丁并符号验证（`PICOLayerCreateSwapchain`）。
+3. 确认 manifest 由插件自动处理，无需 `ManifestActivityAdditions.txt`。
+4. 重新构建 + 真机验证（流程见 `PicoNeo3BuildGuide.md`）。
 
 ## 历史结论速查（2026-08-09）
 

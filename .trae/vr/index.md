@@ -9,5 +9,6 @@
 | `03-hand-grab-and-haptics.md` | 抓取、双手持握、震动和掉落 |
 | `04-locomotion-and-comfort.md` | 瞬移、转向、平滑移动接口 |
 | `05-spatial-ui-tutorial-and-accessibility.md` | 空间 UI、教程、可读性和无障碍 |
+| [`PicoValidationMatrix.md`](PicoValidationMatrix.md) | PICO Neo3 验证矩阵（文件/编辑器/Android/真机四层状态） |
 
 VR 实现遵循舒适优先原则。产品能力、体验规则或数值发生变化时，应更新对应 Design 权威正文；本目录只记录工程约束、平台适配与验证方法。

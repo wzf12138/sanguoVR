@@ -1,15 +1,70 @@
-# 任务包模板
+# 代码任务模板
 
-- 任务编号：
-- 目标：
-- 前置条件：
-- 白名单：
-- 禁区：
-- 停止条件：
-- 实施步骤：
-- 验证方法：
-- 报告路径：`.trae/execution/reports/tasks/<任务编号>.md`
-- 状态：待执行
+> 适用于：C++ 类、组件、接口、系统骨架、Blueprint 基类、配置逻辑等代码任务。
+> 不适用于：模型/动画/材质等 UE Content 资产（使用 `task-template-asset.md`）；关卡设计（使用 `task-template-level.md`）。
+
+## 1. 任务标识
+
+- 任务编号：`MXX-TNNN`
+- 任务类型：（C++ 类 / 组件 / 接口 / 系统骨架 / 配置 / 其他）
+- 关联里程碑：
+- 前置依赖任务：
+- 后置依赖任务：
+
+## 2. 任务目标
+
+- 目标描述：
+- 关联系统指引：（如 `systems/03-combat-resolution-system.md`）
+- 关联接口契约：（引用系统指引中的接口契约段落）
+- 关联标准：（如 `standards/03-blueprint-cpp-boundary-standard.md`）
+
+## 3. 验收标准
+
+- [ ] 代码位于 `Source/` 指定路径下，命名符合 `standards/02-naming-and-path-standard.md`
+- [ ] C++/蓝图边界符合 `standards/03-blueprint-cpp-boundary-standard.md`（规则层在 C++，表现层在蓝图）
+- [ ] 接口签名与 `systems/` 工程指引中的接口契约一致
+- [ ] DataAsset 使用符合 `standards/04-data-asset-standard.md`（参数从 DataAsset 读取，不硬编码）
+- [ ] 编译通过（Development 配置）
+- [ ] 无编译警告（或警告已记录原因）
+- [ ] 调试数据暴露为只读（如适用）
+
+## 4. 白名单路径
+
+```
+# 代码产出路径（相对于项目根目录 VRSanguoYanWuchang/）
+Source/VRSanguo/...
+.trae/execution/reports/tasks/MXX-TNNN.md
+.trae/CHANGELOG.md
+```
+
+## 5. 禁止路径
+
+- Config/（不修改项目配置，除非任务明确要求）
+- Plugins/（不安装或修改插件）
+- Content/（代码任务不产出 Content 资产，除非任务明确要求）
+- .trae/governance/（锁定文件）
+- .trae/rules/（锁定文件）
+- .trae/skills/（锁定文件）
+
+## 6. 验证方法
+
+- [ ] 编译检查：`Rebuild.bat` 或 IDE 编译通过，无错误
+- [ ] 代码回读：逐份回读交付文件，确认标题、类名、接口签名正确
+- [ ] 接口一致性：对照 systems/ 指引接口契约，确认签名和语义一致
+- [ ] 边界检查：确认规则层在 C++、表现层在蓝图，无反模式
+- [ ] 编辑器加载：UE 编辑器可正常加载，无模块加载错误（如适用）
+
+## 7. 停止条件
+
+- 编译失败且重试次数用尽
+- 发现接口契约与任务假设冲突
+- 依赖的系统中指引或标准缺失
+- 需要修改白名单外文件
+- 与另一 `in_progress` 任务产生文件冲突
+
+## 8. 报告路径
+
+`.trae/execution/reports/tasks/MXX-TNNN.md`
 
 ## 报告要求
 
@@ -21,4 +76,9 @@
 - 偏差：与任务规划不一致处、未完成项、阻塞原因与恢复条件。
 - 变更：任务执行期间修改的文件清单；白名单外修改必须注明原因。
 
-示例（M00-T003）：结果 + 编译日志 + V-003 登记引用。
+## 9. 用户确认流程
+
+1. 执行模型完成任务后，报告写入指定路径，状态设为 `awaiting_review`
+2. 报告必须包含：修改文件清单、编译结果、接口一致性确认
+3. 用户或授权审核人审核代码回读和编译证据
+4. 用户确认后，任务状态更新为 `approved`
