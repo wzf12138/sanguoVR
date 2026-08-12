@@ -32,12 +32,19 @@ jobs:
       - name: 生成静态看板
         run: python dashboard/generate-static.py
 
+      - name: 准备部署目录
+        run: |
+          mkdir -p deploy
+          cp dashboard/index.html deploy/
+          cp dashboard/status.json deploy/
+          cp dashboard/integrity.json deploy/
+
       - name: 部署到 GitHub Pages
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dashboard
+          publish_dir: deploy
           publish_branch: gh-pages
           force_orphan: true
           enable_jekyll: false
