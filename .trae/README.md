@@ -13,3 +13,8 @@
 - 治理仪表板: https://wzf12138.github.io/sanguoVR/
 - 变更管理: `governance/policy.md`
 - 架构决策: `knowledge/GameMasterPlan.md`
+
+## CI 门禁
+
+推送 `.trae/` 或 `dashboard/` 变更时自动触发治理一致性校验。
+校验失败将阻断合并，确保知识库质量。
