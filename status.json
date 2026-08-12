@@ -1,0 +1,3641 @@
+{
+  "project": "VR 三国演武场",
+  "updated": "2026-08-12 04:24:26",
+  "session_id": "unknown",
+  "session_short": "unknown",
+  "current_mode": "决策模式",
+  "stats": {
+    "tasks_total": 7,
+    "tasks_completed": 5,
+    "tasks_active": 1,
+    "tasks_blocked": 0,
+    "risks_active": 2,
+    "risks_hidden": 18,
+    "verif_passed": 4,
+    "verif_failed": 1,
+    "verif_pending": 2,
+    "decisions_total": 13,
+    "governance_dirs": 10,
+    "governance_files": 64,
+    "milestones_active": 1,
+    "awaiting_timeout": 0,
+    "tech_debt_open": 4,
+    "health_passed": 7,
+    "health_total": 9
+  },
+  "milestones": [
+    {
+      "id": "M00",
+      "name": "项目基线与自动化骨架",
+      "tasks": [
+        {
+          "task_id": "M00-T001",
+          "task_name": "治理与事实源基线",
+          "status": "completed",
+          "status_text": "已验证（ACL 待管理员应用）",
+          "deliverable": "governance、rules、索引、登记册",
+          "claimed_by": null,
+          "note": ""
+        },
+        {
+          "task_id": "M00-T002",
+          "task_name": "Git 与仓库基线",
+          "status": "completed",
+          "status_text": "已实施（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认）",
+          "deliverable": "`.gitignore`、`.gitattributes`、`.editorconfig`、`.lfsconfig`；Git for Windows + Git LFS 已安装（用户执行）；仓库已初始化并推送远程",
+          "claimed_by": null,
+          "note": ""
+        },
+        {
+          "task_id": "M00-T003",
+          "task_name": "UE5.8 工程与工具链基线",
+          "status": "completed",
+          "status_text": "approved",
+          "deliverable": "编译成功、编辑器启动验证通过、MCP 连通性已记录",
+          "claimed_by": null,
+          "note": ""
+        },
+        {
+          "task_id": "M00-T004",
+          "task_name": "VR/OpenXR/PICO 基线",
+          "status": "unknown",
+          "status_text": "in_progress（2026-08-12：输入映射已按 PICO 官方文档绑定完成；遗留手柄模型挂载与真机复测）",
+          "deliverable": "Step 1-3 编辑器核验已完成（UE5.8）；UE5.6 迁移执行中：项目重建、PICO 插件迁移至项目 Plugins、swapchain 补丁编译生效、Neo3 真机场景可见；2026-08-12 输入映射按官方文档绑定（IMC_Default/Hands/Menu/Weapon×2 全部配置 PICO Neo3 键）；遗留：VRPawn 挂载 Neo3 手柄模型（StaticMesh 组件）、OpenXR Input PlayerMappableInputConfig、真机复测输入",
+          "claimed_by": "session-20260811-execution",
+          "note": "UE5.6 迁移执行中：swapchain 补丁生效、Neo3 真机场景可见；输入映射已按 PICO 官方文档绑定（5 个 IMC 全部配好 PICO Neo3 键，2026-08-12 完成）；遗留：VRPawn 手柄模型挂载（StaticMesh 组件）、OpenXR Input PlayerMappableInputConfig、真机复测输入。"
+        },
+        {
+          "task_id": "M00-T005",
+          "task_name": "系统骨架与数据驱动边界",
+          "status": "ready",
+          "status_text": "ready（2026-08-11：T004 阻塞期间并发启动）",
+          "deliverable": "系统目录、接口与数据资产骨架",
+          "claimed_by": null,
+          "note": "T004 因 PICO 设备阻塞，用户批准并发启动 T005。"
+        },
+        {
+          "task_id": "M00-T006",
+          "task_name": "自动化、诊断与交付门禁",
+          "status": "completed",
+          "status_text": "已批准",
+          "deliverable": "测试、日志、性能和构建门禁",
+          "claimed_by": null,
+          "note": ""
+        },
+        {
+          "task_id": "M00-DOC-001",
+          "task_name": "治理文档最终收口",
+          "status": "completed",
+          "status_text": "approved",
+          "deliverable": "合并重复事实源、迁移引用、删除清单与完整性报告",
+          "claimed_by": null,
+          "note": ""
+        }
+      ],
+      "total": 7,
+      "done": 5,
+      "pct": 71,
+      "has_active": true
+    },
+    {
+      "id": "M01",
+      "name": "1v1 核心战斗技术切片",
+      "tasks": [],
+      "total": 0,
+      "done": 0,
+      "pct": 0,
+      "has_active": false
+    },
+    {
+      "id": "M02",
+      "name": "五武器、混合移动与全身 IK",
+      "tasks": [],
+      "total": 0,
+      "done": 0,
+      "pct": 0,
+      "has_active": false
+    },
+    {
+      "id": "M03",
+      "name": "N 对 N、兵种与默认 3v3",
+      "tasks": [],
+      "total": 0,
+      "done": 0,
+      "pct": 0,
+      "has_active": false
+    },
+    {
+      "id": "M04",
+      "name": "生涯、自定义、训练与存档",
+      "tasks": [],
+      "total": 0,
+      "done": 0,
+      "pct": 0,
+      "has_active": false
+    },
+    {
+      "id": "M05",
+      "name": "三国内容、武将与生产替换",
+      "tasks": [],
+      "total": 0,
+      "done": 0,
+      "pct": 0,
+      "has_active": false
+    },
+    {
+      "id": "M06",
+      "name": "4v4 优化与发布验收",
+      "tasks": [],
+      "total": 0,
+      "done": 0,
+      "pct": 0,
+      "has_active": false
+    }
+  ],
+  "active_risks": [
+    {
+      "id": "RSK-012",
+      "risk": "PICO Neo3 与 UE5.8 插件/SDK 兼容性",
+      "prob": "高/高",
+      "signal": "空包或输入异常、追踪漂移",
+      "mitigation": "尽早完成空包、输入与追踪真机验证",
+      "severity": "critical"
+    },
+    {
+      "id": "RSK-016",
+      "risk": "缺少真机验证导致静态结论被误当设备证据",
+      "prob": "中/高",
+      "signal": "报告只含静态检查",
+      "mitigation": "区分静态与真机证据，设备结论单独登记",
+      "severity": "high"
+    }
+  ],
+  "verif_items": [
+    {
+      "id": "V-001",
+      "name": "治理、规则、VR、系统、登记册与任务文件物理存在与可读；`.trae` 恢复清单逐份读取",
+      "task": "M00-T001",
+      "level": "文件",
+      "status": "已验证",
+      "evidence": "文件工具逐份读取：治理契约、操作模型、规则、标准、VR、系统、Design 详规、登记册、里程碑任务详规及 active 任务包；报告索引见 `execution/reports/tasks/README.md`"
+    },
+    {
+      "id": "V-002",
+      "name": "Git 安装、仓库初始化、LFS 配置与远程推送",
+      "task": "M00-T002",
+      "level": "文件",
+      "status": "已验证（2026-08-09 用户确认）",
+      "evidence": "`.gitignore`、`.gitattributes`、`.lfsconfig`；`../standards/10-git-standard.md`；Git for Windows + Git LFS 已安装，`origin/master` 已推送远程"
+    },
+    {
+      "id": "V-003",
+      "name": "UE5.8 工程文件生成与 Editor 编译",
+      "task": "M00-T003",
+      "level": "构建",
+      "status": "已验证（编译成功）",
+      "evidence": "`Rebuild.bat VRSanguoYanWuchangEditor Win64 Development` Result: Succeeded（33.35s，10 动作）；UBT 自动生成 makefile；MCP `list_toolsets` 连通、`LogLoad` 无错误"
+    },
+    {
+      "id": "V-004",
+      "name": "OpenXR 编辑器启动与 VR 能力",
+      "task": "M00-T004",
+      "level": "编辑器",
+      "status": "已验证（编辑器）",
+      "evidence": "`xrCreateInstance succeeded`（SteamVR/OpenXR 2.14.5）；插件运行中全部启用；VR 模板资产核对通过（详见 `../vr/PicoValidationMatrix.md`）"
+    },
+    {
+      "id": "V-005",
+      "name": "PICO Neo3 安装、启动、输入与断网（UE5.8 路线）",
+      "task": "M00-T004",
+      "level": "真机",
+      "status": "验证失败（xrCreateSession 拒绝，引擎/运行时组合不兼容）",
+      "evidence": "APK 构建安装成功；经三轮配置修复（Swappy 禁用/多视图关闭/OpenXR 启用）后，OpenXR 运行时加载成功（Pico XRT 3.0.1）但 `xrCreateSession` 返回 `XR_ERROR_INITIALIZATION_FAILED`，应用停在 LOADING；UE5.8 与 Neo3 系统 OpenXR 运行时不兼容，非配置可解；已决策降级 UE5.6（详见 `../knowledge/TechnicalDecisions.md`）"
+    },
+    {
+      "id": "V-008",
+      "name": "UE5.6 + PICO OpenXR Plugin（OS 5）真机：swapchain 与场景渲染",
+      "task": "M00-T004",
+      "level": "真机",
+      "status": "部分验证（2026-08-11：场景可见，输入未完成）",
+      "evidence": "UE5.6 项目重建 + PICO 插件（v1.6.1）迁移至项目 `Plugins/`；swapchain 补丁（`PICO_HMD.cpp` 拦截 `xrCreateSwapchain` 剥离 format list）符号已确认编译进 libUnreal.so（`PICOLayerCreateSwapchain` 等 3 符号）；Neo3 真机场景可见、无 swapchain 崩溃（日志 `Swapchain format not supported (50), falling back to runtime preferred format (43)` 后正常创建）；遗留：IMC 需绑定"
+    },
+    {
+      "id": "V-006",
+      "name": "系统骨架自动化测试",
+      "task": "M00-T005/T006",
+      "level": "自动化",
+      "status": "待验证",
+      "evidence": "Automation 报告"
+    },
+    {
+      "id": "V-007",
+      "name": "NTFS ACL 应用与恢复",
+      "task": "M00-T001",
+      "level": "系统权限",
+      "status": "待用户管理员执行",
+      "evidence": "管理脚本输出"
+    }
+  ],
+  "decision_items": [
+    {
+      "id": "DEC-001",
+      "decision": "一期为买断制、可离线运行的单机 VR N 对 N 竞技商品，默认 3v3 并动态支持 2v2—4v4",
+      "status": "已接受",
+      "reason": "与产品总纲一致，确保 AI 队友、兵种协作和首发竞技完整性",
+      "trigger": "产品总纲经用户批准变更"
+    },
+    {
+      "id": "DEC-002",
+      "decision": "1v1 仅作为首个战斗技术切片、训练或单挑内容，不代表一期完成",
+      "status": "已接受",
+      "reason": "先隔离验证核心战斗，同时不得裁剪正式 N 对 N 范围",
+      "trigger": "M01 技术切片完成后复审后续集成顺序"
+    },
+    {
+      "id": "DEC-003",
+      "decision": "战斗采用适度物理加游戏化纠正",
+      "status": "已接受",
+      "reason": "保留重量与后果，同时避免武器锁死",
+      "trigger": "试玩认为手感失真或频繁卡死"
+    },
+    {
+      "id": "DEC-004",
+      "decision": "平滑移动和战术瞬移均为一期正式能力，舒适选项可配置",
+      "status": "已接受",
+      "reason": "同时满足正式移动能力与 VR 舒适度",
+      "trigger": "PICO 真机与试玩数据支持调整默认选项"
+    },
+    {
+      "id": "DEC-005",
+      "decision": "蓝图表现、C++ 规则、数据资产内容",
+      "status": "已接受",
+      "reason": "保证规则一致且便于快速调参",
+      "trigger": "原型阶段实现成本异常"
+    },
+    {
+      "id": "DEC-006",
+      "decision": "AI 等级、兵种类型与队伍战术分层",
+      "status": "已接受",
+      "reason": "支持普通兵种、武将和 N 对 N 协作",
+      "trigger": "数据组合或性能成本异常"
+    },
+    {
+      "id": "DEC-007",
+      "decision": "正式内容采用汉末至三国视觉语言，并包含三国兵种与武将",
+      "status": "已接受",
+      "reason": "满足商品内容和题材承诺",
+      "trigger": "内容生产计划经用户批准变更"
+    },
+    {
+      "id": "DEC-008",
+      "decision": "一期联网、骑战和大战场后置；N 对 N 属于一期正式范围",
+      "status": "已接受",
+      "reason": "控制在线与大战场风险，同时保持首发小队竞技完整性",
+      "trigger": "产品总纲经用户批准变更"
+    },
+    {
+      "id": "DEC-009",
+      "decision": "治理文件唯一正确根为项目内 `.trae`",
+      "status": "已接受",
+      "reason": "避免工作区根级误写污染，统一事实源入口",
+      "trigger": "治理结构经用户批准变更"
+    },
+    {
+      "id": "DEC-010",
+      "decision": "保留 UE5.8 官方 VR 模板能力；OpenXR 为主路径，PICO Neo3 为一期设备",
+      "status": "已接受",
+      "reason": "复用官方交互基线，同时保持平台解耦",
+      "trigger": "设备矩阵或模板基线变更"
+    },
+    {
+      "id": "DEC-011",
+      "decision": "玩家与 AI 通过统一角色能力接口接入",
+      "status": "已接受",
+      "reason": "保证规则一致、避免绕过硬直与武器规则",
+      "trigger": "接口重构或性能异常"
+    },
+    {
+      "id": "DEC-012",
+      "decision": "治理 ACL 脚本保存于项目外 `D:/AWork/TraeAdmin/VRSanguoYanWuchang`",
+      "status": "已接受",
+      "reason": "避免项目内代理误改权限脚本，脚本不纳入 Git",
+      "trigger": "权限策略变更"
+    },
+    {
+      "id": "DEC-013",
+      "decision": "UE 二进制资产使用 Git LFS，生成目录不入库",
+      "status": "已接受",
+      "reason": "避免大型二进制进入普通对象库",
+      "trigger": "Git 基线启用或存储策略变更"
+    }
+  ],
+  "dependency_items": [
+    {
+      "id": "DEP-001",
+      "dep": "Unreal Engine 5",
+      "purpose": "运行时与编辑器",
+      "req": "锁定项目版本并记录升级测试",
+      "alt": "升级可能改变物理、XR 与构建"
+    },
+    {
+      "id": "DEP-002",
+      "dep": "OpenXR",
+      "purpose": "头显与控制器抽象",
+      "req": "使用语义输入动作",
+      "alt": "厂商扩展仅在必要时启用"
+    },
+    {
+      "id": "DEP-003",
+      "dep": "目标一体机 SDK/运行时",
+      "purpose": "打包、性能、权限",
+      "req": "记录系统版本与刷新率",
+      "alt": "不以 PC VR 测试替代"
+    },
+    {
+      "id": "DEP-004",
+      "dep": "UE 行为树/黑板或等价 AI 框架",
+      "purpose": "感知与动作编排",
+      "req": "战术评分保留可调层",
+      "alt": "避免随机行为树失控"
+    },
+    {
+      "id": "DEP-005",
+      "dep": "Data Asset/Data Table",
+      "purpose": "武器、AI、教程配置",
+      "req": "稳定 ID、版本与校验",
+      "alt": "禁止复制蓝图代替数据变体"
+    },
+    {
+      "id": "DEP-006",
+      "dep": "动画与角色骨骼",
+      "purpose": "AI 战斗表现",
+      "req": "尽量复用统一骨骼",
+      "alt": "来源混杂导致重定向成本"
+    },
+    {
+      "id": "DEP-007",
+      "dep": "音效与触觉资源",
+      "purpose": "命中、格挡、受击反馈",
+      "req": "结果类型可区分",
+      "alt": "缺失时使用占位映射"
+    },
+    {
+      "id": "DEP-008",
+      "dep": "第三方美术资产",
+      "purpose": "校场、角色、武器",
+      "req": "商业许可、LOD、碰撞、性能审查",
+      "alt": "不合规则灰盒或自制替代"
+    },
+    {
+      "id": "DEP-009",
+      "dep": "Git",
+      "purpose": "版本控制与回滚锚点",
+      "req": "已启用（2026-08-09 用户确认：Git for Windows + Git LFS 已安装，仓库已初始化并推送远程 `origin/master`）；遵循 `../standards/10-git-standard.md`",
+      "alt": "保持原子提交，禁止强推共享主分支"
+    }
+  ],
+  "requirement_items": [
+    {
+      "id": "REQ-001",
+      "req": "新玩家独立完成校准、教程和一局战斗",
+      "system": "游戏流程、VR 校准、教程 UI",
+      "evidence": "外部试玩录像与完成率"
+    },
+    {
+      "id": "REQ-002",
+      "req": "五种武器可抓取且玩法有差异",
+      "system": "交互武器、数据资产",
+      "evidence": "五武器功能测试与玩家反馈"
+    },
+    {
+      "id": "REQ-003",
+      "req": "真实拉弦与箭袋容量",
+      "system": "交互武器、手部交互",
+      "evidence": "取箭搭箭拉弦发射测试"
+    },
+    {
+      "id": "REQ-004",
+      "req": "快速挥动不易穿透且不重复伤害",
+      "system": "战斗结算、测试标准",
+      "evidence": "轨迹与攻击 ID 自动化测试"
+    },
+    {
+      "id": "REQ-005",
+      "req": "武器不长期锁死并可自动解卡",
+      "system": "战斗结算、风险 RSK-001",
+      "evidence": "压力场景与真机录像"
+    },
+    {
+      "id": "REQ-006",
+      "req": "战术瞬移有距离、冷却与合法落点",
+      "system": "移动系统、VR 舒适度",
+      "evidence": "边界、墙体、AI 占位测试"
+    },
+    {
+      "id": "REQ-007",
+      "req": "T1、T2、T3 行为可理解且不作弊",
+      "system": "AI 系统",
+      "evidence": "分级对战记录与决策日志"
+    },
+    {
+      "id": "REQ-008",
+      "req": "胜负、统计、快速重开",
+      "system": "流程、UI、遥测",
+      "evidence": "连续三局与残留检查"
+    },
+    {
+      "id": "REQ-009",
+      "req": "一体机稳定帧率与低性能档",
+      "system": "性能标准",
+      "evidence": "目标设备帧时间报告"
+    },
+    {
+      "id": "REQ-010",
+      "req": "汉末三国风格统一",
+      "system": "内容风格、资产许可",
+      "evidence": "美术审查与资产登记"
+    },
+    {
+      "id": "REQ-011",
+      "req": "平滑移动和后续坐骑仅预留接口",
+      "system": "移动系统、范围标准",
+      "evidence": "接口审查，无一期实现"
+    },
+    {
+      "id": "REQ-012",
+      "req": "骑马、联网、N 对 N 等不进入一期",
+      "system": "范围标准、决策登记",
+      "evidence": "范围审查与构建内容清点"
+    }
+  ],
+  "license_items": [
+    {
+      "id": "AST-001",
+      "asset": "灰盒竞技场",
+      "source": "项目自制",
+      "license": "已确认",
+      "tech": "待实现",
+      "conclusion": "可用于玩法验证"
+    },
+    {
+      "id": "AST-002",
+      "asset": "基础占位武器",
+      "source": "项目自制/引擎基础形体",
+      "license": "已确认",
+      "tech": "待实现",
+      "conclusion": "可用于首个里程碑"
+    },
+    {
+      "id": "AST-003",
+      "asset": "角色模型包",
+      "source": "待选",
+      "license": "未审查",
+      "tech": "未审查",
+      "conclusion": "禁止进入公开试玩包"
+    },
+    {
+      "id": "AST-004",
+      "asset": "汉末风格武器包",
+      "source": "待选",
+      "license": "未审查",
+      "tech": "未审查",
+      "conclusion": "核对朝代、比例与许可"
+    },
+    {
+      "id": "AST-005",
+      "asset": "校场环境包",
+      "source": "待选",
+      "license": "未审查",
+      "tech": "未审查",
+      "conclusion": "核对 LOD、材质与动态光"
+    },
+    {
+      "id": "AST-006",
+      "asset": "动画包",
+      "source": "待选",
+      "license": "未审查",
+      "tech": "未审查",
+      "conclusion": "核对骨骼与商用范围"
+    },
+    {
+      "id": "AST-007",
+      "asset": "音效/音乐包",
+      "source": "待选",
+      "license": "未审查",
+      "tech": "未审查",
+      "conclusion": "核对署名与再分发限制"
+    }
+  ],
+  "playtest_items": [
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    },
+    {
+      "id": "",
+      "issue": "",
+      "success": "",
+      "failure": ""
+    }
+  ],
+  "permission_items": [
+    {
+      "scope": "项目根",
+      "policy": "当前用户与 SYSTEM/Administrators 可维护",
+      "status": "待检查",
+      "method": "管理员脚本 `-Mode Audit`"
+    },
+    {
+      "scope": "`.trae`",
+      "policy": "当前用户读写；SYSTEM/Administrators 完全控制；移除普通 Users 写权限",
+      "status": "脚本已规划，待物理应用",
+      "method": "`Set-TraeGovernanceAcl.ps1 -Mode Apply`"
+    },
+    {
+      "scope": "项目外管理员目录",
+      "policy": "仅管理员维护，避免项目内代理误改",
+      "status": "待物理应用",
+      "method": "同一脚本应用管理员目录 ACL"
+    },
+    {
+      "scope": "恢复",
+      "policy": "恢复继承并移除显式治理 ACL",
+      "status": "可用脚本设计",
+      "method": "`Set-TraeGovernanceAcl.ps1 -Mode Restore`"
+    }
+  ],
+  "asset_items": [
+    {
+      "id": "AST-001",
+      "type": "SkeletalMesh",
+      "path": "Content/VRSanguo/Characters/SK_Militia",
+      "status": "—",
+      "task": "—"
+    }
+  ],
+  "standards_bl": [
+    {
+      "ms": "M00",
+      "priority": "P0",
+      "todo": "清理重复命名标准，确定编码、目录、Blueprint/C++、数据资产、接口、测试、文档与交付入口",
+      "trigger": "UE5.8 官方 VR 模板落盘，项目模块、插件和 Content 根可读"
+    },
+    {
+      "ms": "M01",
+      "priority": "P0",
+      "todo": "补齐核心战斗切片的事件、数据资产、测试与性能记录规范",
+      "trigger": "单手剑 1v1 技术切片进入任务准备，战斗接口与采样方案已批准"
+    },
+    {
+      "ms": "M02",
+      "priority": "P0",
+      "todo": "补齐五武器、混合移动、全身 IK、抓取与 VR 舒适验证标准",
+      "trigger": "对应系统接口稳定，至少一个设备配置可用于验证"
+    },
+    {
+      "ms": "M03",
+      "priority": "P1",
+      "todo": "补齐 N 对 N、AI 分层、导航占位、压力测试与诊断标准",
+      "trigger": "2v2 以上小队战任务获批，AI 与战斗接口已集成"
+    },
+    {
+      "ms": "M04",
+      "priority": "P1",
+      "todo": "补齐模式流程、版本化存档、配置迁移、UI 状态与回归测试标准",
+      "trigger": "生涯、自定义、训练和持久化格式进入设计冻结"
+    },
+    {
+      "ms": "M05",
+      "priority": "P1",
+      "todo": "补齐内容生产、历史风格、动画、音频、本地化、资产许可与替换验收标准",
+      "trigger": "三国内容、武将、兵种和正式资产进入批量生产"
+    },
+    {
+      "ms": "M06",
+      "priority": "P0",
+      "todo": "收敛发布、4v4 性能、稳定性、设备矩阵、Shipping 诊断裁剪和交付标准",
+      "trigger": "发布候选范围冻结，目标设备与构建链可用"
+    }
+  ],
+  "governance_tree": [
+    {
+      "dir": "governance/",
+      "label": "治理契约与操作模型",
+      "desc": "定义什么受控、谁能做、怎样变更、何时算完成",
+      "files": [
+        {
+          "name": "policy.md",
+          "label": "集中式治理政策",
+          "desc": "权威链、单一事实源、文件控制等级、多任务并发",
+          "mtime": "2026-08-12",
+          "size": "4.7KB"
+        },
+        {
+          "name": "change-request-template.md",
+          "label": "变更请求模板",
+          "desc": "变更登记格式与审批流程",
+          "mtime": "2026-08-12",
+          "size": "1.7KB"
+        },
+        {
+          "name": "definition-of-done.md",
+          "label": "集中式完成定义",
+          "desc": "范围边界、交付完整性、验证证据",
+          "mtime": "2026-08-12",
+          "size": "2.8KB"
+        },
+        {
+          "name": "responsibility-matrix.md",
+          "label": "集中式职责边界",
+          "desc": "RACI 矩阵、用户/代理/维护者职责",
+          "mtime": "2026-08-12",
+          "size": "2.6KB"
+        },
+        {
+          "name": "DecisionModel.md",
+          "label": "决策模型",
+          "desc": "规划方向、拆解任务、生成五件套",
+          "mtime": "2026-08-12",
+          "size": "1.6KB"
+        },
+        {
+          "name": "ExecutionModel.md",
+          "label": "执行模型",
+          "desc": "认领任务、冲突检测、按白名单实施",
+          "mtime": "2026-08-12",
+          "size": "3.9KB"
+        },
+        {
+          "name": "ReviewProtocol.md",
+          "label": "审核协议",
+          "desc": "代码回读/资产视觉/关卡加载三种验收",
+          "mtime": "2026-08-12",
+          "size": "2.4KB"
+        },
+        {
+          "name": "SessionCommands.md",
+          "label": "新会话短指令",
+          "desc": "决策/执行/审核/变更的短指令映射",
+          "mtime": "2026-08-12",
+          "size": "1.9KB"
+        }
+      ]
+    },
+    {
+      "dir": "rules/",
+      "label": "权威项目规则",
+      "desc": "唯一规则入口",
+      "files": [
+        {
+          "name": "project_rules.md",
+          "label": "项目规则",
+          "desc": "必读顺序、文件边界、执行规则、权限规则",
+          "mtime": "2026-08-12",
+          "size": "1.6KB"
+        }
+      ]
+    },
+    {
+      "dir": "knowledge/",
+      "label": "知识库",
+      "desc": "产品总纲、技术参考",
+      "files": [
+        {
+          "name": "GameMasterPlan.md",
+          "label": "产品总纲",
+          "desc": "一期范围、核心玩法、里程碑定义",
+          "mtime": "2026-08-12",
+          "size": "4.9KB"
+        },
+        {
+          "name": "EngineReference.md",
+          "label": "引擎技术参考",
+          "desc": "VR/OpenXR/IK/性能/AI",
+          "mtime": "2026-08-12",
+          "size": "16.6KB"
+        },
+        {
+          "name": "TechnicalDecisions.md",
+          "label": "技术决策",
+          "desc": "引擎版本、插件选择",
+          "mtime": "2026-08-12",
+          "size": "10.0KB"
+        },
+        {
+          "name": "EnvironmentSetup.md",
+          "label": "环境配置",
+          "desc": "SDK/NDK/JDK 版本与路径",
+          "mtime": "2026-08-12",
+          "size": "6.8KB"
+        },
+        {
+          "name": "PicoNeo3BuildGuide.md",
+          "label": "PICO Neo3 构建",
+          "desc": "打包配置与验证矩阵",
+          "mtime": "2026-08-12",
+          "size": "12.6KB"
+        },
+        {
+          "name": "DeviceConfigurationMatrix.md",
+          "label": "设备配置矩阵",
+          "desc": "设备配置当前值与改回清单",
+          "mtime": "2026-08-12",
+          "size": "6.5KB"
+        }
+      ]
+    },
+    {
+      "dir": "knowledge/Design/",
+      "label": "权威产品详规",
+      "desc": "核心玩法设计",
+      "files": [
+        {
+          "name": "CombatSystem.md",
+          "label": "战斗系统",
+          "desc": "命中、格挡、伤害、硬直与解卡",
+          "mtime": "2026-08-12",
+          "size": "1.9KB"
+        },
+        {
+          "name": "WeaponsAndInteraction.md",
+          "label": "武器与交互",
+          "desc": "五武器、抓取与可配置脱手",
+          "mtime": "2026-08-12",
+          "size": "1.5KB"
+        },
+        {
+          "name": "HealthAndArmor.md",
+          "label": "生命与护甲",
+          "desc": "统一生命与分部位护甲",
+          "mtime": "2026-08-12",
+          "size": "1.0KB"
+        },
+        {
+          "name": "MovementAndFullBodyIK.md",
+          "label": "移动与全身 IK",
+          "desc": "混合移动、占位与全身 IK",
+          "mtime": "2026-08-12",
+          "size": "1.2KB"
+        },
+        {
+          "name": "SquadAI.md",
+          "label": "小队 AI",
+          "desc": "N 对 N 队伍、个体战术与武将 AI",
+          "mtime": "2026-08-12",
+          "size": "1.3KB"
+        },
+        {
+          "name": "GameModesAndProgression.md",
+          "label": "游戏模式与进程",
+          "desc": "生涯、自定义、训练、结算与存档",
+          "mtime": "2026-08-12",
+          "size": "1.0KB"
+        }
+      ]
+    },
+    {
+      "dir": "knowledge/Production/",
+      "label": "生产规格",
+      "desc": "美术风格、动画、关卡、性能",
+      "files": [
+        {
+          "name": "ArtStyleGuide.md",
+          "label": "美术风格指南",
+          "desc": "色彩体系、材质语言、角色甲胄",
+          "mtime": "2026-08-12",
+          "size": "3.5KB"
+        },
+        {
+          "name": "AnimationSpec.md",
+          "label": "动画规范",
+          "desc": "骨架、动画列表、全身 IK、时机参考",
+          "mtime": "2026-08-12",
+          "size": "3.3KB"
+        },
+        {
+          "name": "LevelDesignSpec.md",
+          "label": "关卡设计规范",
+          "desc": "布局指标、VR 舒适度、导航",
+          "mtime": "2026-08-12",
+          "size": "3.3KB"
+        },
+        {
+          "name": "ContentPipeline.md",
+          "label": "内容管线",
+          "desc": "三国视觉、角色、武器、动画管线",
+          "mtime": "2026-08-12",
+          "size": "1.5KB"
+        },
+        {
+          "name": "TechnicalArchitecture.md",
+          "label": "技术架构",
+          "desc": "模块边界、数据驱动和离线约束",
+          "mtime": "2026-08-12",
+          "size": "1.5KB"
+        },
+        {
+          "name": "QualityAndPerformance.md",
+          "label": "质量与性能",
+          "desc": "测试矩阵、4v4 压力基线",
+          "mtime": "2026-08-12",
+          "size": "1.4KB"
+        }
+      ]
+    },
+    {
+      "dir": "standards/",
+      "label": "工程标准",
+      "desc": "10 份编号标准",
+      "files": [
+        {
+          "name": "01-project-scope-standard.md",
+          "label": "一期范围标准",
+          "desc": "边界、阶段门与变更原则",
+          "mtime": "2026-08-12",
+          "size": "1.1KB"
+        },
+        {
+          "name": "02-naming-and-path-standard.md",
+          "label": "命名与路径标准",
+          "desc": "UE 资产、C++、蓝图命名",
+          "mtime": "2026-08-12",
+          "size": "4.2KB"
+        },
+        {
+          "name": "03-blueprint-cpp-boundary-standard.md",
+          "label": "蓝图/C++ 边界",
+          "desc": "表现层、规则层、内容层职责",
+          "mtime": "2026-08-12",
+          "size": "3.0KB"
+        },
+        {
+          "name": "04-data-asset-standard.md",
+          "label": "数据资产标准",
+          "desc": "武器、AI、竞技场数据配置",
+          "mtime": "2026-08-12",
+          "size": "2.9KB"
+        },
+        {
+          "name": "05-event-and-interface-standard.md",
+          "label": "事件与接口标准",
+          "desc": "接口、事件、状态与依赖方向",
+          "mtime": "2026-08-12",
+          "size": "4.0KB"
+        },
+        {
+          "name": "06-performance-standard.md",
+          "label": "性能标准",
+          "desc": "一体机性能预算与降级策略",
+          "mtime": "2026-08-12",
+          "size": "1.2KB"
+        },
+        {
+          "name": "07-vr-comfort-standard.md",
+          "label": "VR 舒适标准",
+          "desc": "移动、转向、震动和失败恢复",
+          "mtime": "2026-08-12",
+          "size": "1.2KB"
+        },
+        {
+          "name": "08-testing-and-acceptance-standard.md",
+          "label": "测试与验收标准",
+          "desc": "功能、战斗、VR、稳定性验收",
+          "mtime": "2026-08-12",
+          "size": "1.2KB"
+        },
+        {
+          "name": "09-content-and-historical-style-standard.md",
+          "label": "内容风格标准",
+          "desc": "汉末三国风格与资源统一",
+          "mtime": "2026-08-12",
+          "size": "1.3KB"
+        },
+        {
+          "name": "10-git-standard.md",
+          "label": "Git 标准",
+          "desc": "分支、提交、LFS 与禁止提交项",
+          "mtime": "2026-08-12",
+          "size": "1.1KB"
+        }
+      ]
+    },
+    {
+      "dir": "vr/",
+      "label": "VR 工程标准",
+      "desc": "OpenXR、PICO、手部交互、移动",
+      "files": [
+        {
+          "name": "01-xr-runtime-and-device-profile.md",
+          "label": "XR 运行时与设备",
+          "desc": "OpenXR、目标设备与输入基线",
+          "mtime": "2026-08-12",
+          "size": "1.2KB"
+        },
+        {
+          "name": "02-player-calibration-and-body.md",
+          "label": "玩家校准",
+          "desc": "身高、主手、身体表现",
+          "mtime": "2026-08-12",
+          "size": "1.3KB"
+        },
+        {
+          "name": "03-hand-grab-and-haptics.md",
+          "label": "手部交互与触觉",
+          "desc": "抓取、双手持握、震动",
+          "mtime": "2026-08-12",
+          "size": "1.1KB"
+        },
+        {
+          "name": "04-locomotion-and-comfort.md",
+          "label": "移动与舒适",
+          "desc": "瞬移、转向、平滑移动接口",
+          "mtime": "2026-08-12",
+          "size": "1.0KB"
+        },
+        {
+          "name": "05-spatial-ui-tutorial-and-accessibility.md",
+          "label": "空间 UI 与无障碍",
+          "desc": "空间 UI、教程、可读性",
+          "mtime": "2026-08-12",
+          "size": "1.2KB"
+        },
+        {
+          "name": "PicoValidationMatrix.md",
+          "label": "PICO 验证矩阵",
+          "desc": "设备验证项目与状态",
+          "mtime": "2026-08-12",
+          "size": "1.8KB"
+        }
+      ]
+    },
+    {
+      "dir": "systems/",
+      "label": "工程实现指引",
+      "desc": "7 份系统指引，链接 Design 详规",
+      "files": [
+        {
+          "name": "01-game-flow-system.md",
+          "label": "游戏流程系统",
+          "desc": "阶段管理、状态机、重置",
+          "mtime": "2026-08-12",
+          "size": "1.9KB"
+        },
+        {
+          "name": "02-interaction-and-weapon-system.md",
+          "label": "交互与武器系统",
+          "desc": "武器生命周期、抓取、轨迹",
+          "mtime": "2026-08-12",
+          "size": "2.2KB"
+        },
+        {
+          "name": "03-combat-resolution-system.md",
+          "label": "战斗结算系统",
+          "desc": "攻击判定、伤害、硬直",
+          "mtime": "2026-08-12",
+          "size": "2.3KB"
+        },
+        {
+          "name": "04-movement-system.md",
+          "label": "移动系统",
+          "desc": "瞬移、平滑移动、IK",
+          "mtime": "2026-08-12",
+          "size": "2.3KB"
+        },
+        {
+          "name": "05-ai-combat-system.md",
+          "label": "AI 战斗系统",
+          "desc": "感知、决策、战术",
+          "mtime": "2026-08-12",
+          "size": "2.4KB"
+        },
+        {
+          "name": "06-arena-tutorial-ui-system.md",
+          "label": "竞技场与 UI 系统",
+          "desc": "场景、教程、UI",
+          "mtime": "2026-08-12",
+          "size": "2.1KB"
+        },
+        {
+          "name": "07-save-telemetry-and-diagnostics-system.md",
+          "label": "存档与诊断系统",
+          "desc": "存档、遥测、诊断",
+          "mtime": "2026-08-12",
+          "size": "3.0KB"
+        }
+      ]
+    },
+    {
+      "dir": "registers/",
+      "label": "状态登记册",
+      "desc": "10 份登记册 + 标准完善待办",
+      "files": [
+        {
+          "name": "01-decision-register.md",
+          "label": "决策登记",
+          "desc": "关键设计决策与 ADR 上下文",
+          "mtime": "2026-08-12",
+          "size": "7.5KB"
+        },
+        {
+          "name": "02-risk-register.md",
+          "label": "风险登记",
+          "desc": "17 项项目风险",
+          "mtime": "2026-08-12",
+          "size": "4.5KB"
+        },
+        {
+          "name": "03-dependency-register.md",
+          "label": "依赖登记",
+          "desc": "9 项系统依赖 + 资产级依赖链",
+          "mtime": "2026-08-12",
+          "size": "3.0KB"
+        },
+        {
+          "name": "04-requirement-traceability-register.md",
+          "label": "需求追踪",
+          "desc": "12 项需求到系统/标准的追踪",
+          "mtime": "2026-08-12",
+          "size": "1.7KB"
+        },
+        {
+          "name": "05-asset-license-register.md",
+          "label": "资产许可登记",
+          "desc": "7 项资产的许可与技术状态",
+          "mtime": "2026-08-12",
+          "size": "1.3KB"
+        },
+        {
+          "name": "06-playtest-issue-register.md",
+          "label": "试玩问题登记",
+          "desc": "6 项初始验证主题",
+          "mtime": "2026-08-12",
+          "size": "1.4KB"
+        },
+        {
+          "name": "07-task-register.md",
+          "label": "任务登记",
+          "desc": "7 项任务的完整历史",
+          "mtime": "2026-08-12",
+          "size": "1.8KB"
+        },
+        {
+          "name": "08-permission-register.md",
+          "label": "权限登记",
+          "desc": "NTFS ACL 策略与应用状态",
+          "mtime": "2026-08-12",
+          "size": "1.0KB"
+        },
+        {
+          "name": "09-verification-register.md",
+          "label": "验证登记",
+          "desc": "7 项验证的层级与证据",
+          "mtime": "2026-08-12",
+          "size": "3.2KB"
+        },
+        {
+          "name": "10-asset-register.md",
+          "label": "资产登记册",
+          "desc": "Content 资产状态与并发控制",
+          "mtime": "2026-08-12",
+          "size": "1.7KB"
+        },
+        {
+          "name": "standards-backlog.md",
+          "label": "标准完善待办",
+          "desc": "M00-M06 标准补齐计划",
+          "mtime": "2026-08-12",
+          "size": "3.0KB"
+        }
+      ]
+    },
+    {
+      "dir": "execution/",
+      "label": "执行基线",
+      "desc": "任务模板、里程碑详规、active 任务包",
+      "files": [
+        {
+          "name": "task-template.md",
+          "label": "代码任务模板",
+          "desc": "代码类任务五件套模板",
+          "mtime": "2026-08-12",
+          "size": "3.4KB"
+        },
+        {
+          "name": "task-template-asset.md",
+          "label": "资产任务模板",
+          "desc": "资产类任务（含视觉验收）",
+          "mtime": "2026-08-12",
+          "size": "2.7KB"
+        },
+        {
+          "name": "task-template-level.md",
+          "label": "关卡任务模板",
+          "desc": "关卡类任务（含 UE 加载验证）",
+          "mtime": "2026-08-12",
+          "size": "3.3KB"
+        }
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "date": "2026-08-12（M00-T004：输入映射按 PICO 官方文档绑定完成）",
+      "summary": "\n- 编辑器内配置（用户执行，AI 核验）：\n  - 5 个 IMC 全部按 PICO 官方文档（developer.picoxr.com Input mappings）绑定 PICO Neo3 键：IMC_Default（Move/Turn/Grab_L/R/Menu_Toggle）、IMC_Hands（Grasp/IndexCurl/Point/ThumbUp 共 10 键）、IMC_Menu（Interact Trigger + Cursor Thumbstick 2D）、IMC_Weapon_Left/Right（Shoot Trigger Axis）。\n  - 插件按键命名确认：`PICONeo3_*`（显示名 \"PICO Neo3 Controller\" 分类），非官方文档中的 \"PICO Touch\" 命名。\n  - 二进制核验：5 个 IMC 资产均已包含对应 `PICONeo3_*` 键（IMC_Default 6 键、IMC_Hands 10 键、IMC_Menu 4 键、Weapon×2 各 1 键）。\n- 任务状态同步：STATUS.json（updatedAt 2026-08-12，note 更新）、07-task-register.md、11-tech-debt-register.md（TD-007 部分偿还标注）。"
+    },
+    {
+      "date": "2026-08-11（M00-T004 UE5.6 迁移执行：swapchain 补丁生效，真机场景可见）",
+      "summary": "\n用户决策并批准执行 UE5.6 + PICO OpenXR Plugin（OS 5）降级路线（替代 UE5.8），任务状态从 `blocked` 恢复为 `in_progress`。\n\n**工程执行（项目外治理文档同步）：**\n\n- 项目已基于 UE5.6 官方 VR 模板重建（`Content/VRTemplate`、`Characters/MannequinsXR`、`LevelPrototyping`、`Weapons`；`Config/` 重配；`Source/VRSanguoYanWuchang`）。"
+    },
+    {
+      "date": "2026-08-11（架构审核修复）",
+      "summary": "\n用户批准：对全部架构进行完整审核后，修复发现的 10 项问题。\n\n**修复中级别问题（4 项）：**\n\n- `governance/policy.md`：第 6 节新增\"审核结论与任务状态映射\"，将 `requires_changes`→`in_progress`、`rejected`→`blocked` 显式定义。"
+    },
+    {
+      "date": "2026-08-11（archcore 方法论评估与架构改进）",
+      "summary": "\n用户批准：以 archcore 插件方法论为参照，评估项目架构并实施改进，目标是更好地支持游戏开发。分两轮完成，架构一次性到位。\n\n### 第一轮：文档完整性与治理工具补全\n\n**新增文件（1 个）：**"
+    },
+    {
+      "date": "2026-08-11（Vibecoding 架构补全）",
+      "summary": "\n用户批准：为支持美术、开发、动画、关卡等领域的 Vibecoding 并行工作流，补全资产生产治理体系。\n\n**新增文件（6 个）：**\n\n- `execution/task-template-asset.md`：资产任务模板（模型、骨骼、动画、材质、音效、特效、UI 等），含视觉验收流程。"
+    },
+    {
+      "date": "2026-08-11（冗余文件实际清理）",
+      "summary": "\n上轮 CHANGELOG 声称删除但实际未落盘的三份文件，本次完成实际删除：\n\n- 删除 `rules/README.md`（纯重定向，3 行，无引用）。\n- 删除 `execution/reports/tasks/M00-T006.md`（4 行记号级报告，内容已被登记册覆盖）。\n- 删除 `execution/requests/README.md`（空目录说明，目录内无实际变更请求文件）。"
+    },
+    {
+      "date": "2026-08-11（多任务并发治理）",
+      "summary": "\n- 用户批准：治理模型从单任务改为多任务并发，每个执行模型认领一个任务。\n- `policy.md` §6：从\"单任务与状态\"改为\"多任务与状态\"，移除\"任一时刻最多一个 in_progress\"约束，新增任务认领、文件冲突检测与共享文件协调规则。\n- `ExecutionModel.md`：新增\"任务认领\"章节，前置门禁增加冲突检测，强制停止条件增加文件冲突。\n- `SKILL.md`：active 门禁路径从单任务改为多任务（`active/{taskId}/` 子目录结构），新增\"并发安全\"小节。\n- `active/` 目录重构：T004 文件移入 `active/M00-T004/`，新建 `active/M00-T005/` 任务包。"
+    },
+    {
+      "date": "2026-08-10（防废弃文件加固）",
+      "summary": "\n- 用户确认三处加固，防止后续 AI 会话产生新的废弃文件：\n- `rules/project_rules.md` 新增创建约束：创建/修改 `.trae/` 文件前必须确认路径属于 active 白名单、任务报告/登记册路径或用户本次明确批准的变更；白名单为空的决策/规划期同样适用，规划输出只写入任务草案或变更申请。\n- `skills/three-kingdoms-vr-arena/SKILL.md` 新增「写前校验」：涉及 `.trae/` 写操作时先核对 `integrity.yaml`/`manifest.yaml` 与实际文件一致性，不一致时报告异常并停止，不自行补建。\n- `governance/SessionCommands.md` 的「检查项目状态」加入一致性核对（新增文件、重复命名、断链、索引与登记册同步），不一致列为异常报告。\n"
+    }
+  ],
+  "integrity": {
+    "status": "passed",
+    "broken_links": 0,
+    "checked": 115
+  },
+  "health_indicators": [
+    {
+      "name": "文件完整性",
+      "passed": true,
+      "detail": "声明文件 1 项；集合数量 8/8 通过"
+    },
+    {
+      "name": "链接完整性",
+      "passed": true,
+      "detail": "检查 145 个链接，断链 0 个"
+    },
+    {
+      "name": "Skill 唯一性",
+      "passed": true,
+      "detail": "找到 1 个带 frontmatter 的 Skill 文件：['skills/three-kingdoms-vr-arena/SKILL.md']"
+    },
+    {
+      "name": "状态一致性",
+      "passed": true,
+      "detail": "检查 2 个任务，全部一致"
+    },
+    {
+      "name": "交叉引用一致性",
+      "passed": false,
+      "detail": "检查 8 项验证登记，不一致：['M00-T002 验证登记 V-002 标记已验证，但任务状态为 已实施（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认）', 'M00-T003 验证登记 V-003 标记已验证，但任务状态为 approved', 'M00-T004 验证登记 V-004 标记已验证，但任务状态为 in_progress（2026-08-12：输入映射已按 PICO 官方文档绑定完成；遗留手柄模型挂载与真机复测）', 'M00-T001 任务标记已验证，但验证登记 V-007 状态为 待用户管理员执行']"
+    },
+    {
+      "name": "验证证据存在性",
+      "passed": true,
+      "detail": "检查 8 项验证证据，全部存在"
+    },
+    {
+      "name": "技术债数量",
+      "passed": false,
+      "detail": "9 条技术债，4 条 open"
+    },
+    {
+      "name": "待审核超时",
+      "passed": true,
+      "detail": "检查 awaiting_review 任务，无超时"
+    },
+    {
+      "name": "白名单冲突",
+      "passed": true,
+      "detail": "1 个 in_progress 任务，无路径冲突"
+    }
+  ],
+  "tech_debt": [
+    {
+      "id": "TD-001",
+      "desc": "UE5.8 与 PICO Neo3 不兼容，项目需降级到 UE5.6",
+      "location": "引擎版本 / 全项目",
+      "reason": "M00-T004 真机验证发现 Neo3 运行时 3.0.1 与 UE5.8 xrCreateSession 不兼容",
+      "impact": "阻塞 PICO 真机验证；需重建项目",
+      "plan": "用户决策后重建 UE5.6 项目，迁移 Source/ 和 Content/",
+      "priority": "高",
+      "status": "open"
+    },
+    {
+      "id": "TD-002",
+      "desc": "systems/ 指引缺少接口契约定义",
+      "location": "systems/01-07",
+      "reason": "M00 规划期侧重职责边界，未到接口定义阶段",
+      "impact": "M01+ 实现时接口依赖隐式约定",
+      "plan": "已补充规划级接口契约（2026-08-11）",
+      "priority": "中",
+      "status": "resolved"
+    },
+    {
+      "id": "TD-003",
+      "desc": "决策登记缺少 ADR 上下文",
+      "location": "registers/01-decision-register.md",
+      "reason": "表格格式侧重快速浏览，未记录备选方案和后果",
+      "impact": "关键决策的\"为什么\"不可追溯",
+      "plan": "已补充关键决策 ADR 上下文（2026-08-11）",
+      "priority": "中",
+      "status": "resolved"
+    },
+    {
+      "id": "TD-004",
+      "desc": "无代码-文档漂移检测机制",
+      "location": "governance/ReviewProtocol.md",
+      "reason": "M00 阶段无实际代码，漂移问题尚未显现",
+      "impact": "实现推进后 systems/ 指引可能静默失效",
+      "plan": "已在 ReviewProtocol 增加文档同步验证（2026-08-11）",
+      "priority": "中",
+      "status": "resolved"
+    },
+    {
+      "id": "TD-005",
+      "desc": "PICO 插件源码级 swapchain 补丁（拦截 `xrCreateSwapchain` 剥离 format list）",
+      "location": "Plugins/PICOOpen174f9f81d266V8/Source/PICOOpenXRHMD/Private/PICO_HMD.cpp",
+      "reason": "Neo3 系统 OpenXR 运行时（R2.1.12.0）Vulkan swapchain format list 触发 ION ENOTTY 崩溃",
+      "impact": "渲染格式受限（固定 B8G8R8A8_SRGB）；PICO 插件升级可能覆盖补丁；换新设备后补丁可能不再需要",
+      "plan": "补丁已编译进 libUnreal.so 并真机验证场景可见（V-008）；升级插件后须重打补丁；新设备接入时评估是否保留（见 DeviceConfigurationMatrix）",
+      "priority": "高",
+      "status": "open"
+    },
+    {
+      "id": "TD-006",
+      "desc": "PICO 插件从引擎 Marketplace 迁移至项目 Plugins（含 Build.cs `PrecompileForTargets`、uplugin `Installed=false`）",
+      "location": "Plugins/PICOOpen174f9f81d266V8",
+      "reason": "安装版引擎对 Marketplace 插件强制 precompiled 处理、增量构建检测不到引擎目录源码变化",
+      "impact": "插件不再随引擎自动更新；Fab 后续升级需手工迁移；引擎原插件已改名 `.disabled`",
+      "plan": "Fab 发布新版本时评估：迁移回引擎目录并重打补丁，或维持项目内插件并手工更新",
+      "priority": "中",
+      "status": "open"
+    },
+    {
+      "id": "TD-007",
+      "desc": "输入映射为 Quest 风格，未按 PICO Touch 绑定；OpenXR Input 缺 PlayerMappableInputConfig",
+      "location": "Content/VRTemplate/Input/*.uasset、Config/DefaultInput.ini",
+      "reason": "基于 UE5.6 官方 VR 模板（Quest 默认按键）；PICO 官方文档要求绑定 PICO Touch 按键",
+      "impact": "真机手柄按键不可用、手柄模型不显示",
+      "plan": "**部分偿还（2026-08-12）**：5 个 IMC 已按 PICO 官方文档绑定 PICO Neo3 键（IMC_Default/Hands/Menu/Weapon×2，二进制核验通过）；遗留：OpenXR Input PlayerMappableInputConfig 配置、VRPawn 挂载 Neo3 手柄模型（StaticMesh 组件）、真机复测",
+      "priority": "高",
+      "status": "open"
+    },
+    {
+      "id": "TD-008",
+      "desc": "`DefaultInput.ini` 曾指向不存在的 `/Game/XRFramework/Input/`（5.8 迁移残留）",
+      "location": "Config/DefaultInput.ini",
+      "reason": "UE5.8→5.6 迁移时 IMC 路径未同步",
+      "impact": "曾导致 5 个 IMC 全部加载失败、输入不可用",
+      "plan": "已修复为 `/Game/VRTemplate/Input/`（2026-08-11，v3 日志确认 IMC 加载成功）",
+      "priority": "高",
+      "status": "resolved"
+    },
+    {
+      "id": "TD-009",
+      "desc": "安装版引擎 `Engine\\Intermediate\\Build\\BuildRules\\` 被误删（UE5Rules.dll）",
+      "location": "引擎目录（项目外）",
+      "reason": "排障时误将引擎 BuildRules 当缓存删除",
+      "impact": "UE5Rules.dll 本机无法从源码完整重建（引擎裁剪工具源码），曾阻塞全部构建",
+      "plan": "已用 Epic Launcher「验证/修复」恢复（2026-08-11）；经验已写入 PicoNeo3BuildGuide「已知构建坑」",
+      "priority": "高",
+      "status": "resolved"
+    }
+  ],
+  "interface_contracts": [
+    {
+      "file": "01-game-flow-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    },
+    {
+      "file": "02-interaction-and-weapon-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    },
+    {
+      "file": "03-combat-resolution-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    },
+    {
+      "file": "04-movement-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    },
+    {
+      "file": "05-ai-combat-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    },
+    {
+      "file": "06-arena-tutorial-ui-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    },
+    {
+      "file": "07-save-telemetry-and-diagnostics-system.md",
+      "has_contract": true,
+      "has_implementation": false,
+      "status": "已定义",
+      "impl_status": "未实现（M01+）"
+    }
+  ],
+  "pattern_progress": {
+    "total_categories": 0,
+    "filled": 0,
+    "categories": []
+  },
+  "cross_ref_issues": [
+    "M00-T002 验证登记 V-002 标记已验证，但任务状态为 已实施（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认）",
+    "M00-T003 验证登记 V-003 标记已验证，但任务状态为 approved",
+    "M00-T004 验证登记 V-004 标记已验证，但任务状态为 in_progress（2026-08-12：输入映射已按 PICO 官方文档绑定完成；遗留手柄模型挂载与真机复测）",
+    "M00-T001 任务标记已验证，但验证登记 V-007 状态为 待用户管理员执行"
+  ],
+  "asset_repo": {
+    "existing_assets": [
+      {
+        "name": "T_GridChecker_A",
+        "filename": "T_GridChecker_A.uasset",
+        "path": "Content/LevelPrototyping/Textures/T_GridChecker_A.uasset",
+        "type": "Texture",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "MF_ProcGrid",
+        "filename": "MF_ProcGrid.uasset",
+        "path": "Content/LevelPrototyping/Materials/MF_ProcGrid.uasset",
+        "type": "MaterialFunction",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "M_FlatCol",
+        "filename": "M_FlatCol.uasset",
+        "path": "Content/LevelPrototyping/Materials/M_FlatCol.uasset",
+        "type": "Material",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "MI_PrototypeGrid_Gray_02",
+        "filename": "MI_PrototypeGrid_Gray_02.uasset",
+        "path": "Content/LevelPrototyping/Materials/MI_PrototypeGrid_Gray_02.uasset",
+        "type": "MaterialInstance",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "M_PrototypeGrid",
+        "filename": "M_PrototypeGrid.uasset",
+        "path": "Content/LevelPrototyping/Materials/M_PrototypeGrid.uasset",
+        "type": "Material",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "MI_PrototypeGrid_Gray",
+        "filename": "MI_PrototypeGrid_Gray.uasset",
+        "path": "Content/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.uasset",
+        "type": "MaterialInstance",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "MI_PrototypeGrid_TopDark",
+        "filename": "MI_PrototypeGrid_TopDark.uasset",
+        "path": "Content/LevelPrototyping/Materials/MI_PrototypeGrid_TopDark.uasset",
+        "type": "MaterialInstance",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "MI_DefaultColorway",
+        "filename": "MI_DefaultColorway.uasset",
+        "path": "Content/LevelPrototyping/Materials/MI_DefaultColorway.uasset",
+        "type": "MaterialInstance",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_Cube",
+        "filename": "SM_Cube.uasset",
+        "path": "Content/LevelPrototyping/Meshes/SM_Cube.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_SM_ChamferCube",
+        "filename": "SM_SM_ChamferCube.uasset",
+        "path": "Content/LevelPrototyping/Meshes/SM_SM_ChamferCube.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_Cylinder",
+        "filename": "SM_Cylinder.uasset",
+        "path": "Content/LevelPrototyping/Meshes/SM_Cylinder.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_QuarterCylinder",
+        "filename": "SM_QuarterCylinder.uasset",
+        "path": "Content/LevelPrototyping/Meshes/SM_QuarterCylinder.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_Ramp",
+        "filename": "SM_Ramp.uasset",
+        "path": "Content/LevelPrototyping/Meshes/SM_Ramp.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_ChamferCube",
+        "filename": "SM_ChamferCube.uasset",
+        "path": "Content/LevelPrototyping/Meshes/SM_ChamferCube.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "BP_DoorFrame",
+        "filename": "BP_DoorFrame.uasset",
+        "path": "Content/LevelPrototyping/Interactable/Door/BP_DoorFrame.uasset",
+        "type": "Blueprint",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_DoorFrame_Corner",
+        "filename": "SM_DoorFrame_Corner.uasset",
+        "path": "Content/LevelPrototyping/Interactable/Door/Assets/Meshes/SM_DoorFrame_Corner.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_DoorFrame_Edge",
+        "filename": "SM_DoorFrame_Edge.uasset",
+        "path": "Content/LevelPrototyping/Interactable/Door/Assets/Meshes/SM_DoorFrame_Edge.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_Door",
+        "filename": "SM_Door.uasset",
+        "path": "Content/LevelPrototyping/Interactable/Door/Assets/Meshes/SM_Door.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "BP_JumpPad",
+        "filename": "BP_JumpPad.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/BP_JumpPad.uasset",
+        "type": "Blueprint",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "NS_JumpPad",
+        "filename": "NS_JumpPad.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/Assets/NS_JumpPad.uasset",
+        "type": "NiagaraSystem",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "M_GradientGlow",
+        "filename": "M_GradientGlow.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/Assets/Materials/M_GradientGlow.uasset",
+        "type": "Material",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "MI_GlowNT",
+        "filename": "MI_GlowNT.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/Assets/Materials/MI_GlowNT.uasset",
+        "type": "MaterialInstance",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "M_SimpleGlow",
+        "filename": "M_SimpleGlow.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/Assets/Materials/M_SimpleGlow.uasset",
+        "type": "Material",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_CircularGlow",
+        "filename": "SM_CircularGlow.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/Assets/Meshes/SM_CircularGlow.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_CircularBand",
+        "filename": "SM_CircularBand.uasset",
+        "path": "Content/LevelPrototyping/Interactable/JumpPad/Assets/Meshes/SM_CircularBand.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "BP_WobbleTarget",
+        "filename": "BP_WobbleTarget.uasset",
+        "path": "Content/LevelPrototyping/Interactable/Target/BP_WobbleTarget.uasset",
+        "type": "Blueprint",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "SM_TargetBaseMesh",
+        "filename": "SM_TargetBaseMesh.uasset",
+        "path": "Content/LevelPrototyping/Interactable/Target/Assets/SM_TargetBaseMesh.uasset",
+        "type": "StaticMesh",
+        "source": "UE 关卡原型",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "RT_VRSpectator",
+        "filename": "RT_VRSpectator.uasset",
+        "path": "Content/VRSpectator/RT_VRSpectator.uasset",
+        "type": "RenderTarget",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "VR 观战"
+      },
+      {
+        "name": "EVRSpectatorMode",
+        "filename": "EVRSpectatorMode.uasset",
+        "path": "Content/VRSpectator/EVRSpectatorMode.uasset",
+        "type": "Enum",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "VR 观战"
+      },
+      {
+        "name": "VRSpectator",
+        "filename": "VRSpectator.uasset",
+        "path": "Content/VRSpectator/VRSpectator.uasset",
+        "type": "Other",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "VR 观战"
+      },
+      {
+        "name": "IMC_VRSpectator",
+        "filename": "IMC_VRSpectator.uasset",
+        "path": "Content/VRSpectator/Input/IMC_VRSpectator.uasset",
+        "type": "InputMappingContext",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_FadeInOut",
+        "filename": "IA_VRSpectator_FadeInOut.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_FadeInOut.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_Look",
+        "filename": "IA_VRSpectator_Look.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_Look.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_ResetRotation",
+        "filename": "IA_VRSpectator_ResetRotation.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_ResetRotation.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_Toggle",
+        "filename": "IA_VRSpectator_Toggle.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_Toggle.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_FOV_Reset",
+        "filename": "IA_VRSpectator_FOV_Reset.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_FOV_Reset.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_Move",
+        "filename": "IA_VRSpectator_Move.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_Move.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_VRSpectator_FOV",
+        "filename": "IA_VRSpectator_FOV.uasset",
+        "path": "Content/VRSpectator/Input/Actions/IA_VRSpectator_FOV.uasset",
+        "type": "InputAction",
+        "source": "UE VR 观战",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "T_Grid",
+        "filename": "T_Grid.uasset",
+        "path": "Content/VRTemplate/Textures/T_Grid.uasset",
+        "type": "Texture",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "Fire_Cue",
+        "filename": "Fire_Cue.uasset",
+        "path": "Content/VRTemplate/Audio/Fire_Cue.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "音效"
+      },
+      {
+        "name": "Fire01",
+        "filename": "Fire01.uasset",
+        "path": "Content/VRTemplate/Audio/Fire01.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "音效"
+      },
+      {
+        "name": "M_LeftEyeGreen_RightEyeRed",
+        "filename": "M_LeftEyeGreen_RightEyeRed.uasset",
+        "path": "Content/VRTemplate/Materials/M_LeftEyeGreen_RightEyeRed.uasset",
+        "type": "Material",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "DefaultRibbonMaterial_NoGradient",
+        "filename": "DefaultRibbonMaterial_NoGradient.uasset",
+        "path": "Content/VRTemplate/Materials/DefaultRibbonMaterial_NoGradient.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "M_TeleportCylinder",
+        "filename": "M_TeleportCylinder.uasset",
+        "path": "Content/VRTemplate/Materials/M_TeleportCylinder.uasset",
+        "type": "Material",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "MI_Projectile",
+        "filename": "MI_Projectile.uasset",
+        "path": "Content/VRTemplate/Materials/MI_Projectile.uasset",
+        "type": "MaterialInstance",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "MI_Grid_Accent",
+        "filename": "MI_Grid_Accent.uasset",
+        "path": "Content/VRTemplate/Materials/MI_Grid_Accent.uasset",
+        "type": "MaterialInstance",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "MI_VRColorway",
+        "filename": "MI_VRColorway.uasset",
+        "path": "Content/VRTemplate/Materials/MI_VRColorway.uasset",
+        "type": "MaterialInstance",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "M_GridRotation",
+        "filename": "M_GridRotation.uasset",
+        "path": "Content/VRTemplate/Materials/M_GridRotation.uasset",
+        "type": "Material",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "M_TeleportNoise",
+        "filename": "M_TeleportNoise.uasset",
+        "path": "Content/VRTemplate/Materials/M_TeleportNoise.uasset",
+        "type": "Material",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "MI_Grid_Default",
+        "filename": "MI_Grid_Default.uasset",
+        "path": "Content/VRTemplate/Materials/MI_Grid_Default.uasset",
+        "type": "MaterialInstance",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "M_Projectile",
+        "filename": "M_Projectile.uasset",
+        "path": "Content/VRTemplate/Materials/M_Projectile.uasset",
+        "type": "Material",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "M_VRCursor",
+        "filename": "M_VRCursor.uasset",
+        "path": "Content/VRTemplate/Materials/M_VRCursor.uasset",
+        "type": "Material",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "MF_OccludedPixels",
+        "filename": "MF_OccludedPixels.uasset",
+        "path": "Content/VRTemplate/Materials/Functions/MF_OccludedPixels.uasset",
+        "type": "MaterialFunction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "材质/贴图"
+      },
+      {
+        "name": "IMC_Weapon_Right",
+        "filename": "IMC_Weapon_Right.uasset",
+        "path": "Content/VRTemplate/Input/IMC_Weapon_Right.uasset",
+        "type": "InputMappingContext",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IMC_Menu",
+        "filename": "IMC_Menu.uasset",
+        "path": "Content/VRTemplate/Input/IMC_Menu.uasset",
+        "type": "InputMappingContext",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IMC_Weapon_Left",
+        "filename": "IMC_Weapon_Left.uasset",
+        "path": "Content/VRTemplate/Input/IMC_Weapon_Left.uasset",
+        "type": "InputMappingContext",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IMC_Hands",
+        "filename": "IMC_Hands.uasset",
+        "path": "Content/VRTemplate/Input/IMC_Hands.uasset",
+        "type": "InputMappingContext",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IMC_Default",
+        "filename": "IMC_Default.uasset",
+        "path": "Content/VRTemplate/Input/IMC_Default.uasset",
+        "type": "InputMappingContext",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "B_InputModifier_XAxisPositiveOnly",
+        "filename": "B_InputModifier_XAxisPositiveOnly.uasset",
+        "path": "Content/VRTemplate/Input/B_InputModifier_XAxisPositiveOnly.uasset",
+        "type": "Blueprint",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Shoot_Left",
+        "filename": "IA_Shoot_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Shoot_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Grab_Left_Released",
+        "filename": "IA_Grab_Left_Released.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Grab_Left_Released.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Interact_Left_Pressed",
+        "filename": "IA_Menu_Interact_Left_Pressed.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Interact_Left_Pressed.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Interact_Left",
+        "filename": "IA_Menu_Interact_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Interact_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Cursor_Left",
+        "filename": "IA_Menu_Cursor_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Cursor_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Interact_Left_Released",
+        "filename": "IA_Menu_Interact_Left_Released.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Interact_Left_Released.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Interact_Right_Pressed",
+        "filename": "IA_Menu_Interact_Right_Pressed.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Interact_Right_Pressed.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Toggle_Right",
+        "filename": "IA_Menu_Toggle_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Toggle_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Shoot_Right",
+        "filename": "IA_Shoot_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Shoot_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Move",
+        "filename": "IA_Move.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Move.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Interact_Right",
+        "filename": "IA_Menu_Interact_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Interact_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Grab_Left",
+        "filename": "IA_Grab_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Grab_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Grab_Left_Pressed",
+        "filename": "IA_Grab_Left_Pressed.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Grab_Left_Pressed.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Turn",
+        "filename": "IA_Turn.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Turn.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Cursor_Right",
+        "filename": "IA_Menu_Cursor_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Cursor_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Grab_Right_Released",
+        "filename": "IA_Grab_Right_Released.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Grab_Right_Released.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Toggle_Left",
+        "filename": "IA_Menu_Toggle_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Toggle_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Grab_Right_Pressed",
+        "filename": "IA_Grab_Right_Pressed.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Grab_Right_Pressed.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Grab_Right",
+        "filename": "IA_Grab_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Grab_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Menu_Interact_Right_Released",
+        "filename": "IA_Menu_Interact_Right_Released.uasset",
+        "path": "Content/VRTemplate/Input/Actions/IA_Menu_Interact_Right_Released.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_Point_Left",
+        "filename": "IA_Hand_Point_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_Point_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_IndexCurl_Right",
+        "filename": "IA_Hand_IndexCurl_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_IndexCurl_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_Point_Right",
+        "filename": "IA_Hand_Point_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_Point_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_ThumbUp_Left",
+        "filename": "IA_Hand_ThumbUp_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_ThumbUp_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_Grasp_Right",
+        "filename": "IA_Hand_Grasp_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_Grasp_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_ThumbUp_Right",
+        "filename": "IA_Hand_ThumbUp_Right.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_ThumbUp_Right.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_IndexCurl_Left",
+        "filename": "IA_Hand_IndexCurl_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_IndexCurl_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "IA_Hand_Grasp_Left",
+        "filename": "IA_Hand_Grasp_Left.uasset",
+        "path": "Content/VRTemplate/Input/Actions/Hands/IA_Hand_Grasp_Left.uasset",
+        "type": "InputAction",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "输入系统"
+      },
+      {
+        "name": "VRTemplateMap_BuiltData",
+        "filename": "VRTemplateMap_BuiltData.uasset",
+        "path": "Content/VRTemplate/Maps/VRTemplateMap_BuiltData.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "VRTemplateMap",
+        "filename": "VRTemplateMap.umap",
+        "path": "Content/VRTemplate/Maps/VRTemplateMap.umap",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "关卡/场景"
+      },
+      {
+        "name": "GrabHapticEffect",
+        "filename": "GrabHapticEffect.uasset",
+        "path": "Content/VRTemplate/Haptics/GrabHapticEffect.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "触觉反馈"
+      },
+      {
+        "name": "PistolFireHapticEffect",
+        "filename": "PistolFireHapticEffect.uasset",
+        "path": "Content/VRTemplate/Haptics/PistolFireHapticEffect.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "触觉反馈"
+      },
+      {
+        "name": "NPC_VRTemplate",
+        "filename": "NPC_VRTemplate.uasset",
+        "path": "Content/VRTemplate/VFX/NPC_VRTemplate.uasset",
+        "type": "NiagaraSystem",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "特效"
+      },
+      {
+        "name": "NS_TeleportRing",
+        "filename": "NS_TeleportRing.uasset",
+        "path": "Content/VRTemplate/VFX/NS_TeleportRing.uasset",
+        "type": "NiagaraSystem",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "特效"
+      },
+      {
+        "name": "NS_PlayAreaBounds",
+        "filename": "NS_PlayAreaBounds.uasset",
+        "path": "Content/VRTemplate/VFX/NS_PlayAreaBounds.uasset",
+        "type": "NiagaraSystem",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "特效"
+      },
+      {
+        "name": "NS_MenuLaser",
+        "filename": "NS_MenuLaser.uasset",
+        "path": "Content/VRTemplate/VFX/NS_MenuLaser.uasset",
+        "type": "NiagaraSystem",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "特效"
+      },
+      {
+        "name": "NS_TeleportTrace",
+        "filename": "NS_TeleportTrace.uasset",
+        "path": "Content/VRTemplate/VFX/NS_TeleportTrace.uasset",
+        "type": "NiagaraSystem",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "特效"
+      },
+      {
+        "name": "WidgetMenu",
+        "filename": "WidgetMenu.uasset",
+        "path": "Content/VRTemplate/Blueprints/WidgetMenu.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "B_AssetGuideline",
+        "filename": "B_AssetGuideline.uasset",
+        "path": "Content/VRTemplate/Blueprints/B_AssetGuideline.uasset",
+        "type": "Blueprint",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "Projectile",
+        "filename": "Projectile.uasset",
+        "path": "Content/VRTemplate/Blueprints/Projectile.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "Pistol",
+        "filename": "Pistol.uasset",
+        "path": "Content/VRTemplate/Blueprints/Pistol.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "BPI_PawnAnim",
+        "filename": "BPI_PawnAnim.uasset",
+        "path": "Content/VRTemplate/Blueprints/BPI_PawnAnim.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "VRPawn",
+        "filename": "VRPawn.uasset",
+        "path": "Content/VRTemplate/Blueprints/VRPawn.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "Menu",
+        "filename": "Menu.uasset",
+        "path": "Content/VRTemplate/Blueprints/Menu.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "GrabComponent",
+        "filename": "GrabComponent.uasset",
+        "path": "Content/VRTemplate/Blueprints/GrabComponent.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "VRGameMode",
+        "filename": "VRGameMode.uasset",
+        "path": "Content/VRTemplate/Blueprints/VRGameMode.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "Grabbable_SmallCube",
+        "filename": "Grabbable_SmallCube.uasset",
+        "path": "Content/VRTemplate/Blueprints/Grabbable_SmallCube.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "VRTeleportVisualizer",
+        "filename": "VRTeleportVisualizer.uasset",
+        "path": "Content/VRTemplate/Blueprints/VRTeleportVisualizer.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "GrabType",
+        "filename": "GrabType.uasset",
+        "path": "Content/VRTemplate/Blueprints/GrabType.uasset",
+        "type": "Other",
+        "source": "UE VR 模板",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "蓝图"
+      },
+      {
+        "name": "T_Pistol_Masks",
+        "filename": "T_Pistol_Masks.uasset",
+        "path": "Content/Weapons/Pistol/Textures/T_Pistol_Masks.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_Pistol_D",
+        "filename": "T_Pistol_D.uasset",
+        "path": "Content/Weapons/Pistol/Textures/T_Pistol_D.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_Pistol_N",
+        "filename": "T_Pistol_N.uasset",
+        "path": "Content/Weapons/Pistol/Textures/T_Pistol_N.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_Pistol_AORM",
+        "filename": "T_Pistol_AORM.uasset",
+        "path": "Content/Weapons/Pistol/Textures/T_Pistol_AORM.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "MI_Weapon_Pistol",
+        "filename": "MI_Weapon_Pistol.uasset",
+        "path": "Content/Weapons/Pistol/Materials/MI_Weapon_Pistol.uasset",
+        "type": "MaterialInstance",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "PA_Pistol",
+        "filename": "PA_Pistol.uasset",
+        "path": "Content/Weapons/Pistol/Meshes/PA_Pistol.uasset",
+        "type": "PhysicsAsset",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SK_Pistol",
+        "filename": "SK_Pistol.uasset",
+        "path": "Content/Weapons/Pistol/Meshes/SK_Pistol.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SKM_Pistol",
+        "filename": "SKM_Pistol.uasset",
+        "path": "Content/Weapons/Pistol/Meshes/SKM_Pistol.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SM_Pistol",
+        "filename": "SM_Pistol.uasset",
+        "path": "Content/Weapons/Pistol/Meshes/SM_Pistol.uasset",
+        "type": "StaticMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_FPGun_N",
+        "filename": "T_FPGun_N.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Textures/T_FPGun_N.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_FPGun_M",
+        "filename": "T_FPGun_M.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Textures/T_FPGun_M.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "FirstPersonTemplateWeaponFire02",
+        "filename": "FirstPersonTemplateWeaponFire02.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Audio/FirstPersonTemplateWeaponFire02.uasset",
+        "type": "Other",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "M_GrenadeLauncher",
+        "filename": "M_GrenadeLauncher.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Materials/M_GrenadeLauncher.uasset",
+        "type": "Material",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "M_ProjectileBullet",
+        "filename": "M_ProjectileBullet.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Materials/M_ProjectileBullet.uasset",
+        "type": "Material",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "PA_GrenadeLauncher",
+        "filename": "PA_GrenadeLauncher.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Meshes/PA_GrenadeLauncher.uasset",
+        "type": "PhysicsAsset",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SK_GrenadeLauncher",
+        "filename": "SK_GrenadeLauncher.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Meshes/SK_GrenadeLauncher.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SM_GrenadeLauncher",
+        "filename": "SM_GrenadeLauncher.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Meshes/SM_GrenadeLauncher.uasset",
+        "type": "StaticMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "FirstPersonProjectileMesh",
+        "filename": "FirstPersonProjectileMesh.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Meshes/FirstPersonProjectileMesh.uasset",
+        "type": "Other",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SKM_GrenadeLauncher",
+        "filename": "SKM_GrenadeLauncher.uasset",
+        "path": "Content/Weapons/GrenadeLauncher/Meshes/SKM_GrenadeLauncher.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "M_Weapon",
+        "filename": "M_Weapon.uasset",
+        "path": "Content/Weapons/Rifle/M_Weapon.uasset",
+        "type": "Material",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_Rifle_BC",
+        "filename": "T_Rifle_BC.uasset",
+        "path": "Content/Weapons/Rifle/Textures/T_Rifle_BC.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "T_Rifle_N",
+        "filename": "T_Rifle_N.uasset",
+        "path": "Content/Weapons/Rifle/Textures/T_Rifle_N.uasset",
+        "type": "Texture",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "M_Weapon",
+        "filename": "M_Weapon.uasset",
+        "path": "Content/Weapons/Rifle/Materials/M_Weapon.uasset",
+        "type": "Material",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "M_Rifle",
+        "filename": "M_Rifle.uasset",
+        "path": "Content/Weapons/Rifle/Materials/M_Rifle.uasset",
+        "type": "Material",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SKM_Rifle",
+        "filename": "SKM_Rifle.uasset",
+        "path": "Content/Weapons/Rifle/Meshes/SKM_Rifle.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SK_Rifle",
+        "filename": "SK_Rifle.uasset",
+        "path": "Content/Weapons/Rifle/Meshes/SK_Rifle.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "PA_Rifle",
+        "filename": "PA_Rifle.uasset",
+        "path": "Content/Weapons/Rifle/Meshes/PA_Rifle.uasset",
+        "type": "PhysicsAsset",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "SM_Rifle",
+        "filename": "SM_Rifle.uasset",
+        "path": "Content/Weapons/Rifle/Meshes/SM_Rifle.uasset",
+        "type": "StaticMesh",
+        "source": "UE 模板武器",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "武器"
+      },
+      {
+        "name": "B_MannequinsXR",
+        "filename": "B_MannequinsXR.uasset",
+        "path": "Content/Characters/MannequinsXR/B_MannequinsXR.uasset",
+        "type": "Blueprint",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01ID_BN",
+        "filename": "T_Quinn_01ID_BN.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01ID_BN.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02ID_MSR_MSK",
+        "filename": "T_Quinn_02ID_MSR_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02ID_MSR_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01ID_D",
+        "filename": "T_Quinn_01ID_D.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01ID_D.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01ID_N",
+        "filename": "T_Quinn_01ID_N.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01ID_N.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01_ASAOMASK_MSK",
+        "filename": "T_Quinn_01_ASAOMASK_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01_ASAOMASK_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02ID_D",
+        "filename": "T_Quinn_02ID_D.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02ID_D.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01ID_MSR_MSK",
+        "filename": "T_Quinn_01ID_MSR_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01ID_MSR_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02ID_Tan",
+        "filename": "T_Quinn_02ID_Tan.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02ID_Tan.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02ID_N",
+        "filename": "T_Quinn_02ID_N.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02ID_N.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02ID_BN",
+        "filename": "T_Quinn_02ID_BN.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02ID_BN.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01ID_Tan",
+        "filename": "T_Quinn_01ID_Tan.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01ID_Tan.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02_ASAOMASK_MSK",
+        "filename": "T_Quinn_02_ASAOMASK_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02_ASAOMASK_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_01_CCRCCPlastic_MSK",
+        "filename": "T_Quinn_01_CCRCCPlastic_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_01_CCRCCPlastic_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Quinn_02_CCRCCPlastic_MSK",
+        "filename": "T_Quinn_02_CCRCCPlastic_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Quinn/T_Quinn_02_CCRCCPlastic_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_UE_Logo_M",
+        "filename": "T_UE_Logo_M.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Shared/T_UE_Logo_M.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_Tan",
+        "filename": "T_Manny_02_Tan.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_Tan.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_ASAOPMASK_MSK",
+        "filename": "T_Manny_01_ASAOPMASK_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_ASAOPMASK_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_N",
+        "filename": "T_Manny_02_N.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_N.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_D",
+        "filename": "T_Manny_01_D.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_D.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_D",
+        "filename": "T_Manny_02_D.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_D.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_N",
+        "filename": "T_Manny_01_N.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_N.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_BN",
+        "filename": "T_Manny_01_BN.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_BN.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_ASAOPMASK_MSK",
+        "filename": "T_Manny_02_ASAOPMASK_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_ASAOPMASK_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_CCRCCPlastic_MSK",
+        "filename": "T_Manny_02_CCRCCPlastic_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_CCRCCPlastic_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_MSR_MSK",
+        "filename": "T_Manny_02_MSR_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_MSR_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_02_BN",
+        "filename": "T_Manny_02_BN.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_02_BN.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_MSR_MSK",
+        "filename": "T_Manny_01_MSR_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_MSR_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_CCRCCPlastic_MSK",
+        "filename": "T_Manny_01_CCRCCPlastic_MSK.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_CCRCCPlastic_MSK.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "T_Manny_01_Tan",
+        "filename": "T_Manny_01_Tan.uasset",
+        "path": "Content/Characters/MannequinsXR/Textures/Manny/T_Manny_01_Tan.uasset",
+        "type": "Texture",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "M_Mannequin",
+        "filename": "M_Mannequin.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/M_Mannequin.uasset",
+        "type": "Material",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MI_Quinn_01",
+        "filename": "MI_Quinn_01.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Instances/Quinn/MI_Quinn_01.uasset",
+        "type": "MaterialInstance",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MI_Quinn_02",
+        "filename": "MI_Quinn_02.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Instances/Quinn/MI_Quinn_02.uasset",
+        "type": "MaterialInstance",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MI_Manny_01",
+        "filename": "MI_Manny_01.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Instances/Manny/MI_Manny_01.uasset",
+        "type": "MaterialInstance",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MI_Manny_02",
+        "filename": "MI_Manny_02.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Instances/Manny/MI_Manny_02.uasset",
+        "type": "MaterialInstance",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "CA_Mannequin",
+        "filename": "CA_Mannequin.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Functions/CA_Mannequin.uasset",
+        "type": "CurveAsset",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MF_Diffraction",
+        "filename": "MF_Diffraction.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Functions/MF_Diffraction.uasset",
+        "type": "MaterialFunction",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "ChromaticCurve",
+        "filename": "ChromaticCurve.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Functions/ChromaticCurve.uasset",
+        "type": "Other",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "ML_BaseColorFallOff",
+        "filename": "ML_BaseColorFallOff.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Functions/ML_BaseColorFallOff.uasset",
+        "type": "Other",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MF_logo3layers",
+        "filename": "MF_logo3layers.uasset",
+        "path": "Content/Characters/MannequinsXR/Materials/Functions/MF_logo3layers.uasset",
+        "type": "MaterialFunction",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "A_MannequinsXR_Grasp_Right",
+        "filename": "A_MannequinsXR_Grasp_Right.uasset",
+        "path": "Content/Characters/MannequinsXR/Animations/A_MannequinsXR_Grasp_Right.uasset",
+        "type": "Animation",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "A_MannequinsXR_Point_Right",
+        "filename": "A_MannequinsXR_Point_Right.uasset",
+        "path": "Content/Characters/MannequinsXR/Animations/A_MannequinsXR_Point_Right.uasset",
+        "type": "Animation",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "A_MannequinsXR_IndexCurl_Right",
+        "filename": "A_MannequinsXR_IndexCurl_Right.uasset",
+        "path": "Content/Characters/MannequinsXR/Animations/A_MannequinsXR_IndexCurl_Right.uasset",
+        "type": "Animation",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "A_MannequinsXR_Idle_Right",
+        "filename": "A_MannequinsXR_Idle_Right.uasset",
+        "path": "Content/Characters/MannequinsXR/Animations/A_MannequinsXR_Idle_Right.uasset",
+        "type": "Animation",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "MDT_MannequinsXR",
+        "filename": "MDT_MannequinsXR.uasset",
+        "path": "Content/Characters/MannequinsXR/Animations/MDT_MannequinsXR.uasset",
+        "type": "AnimBlueprint",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "A_MannequinsXR_ThumbUp_Right",
+        "filename": "A_MannequinsXR_ThumbUp_Right.uasset",
+        "path": "Content/Characters/MannequinsXR/Animations/A_MannequinsXR_ThumbUp_Right.uasset",
+        "type": "Animation",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "SK_MannequinsXR",
+        "filename": "SK_MannequinsXR.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/SK_MannequinsXR.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "SKM_MannyXR_left",
+        "filename": "SKM_MannyXR_left.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/SKM_MannyXR_left.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "SKM_QuinnXR_left",
+        "filename": "SKM_QuinnXR_left.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/SKM_QuinnXR_left.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "SkeletalMeshLODSettings_MannequinsXR",
+        "filename": "SkeletalMeshLODSettings_MannequinsXR.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/SkeletalMeshLODSettings_MannequinsXR.uasset",
+        "type": "Other",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "ABP_MannequinsXR",
+        "filename": "ABP_MannequinsXR.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/ABP_MannequinsXR.uasset",
+        "type": "AnimBlueprint",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "SKM_QuinnXR_right",
+        "filename": "SKM_QuinnXR_right.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/SKM_QuinnXR_right.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      },
+      {
+        "name": "SKM_MannyXR_right",
+        "filename": "SKM_MannyXR_right.uasset",
+        "path": "Content/Characters/MannequinsXR/Meshes/SKM_MannyXR_right.uasset",
+        "type": "SkeletalMesh",
+        "source": "UE MannequinsXR",
+        "size_kb": 0.1,
+        "mtime": "2026-08-12 04:24",
+        "category": "角色"
+      }
+    ],
+    "planned_assets": [
+      {
+        "id": "PLN-W01",
+        "category": "武器",
+        "name": "单手刀剑（环首刀）",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Weapons/Sword/SK_Sword",
+        "milestone": "M01",
+        "status": "planned",
+        "deps": "角色骨架",
+        "desc": "环首刀，约 100cm，玩家版+AI版+灰盒版"
+      },
+      {
+        "id": "PLN-W02",
+        "category": "武器",
+        "name": "盾牌（钩镶/长方盾）",
+        "type": "StaticMesh",
+        "planned_path": "Content/VRSanguo/Weapons/Shield/SM_Shield",
+        "milestone": "M02",
+        "status": "planned",
+        "deps": "角色骨架（挂载点）",
+        "desc": "钩镶或长方盾，约 60x40cm"
+      },
+      {
+        "id": "PLN-W03",
+        "category": "武器",
+        "name": "长柄重兵（戟/长刀）",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Weapons/Halberd/SK_Halberd",
+        "milestone": "M02",
+        "status": "planned",
+        "deps": "角色骨架（挂载点）",
+        "desc": "戟或长刀，约 250cm"
+      },
+      {
+        "id": "PLN-W04",
+        "category": "武器",
+        "name": "长矛（矟/槊）",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Weapons/Spear/SK_Spear",
+        "milestone": "M02",
+        "status": "planned",
+        "deps": "角色骨架（挂载点）",
+        "desc": "矟或槊，约 300cm"
+      },
+      {
+        "id": "PLN-W05",
+        "category": "武器",
+        "name": "弓箭（汉弓）",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Weapons/Bow/SK_Bow",
+        "milestone": "M02",
+        "status": "planned",
+        "deps": "角色骨架（挂载点）",
+        "desc": "汉弓，约 120cm"
+      },
+      {
+        "id": "PLN-C01",
+        "category": "角色",
+        "name": "刀盾兵",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_Militia_SwordShield",
+        "milestone": "M03",
+        "status": "planned",
+        "deps": "统一骨架",
+        "desc": "中甲札甲，刀盾组合"
+      },
+      {
+        "id": "PLN-C02",
+        "category": "角色",
+        "name": "长矛兵",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_Militia_Spearman",
+        "milestone": "M03",
+        "status": "planned",
+        "deps": "统一骨架",
+        "desc": "中甲札甲，长矛"
+      },
+      {
+        "id": "PLN-C03",
+        "category": "角色",
+        "name": "长柄重兵",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_Militia_Halberdier",
+        "milestone": "M03",
+        "status": "planned",
+        "deps": "统一骨架",
+        "desc": "重甲两当铠，长柄武器"
+      },
+      {
+        "id": "PLN-C04",
+        "category": "角色",
+        "name": "弓兵",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_Militia_Archer",
+        "milestone": "M03",
+        "status": "planned",
+        "deps": "统一骨架",
+        "desc": "轻甲皮甲，弓箭"
+      },
+      {
+        "id": "PLN-C05",
+        "category": "角色",
+        "name": "精锐近战",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_Elite_Melee",
+        "milestone": "M03",
+        "status": "planned",
+        "deps": "统一骨架",
+        "desc": "重甲筒袖铠，精锐近战"
+      },
+      {
+        "id": "PLN-C06",
+        "category": "角色",
+        "name": "武将",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_General",
+        "milestone": "M05",
+        "status": "planned",
+        "deps": "统一骨架",
+        "desc": "略高大 180cm，重甲，三国武将"
+      },
+      {
+        "id": "PLN-L01",
+        "category": "场景",
+        "name": "校场（灰盒）",
+        "type": "Level",
+        "planned_path": "Content/VRSanguo/Maps/L_Prototype_Symmetric",
+        "milestone": "M01",
+        "status": "planned",
+        "deps": "—",
+        "desc": "对称灰盒竞技场，约 50x50m"
+      },
+      {
+        "id": "PLN-L02",
+        "category": "场景",
+        "name": "校场（正式）",
+        "type": "Level",
+        "planned_path": "Content/VRSanguo/Maps/L_Arena_Camp",
+        "milestone": "M05",
+        "status": "planned",
+        "deps": "M01 灰盒验证通过",
+        "desc": "夯土地面，木栅围栏，观武台"
+      },
+      {
+        "id": "PLN-L03",
+        "category": "场景",
+        "name": "关隘",
+        "type": "Level",
+        "planned_path": "Content/VRSanguo/Maps/L_Arena_Pass",
+        "milestone": "M05",
+        "status": "planned",
+        "deps": "—",
+        "desc": "石墙，城楼，狭窄通道"
+      },
+      {
+        "id": "PLN-L04",
+        "category": "场景",
+        "name": "水寨",
+        "type": "Level",
+        "planned_path": "Content/VRSanguo/Maps/L_Arena_Water",
+        "milestone": "M05",
+        "status": "planned",
+        "deps": "—",
+        "desc": "木质栈道，水面，船只"
+      },
+      {
+        "id": "PLN-L05",
+        "category": "场景",
+        "name": "山地",
+        "type": "Level",
+        "planned_path": "Content/VRSanguo/Maps/L_Arena_Mountain",
+        "milestone": "M05",
+        "status": "planned",
+        "deps": "—",
+        "desc": "斜坡，岩石，树木"
+      },
+      {
+        "id": "PLN-A01",
+        "category": "骨骼/动画",
+        "name": "统一角色骨架",
+        "type": "SkeletalMesh",
+        "planned_path": "Content/VRSanguo/Characters/SK_Militia",
+        "milestone": "M01",
+        "status": "planned",
+        "deps": "—",
+        "desc": "所有兵种复用的统一骨架，约 170cm"
+      },
+      {
+        "id": "PLN-A02",
+        "category": "骨骼/动画",
+        "name": "角色动画集（战斗）",
+        "type": "Animation",
+        "planned_path": "Content/VRSanguo/Characters/Animations/",
+        "milestone": "M01",
+        "status": "planned",
+        "deps": "统一角色骨架",
+        "desc": "挥砍、格挡、受击、死亡等战斗动画"
+      }
+    ],
+    "registered_assets": [
+      {
+        "资产ID": "AST-001",
+        "类型": "SkeletalMesh",
+        "路径": "Content/VRSanguo/Characters/SK_Militia",
+        "状态": "—",
+        "前置资产": "—",
+        "关联任务": "—",
+        "备注": "示例"
+      }
+    ],
+    "dependency_chain": "以下为里程碑级资产依赖关系，决策模型创建资产任务时据此确定任务的\"前置依赖任务\"字段。依赖不满足时，任务不得设为 `ready`。\n\n### M01 1v1 核心战斗切片\n\n```\n角色骨架 (SK_Militia)\n  ├─→ 角色动画 (A_Militia_*)     ← 依赖骨架\n  ├─→ 武器模型 (SK_Sword 等)     ← 依赖骨架（挂载点）\n  │     └─→ 武器动画 (A_Sword_*)  ← 依赖武器模型 + 角色骨架\n  └─→ 护甲模型 (SM_Armor_*)      ← 依赖骨架（挂载点）\n\n竞技场灰盒 (L_Prototype_Symmetric)\n  └─→ NavMesh 生成               ← 依赖关卡布局\n\n战斗系统核心 (C++)\n  └─→ 武器 DataAsset (DA_Weapon_*) ← 依赖战斗系统接口\n```\n\n### 通用依赖规则\n\n- **骨骼优先**：任何依赖骨架的资产（动画、武器、护甲）必须等骨架任务 `approved` 后才能设为 `ready`\n- **系统优先**：任何依赖 C++ 接口的 DataAsset/Blueprint 必须等系统任务 `approved` 后才能设为 `ready`\n- **关卡最后**：关卡任务依赖其包含的所有资产，应排在最后一批创建\n- **视觉资产独立**：不依赖同一骨架的资产（如音效、UI、特效）可并行创建\n\n### 并发安全\n\n- 并行任务不得共享同一骨架文件（避免动画和武器同时修改骨架）\n- 同一 Content/ 子目录下不得有两个 `in_progress` 任务（避免文件冲突）\n- 资产登记册 `10-asset-register.md` 为资产状态唯一权威，认领前必须检查",
+    "summary": {
+      "existing_total": 189,
+      "planned_total": 18,
+      "categories": {
+        "关卡/场景": {
+          "total": 29,
+          "by_type": {
+            "Texture": 1,
+            "MaterialFunction": 1,
+            "Material": 4,
+            "MaterialInstance": 5,
+            "StaticMesh": 12,
+            "Blueprint": 3,
+            "NiagaraSystem": 1,
+            "Other": 2
+          }
+        },
+        "VR 观战": {
+          "total": 3,
+          "by_type": {
+            "RenderTarget": 1,
+            "Enum": 1,
+            "Other": 1
+          }
+        },
+        "输入系统": {
+          "total": 42,
+          "by_type": {
+            "InputMappingContext": 6,
+            "InputAction": 35,
+            "Blueprint": 1
+          }
+        },
+        "材质/贴图": {
+          "total": 13,
+          "by_type": {
+            "Texture": 1,
+            "Material": 6,
+            "Other": 1,
+            "MaterialInstance": 4,
+            "MaterialFunction": 1
+          }
+        },
+        "音效": {
+          "total": 2,
+          "by_type": {
+            "Other": 2
+          }
+        },
+        "触觉反馈": {
+          "total": 2,
+          "by_type": {
+            "Other": 2
+          }
+        },
+        "特效": {
+          "total": 5,
+          "by_type": {
+            "NiagaraSystem": 5
+          }
+        },
+        "蓝图": {
+          "total": 12,
+          "by_type": {
+            "Other": 11,
+            "Blueprint": 1
+          }
+        },
+        "武器": {
+          "total": 28,
+          "by_type": {
+            "Texture": 8,
+            "MaterialInstance": 1,
+            "PhysicsAsset": 3,
+            "SkeletalMesh": 6,
+            "StaticMesh": 3,
+            "Other": 2,
+            "Material": 5
+          }
+        },
+        "角色": {
+          "total": 53,
+          "by_type": {
+            "Blueprint": 1,
+            "Texture": 29,
+            "Material": 1,
+            "MaterialInstance": 4,
+            "CurveAsset": 1,
+            "MaterialFunction": 2,
+            "Other": 3,
+            "Animation": 5,
+            "AnimBlueprint": 2,
+            "SkeletalMesh": 5
+          }
+        }
+      },
+      "planned_by_milestone": {
+        "M01": 4,
+        "M02": 4,
+        "M03": 5,
+        "M05": 5
+      },
+      "project_assets_count": 0,
+      "template_assets_count": 189
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "timestamp": "2026-08-12 04:24:26",
+  "trae_root": "/home/runner/work/sanguoVR/sanguoVR/.trae",
+  "total": 21,
+  "passed": 19,
+  "failed": 2,
+  "overall": "fail",
+  "checks": [
+    {
+      "category": "禁止根",
+      "name": "项目父级无 .trae/",
+      "passed": true,
+      "detail": "禁止路径 /home/runner/work/sanguoVR/.trae 不存在（正常）"
+    },
+    {
+      "category": "文件完整性",
+      "name": "manifest.yaml 声明文件全部存在",
+      "passed": true,
+      "detail": "检查 16 个声明路径，缺失 0 个"
+    },
+    {
+      "category": "集合数量",
+      "name": "task_templates 文件数",
+      "passed": true,
+      "detail": "期望 3，实际 3"
+    },
+    {
+      "category": "集合数量",
+      "name": "standards_indexed 文件数",
+      "passed": true,
+      "detail": "期望 10，实际 10"
+    },
+    {
+      "category": "集合数量",
+      "name": "vr_indexed 文件数",
+      "passed": true,
+      "detail": "期望 5，实际 5"
+    },
+    {
+      "category": "集合数量",
+      "name": "systems_guides 文件数",
+      "passed": true,
+      "detail": "期望 7，实际 7"
+    },
+    {
+      "category": "集合数量",
+      "name": "registers_core 文件数",
+      "passed": true,
+      "detail": "期望 11，实际 11"
+    },
+    {
+      "category": "集合数量",
+      "name": "production_specs 文件数",
+      "passed": true,
+      "detail": "期望 6，实际 6"
+    },
+    {
+      "category": "集合数量",
+      "name": "pattern_library 文件数",
+      "passed": true,
+      "detail": "期望 1，实际 1"
+    },
+    {
+      "category": "集合数量",
+      "name": "standards_backlog 文件数",
+      "passed": true,
+      "detail": "期望 1，实际 1"
+    },
+    {
+      "category": "索引规范",
+      "name": "必需目录使用 index.md",
+      "passed": true,
+      "detail": "全部使用 index.md"
+    },
+    {
+      "category": "Skill 唯一性",
+      "name": "仅一个带 frontmatter 的 SKILL.md",
+      "passed": true,
+      "detail": "找到 1 个带 frontmatter 的 Skill 文件：['skills/three-kingdoms-vr-arena/SKILL.md']"
+    },
+    {
+      "category": "链接完整性",
+      "name": "Markdown 本地链接无断链",
+      "passed": true,
+      "detail": "检查 145 个链接，断链 0 个"
+    },
+    {
+      "category": "active 门禁",
+      "name": "STATUS.json 格式与状态合法",
+      "passed": true,
+      "detail": "2 个 active 任务，全部状态合法"
+    },
+    {
+      "category": "五件套",
+      "name": "active 任务五件套完整",
+      "passed": true,
+      "detail": "全部完整"
+    },
+    {
+      "category": "白名单冲突",
+      "name": "in_progress 任务无独占路径重叠",
+      "passed": true,
+      "detail": "1 个 in_progress 任务，无路径冲突"
+    },
+    {
+      "category": "交叉引用",
+      "name": "STATUS.json 与任务登记册一致",
+      "passed": true,
+      "detail": "检查 2 个任务，全部一致"
+    },
+    {
+      "category": "交叉引用",
+      "name": "验证证据文件路径存在",
+      "passed": true,
+      "detail": "检查 8 项验证证据，全部存在"
+    },
+    {
+      "category": "交叉引用",
+      "name": "任务登记与验证登记状态一致",
+      "passed": false,
+      "detail": "检查 8 项验证登记，不一致：['M00-T002 验证登记 V-002 标记已验证，但任务状态为 已实施（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认）', 'M00-T003 验证登记 V-003 标记已验证，但任务状态为 approved', 'M00-T004 验证登记 V-004 标记已验证，但任务状态为 in_progress（2026-08-12：输入映射已按 PICO 官方文档绑定完成；遗留手柄模型挂载与真机复测）', 'M00-T001 任务标记已验证，但验证登记 V-007 状态为 待用户管理员执行']"
+    },
+    {
+      "category": "技术债",
+      "name": "open 技术债 <= 3",
+      "passed": false,
+      "detail": "9 条技术债，4 条 open"
+    },
+    {
+      "category": "流程超时",
+      "name": "awaiting_review 不超过 24h",
+      "passed": true,
+      "detail": "检查 awaiting_review 任务，无超时"
+    }
+  ]
+}
