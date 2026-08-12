@@ -17,7 +17,6 @@ permissions:
   pages: write
   id-token: write
 
-# 同一时间只允许一个部署运行
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -34,20 +33,6 @@ jobs:
       - name: 运行治理一致性校验
         run: python dashboard/check-integrity.py
 
-      - name: 校验结果摘要
-        if: always()
-        run: python dashboard/check-integrity.py --json 2>/dev/null | python -c "
-import sys, json
-try:
-    d = json.load(sys.stdin)
-    print(f'总计 {d[\"total\"]} 项 | 通过 {d[\"passed\"]} | 失败 {d[\"failed\"]} | 结果 {d[\"overall\"]}')
-    for c in d['checks']:
-        if not c['passed']:
-            print(f'  FAIL: {c[\"name\"]} — {c[\"detail\"]}')
-except: pass
-"
-
-      # 仅在 push 时生成静态看板（PR 不需要）
       - name: 生成静态看板
         if: github.event_name == 'push'
         run: python dashboard/generate-static.py
