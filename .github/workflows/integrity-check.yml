@@ -36,11 +36,9 @@ jobs:
         run: python dashboard/check-integrity.py
 
       - name: 生成静态看板
-        if: github.event_name == 'push'
         run: python dashboard/generate-static.py
 
       - name: 准备 Pages 产物
-        if: github.event_name == 'push'
         run: |
           mkdir -p pages-output
           cp dashboard/index.html pages-output/
@@ -48,7 +46,6 @@ jobs:
           cp dashboard/integrity.json pages-output/
 
       - name: 上传产物
-        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: pages-output
@@ -57,7 +54,7 @@ jobs:
 
   deploy-pages:
     needs: check-and-generate
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
