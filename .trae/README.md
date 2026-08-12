@@ -1,37 +1,15 @@
-# 项目 AI 资料中心
+# VRSanguoYanWuchang 治理知识库
 
-本目录是 `VRSanguoYanWuchang` 的治理、知识、工程指引、执行与审计唯一入口。
+本目录包含 VR 三国演武场项目的治理、决策、任务和风险管理资料。
 
-## 有效入口
+## 目录结构
 
-- [治理总索引](index.md)
-- [四份治理契约](index.md#四份治理契约)
-- [四份操作模型](index.md#四份操作模型)
-- [权威项目规则](rules/project_rules.md)
-- [唯一项目 Skill](skills/three-kingdoms-vr-arena/SKILL.md)
-- [产品总纲](knowledge/GameMasterPlan.md)
-- [Design 权威产品详规](knowledge/Design/index.md)
-- [Standards 工程标准](standards/index.md)
-- [VR 工程标准](vr/index.md)
-- [Systems 工程实现指引](systems/index.md)
-- [Execution 计划与 active 门禁](execution/README.md)
-- [Registers 状态登记](registers/index.md)
-- [标准完善待办](registers/standards-backlog.md)
-- [变更记录](CHANGELOG.md)
+- `governance/` — 治理策略、审查协议、变更管理
+- `knowledge/` — 系统指南、架构决策记录、规范
+- `execution/` — 任务模板、任务实例、登记册
 
-## 目录职责
+## 快速链接
 
-- `governance/`：治理契约与会话操作模型。
-- `rules/`：唯一权威项目规则，入口为 `rules/project_rules.md`。
-- `knowledge/`：产品总纲、权威产品详规、生产与技术知识。
-- `standards/`：工程标准入口，按里程碑和真实证据逐步完善。
-- `vr/`：OpenXR、输入、舒适度与设备验证标准。
-- `systems/`：工程实现指引，链接 Design 权威详规，不复制产品规则。
-- `execution/`：M00-M06 计划、active 五件套、任务包与报告。
-- `registers/`：决策、风险、依赖、资产、验证、问题与标准完善状态。
-- `archive/`：仅供审计的历史资料。
-- `skills/three-kingdoms-vr-arena/SKILL.md`：项目唯一可发现 Skill。
-
-## 当前执行状态
-
-当前任务与状态以 [`execution/active/STATUS.json`](execution/active/STATUS.json) 为唯一权威，本入口不复制动态状态内容；任务进度历史见 [`registers/07-task-register.md`](registers/07-task-register.md)。
+- 治理仪表板: https://wzf12138.github.io/sanguoVR/
+- 变更管理: `governance/policy.md`
+- 架构决策: `knowledge/GameMasterPlan.md`
