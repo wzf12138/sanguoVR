@@ -13,10 +13,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  check-and-deploy:
+  check-and-generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,12 +45,11 @@ jobs:
           cp dashboard/status.json deploy/
           cp dashboard/integrity.json deploy/
 
-      - name: 部署到 GitHub Pages
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
+      - name: 上传 Pages 产物
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: deploy
-          publish_branch: gh-pages
-          force_orphan: true
-          enable_jekyll: false
+          path: deploy
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
