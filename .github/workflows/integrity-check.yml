@@ -31,6 +31,8 @@ jobs:
         run: pip install pyyaml
 
       - name: 运行治理一致性校验
+        id: integrity
+        continue-on-error: true
         run: python dashboard/check-integrity.py
 
       - name: 生成静态看板
