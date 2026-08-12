@@ -1,0 +1,50 @@
+name: 看板部署
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '.trae/**'
+      - 'dashboard/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装依赖
+        run: pip install pyyaml
+
+      - name: 运行治理一致性校验（报告模式）
+        continue-on-error: true
+        run: python dashboard/check-integrity.py
+
+      - name: 生成静态看板
+        run: python dashboard/generate-static.py
+
+      - name: 准备部署目录
+        run: |
+          mkdir -p deploy
+          cp dashboard/index.html deploy/
+          cp dashboard/status.json deploy/
+          cp dashboard/integrity.json deploy/
+
+      - name: 上传 Pages 产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: deploy
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

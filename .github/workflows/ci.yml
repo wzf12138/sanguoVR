@@ -1,0 +1,28 @@
+name: 治理校验 CI 门禁
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '.trae/**'
+      - 'dashboard/**'
+  pull_request:
+    branches: [master, main]
+    paths:
+      - '.trae/**'
+      - 'dashboard/**'
+
+permissions:
+  contents: read
+
+jobs:
+  integrity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装依赖
+        run: pip install pyyaml
+
+      - name: 治理一致性校验（严格模式）
+        run: python dashboard/check-integrity.py
