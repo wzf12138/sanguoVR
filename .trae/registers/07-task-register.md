@@ -4,7 +4,7 @@
 
 | 任务 | 名称 | 状态 | 交付物 |
 |---|---|---|---|
-| M00-T001 | 治理与事实源基线 | 部分验证（V-001 通过，V-007 ACL 待管理员） | governance、rules、索引、登记册 |
+| M00-T001 | 治理与事实源基线 | 部分验证（V-001 已确认，V-007 ACL 待管理员） | governance、rules、索引、登记册 |
 | M00-T002 | Git 与仓库基线 | 已验证（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认） | `.gitignore`、`.gitattributes`、`.editorconfig`、`.lfsconfig`；Git for Windows + Git LFS 已安装（用户执行）；仓库已初始化并推送远程 |
 | M00-T003 | UE5.8 工程与工具链基线 | 已验证（approved，编译成功） | 编译成功、编辑器启动验证通过、MCP 连通性已记录 |
 | M00-T004 | VR/OpenXR/PICO 基线 | in_progress（2026-08-12：编辑器验证通过，真机验证中） | Step 1-3 编辑器核验已完成（UE5.8）；UE5.6 迁移执行中：项目重建、PICO 插件迁移至项目 Plugins、swapchain 补丁编译生效、Neo3 真机场景可见；2026-08-12 输入映射按官方文档绑定（IMC_Default/Hands/Menu/Weapon×2 全部配置 PICO Neo3 键）；遗留：VRPawn 挂载 Neo3 手柄模型（StaticMesh 组件）、OpenXR Input PlayerMappableInputConfig、真机复测输入 |
