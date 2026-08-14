@@ -328,6 +328,9 @@ def check_allowlist_conflict():
         ".trae/CHANGELOG.md",
         ".trae/integrity.yaml",
         ".trae/manifest.yaml",
+        ".trae/execution/active/STATUS.json",
+        "Intermediate/**",
+        "Binaries/**",
     }
     # 登记册也是共享的
     for reg in (TRAE_ROOT / "registers").glob("*.md"):
@@ -429,7 +432,7 @@ def check_task_verif_consistency():
             t_status = task_status[v_task]
             if "已验证" in t_status and "已验证" not in v_status and "通过" not in v_status:
                 issues.append(f"{v_task} 任务标记已验证，但验证登记 {vid} 状态为 {v_status}")
-            elif "已验证" not in t_status and ("已验证" in v_status or "通过" in v_status):
+            elif "已验证" not in t_status and "approved" not in t_status.lower() and ("已验证" in v_status or "通过" in v_status):
                 issues.append(f"{v_task} 验证登记 {vid} 标记已验证，但任务状态为 {t_status}")
 
     passed = len(issues) == 0

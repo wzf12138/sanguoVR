@@ -5,7 +5,7 @@ forbidden_root: "D:/AWork/Unreal/Project/.trae"
 verification:
   method: "absolute_path_read_and_local_link_check"
   status: passed
-  updated: "2026-08-11"
+  updated: "2026-08-14"
   checks:
     lowercase_indexes:
       expected: 5
@@ -29,11 +29,20 @@ verification:
       concurrency: multi
       active_tasks:
         - task_id: M00-T004
-          status: in_progress
+          status: approved
           package_dir: ".trae/execution/active/M00-T004/"
         - task_id: M00-T005
           status: ready
           package_dir: ".trae/execution/active/M00-T005/"
+        - task_id: M00-T006
+          status: ready
+          package_dir: ".trae/execution/active/M00-T006/"
+        - task_id: M01-T005
+          status: ready
+          package_dir: ".trae/execution/active/M01-T005/"
+        - task_id: M02-PREP-001
+          status: in_progress
+          package_dir: ".trae/execution/active/M02-PREP-001/"
     task_templates:
       expected: 3
       passed: 3
@@ -57,11 +66,11 @@ verification:
     local_markdown_links:
       checked: 115
       broken: 0
-      note: "2026-08-11 archcore 评估改进+审核修复（三轮）：新增技术债登记册、模式库骨架；7 份 systems 指引补充接口契约；决策登记补充 ADR 上下文；ReviewProtocol 增加漂移检测和技术债检查；需求追踪增加覆盖状态列；治理模型同步接口契约约束与技术债职责；审核修复 10 项问题（状态映射/五件套文档化/代码模板升级/T004状态一致性/索引遗漏/接口示例/必读列表/引用路径/版本引用/阻塞描述）"
+      note: "2026-08-14 治理修复（禁止提前提交审核）+ M02-PREP-001 审核 + M00-T004 批准。ExecutionModel 新增提交审核前自检门禁，definition-of-done 新增禁止提前提交审核条款。"
     files_read_back: 22
 limitations:
   git: installed_and_pushed_2026-08-09
   duplicate_document_consolidation: completed
   compile: android_build_successful_ue5.6
-  editor: not_run_ue5.6
-  pico_device: partially_verified_2026-08-11_scene_visible_input_pending
+  editor: verified_ue5.6_2026-08-13
+  pico_device: fully_verified_2026-08-13_input_and_controller_model_working
