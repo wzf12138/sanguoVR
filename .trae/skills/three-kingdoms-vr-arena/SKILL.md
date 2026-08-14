@@ -58,6 +58,7 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 | 决策下一步、规划、生成任务、登记风险 | 决策模式 | `DecisionModel.md` |
 | 执行当前任务、开始或继续实施 | 执行模式 | `ExecutionModel.md` |
 | 审核任务、验收结果或里程碑 | 审核模式 | `ReviewProtocol.md` |
+| 推送/git push/上传git/提交并推送 | 推送模式 | `SessionCommands.md` §推送 |
 | 状态检查、解释、咨询、分析 | 只读模式 | 不修改文件 |
 | 修改治理、规则、Skill、总纲或其他锁定事实源 | 变更申请模式 | `change-request-template.md` |
 

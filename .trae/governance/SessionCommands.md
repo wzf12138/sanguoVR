@@ -58,6 +58,34 @@
 
 只读回答，不创建任务、不改工程。
 
+## 推送
+
+### `推送` / `上传git` / `git push`
+
+> **硬性门禁**：推送前必须完成以下全部检查，任一未通过则不得推送。
+
+**推送前必检清单**：
+
+1. **运行一致性校验**：执行 `python dashboard/check-integrity.py`，确认全部通过（技术债 open 数 >3 的警告可豁免，但需在提交信息中注明）。
+2. **同步 integrity.yaml**：确认 `updated` 日期为当天，`active_tasks` 列表与根 `STATUS.json` 一致，`limitations` 反映最新验证状态。
+3. **同步 manifest.yaml**：确认 `updated` 日期为当天，`active_gate.task_packages` 与根 `STATUS.json` 一致。
+4. **同步登记册**：`07-task-register.md` 中各任务状态与根 `STATUS.json` 一致。
+5. **生成看板**：执行 `python dashboard/generate-static.py`，确认 `status.json`/`integrity.json`/`index.html` 已更新。
+6. **CHANGELOG 完整**：本次会话所有变更已记录在 `.trae/CHANGELOG.md`。
+
+**执行流程**：
+
+```
+1. check-integrity.py         → 校验通过
+2. 逐项核对 integrity/manifest/登记册/CHANGELOG
+3. generate-static.py          → 看板生成
+4. git add -A
+5. git commit -m '<描述>'
+6. git push origin master
+```
+
+**禁止**：跳过校验直接推送；校验未通过仍推送；推送后不确认远程同步成功。
+
 ## 安全默认
 
 用户意图无法明确归类时，自动使用“只读分析”。不得猜测进入执行模式。

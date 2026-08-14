@@ -1,5 +1,14 @@
 # ChangeLog
 
+## 2026-08-14（治理修复：推送前自动门禁）
+
+- 问题：git push 前缺少自动校验，导致推送时 integrity/manifest/登记册/看板未同步。
+- 修复（2 个文件，用户直接批准）：
+  - `governance/SessionCommands.md`：新增"推送"章节，含 6 项推送前必检清单（check-integrity.py → integrity.yaml → manifest.yaml → 登记册 → 看板生成 → CHANGELOG）和 6 步执行流程。标记为硬性门禁，任一未通过不得推送。
+  - `skills/three-kingdoms-vr-arena/SKILL.md`：模式路由表新增"推送/git push/上传git/提交并推送"路由，指向 `SessionCommands.md` §推送。
+
+## 2026-08-14（治理核验同步：integrity/manifest/看板/登记册）
+
 ## 2026-08-13（M00-T005 系统骨架执行完成）
 
 - Step 1-6 全部完成，状态 awaiting_review：
