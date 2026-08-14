@@ -28,11 +28,11 @@
 
 ### `执行当前任务`
 
-仅在状态为 `ready` 且白名单非空时执行。最多提交到 `awaiting_review`。
+先认领任务（更新根 STATUS.json 为 `in_progress` 并填写 `claimedBy`），然后仅在状态为 `in_progress` 且白名单非空时执行。最多提交到 `awaiting_review`。
 
 ### `继续执行当前任务`
 
-只用于状态为 `in_progress` 且未触发停止条件的任务。
+仅用于状态已为 `in_progress`（已认领）且未触发停止条件的任务。
 
 ### `恢复阻塞任务`
 

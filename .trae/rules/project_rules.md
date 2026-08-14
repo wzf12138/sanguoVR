@@ -18,6 +18,7 @@
 
 ## 执行规则
 
+- **认领门禁（最高优先级）**：执行模型或用户在任何文件修改之前，必须先将根 `.trae/execution/active/STATUS.json` 中对应任务状态更新为 `in_progress` 并填写 `claimedBy`（格式 `session-{YYYYMMDD}-{序号}`）。未认领不得开始实施。用户执行任务同样适用（由 AI 监督模型代为更新或提示用户）。认领流程详见 `governance/ExecutionModel.md`。
 - 不询问已在批准方案中明确的事项；直接实施并验证。
 - 修改已有文件前必须先读取，采用最小差异。
 - 不把规划描述为实现，不把桌面验证描述为 PICO 真机验证。

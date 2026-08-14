@@ -8,7 +8,7 @@
 
 | ID | 描述 | 位置 | 引入原因 | 影响 | 偿还计划 | 优先级 | 状态 |
 |---|---|---|---|---|---|---|---|
-| TD-001 | UE5.8 与 PICO Neo3 不兼容，项目需降级到 UE5.6 | 引擎版本 / 全项目 | M00-T004 真机验证发现 Neo3 运行时 3.0.1 与 UE5.8 xrCreateSession 不兼容 | 阻塞 PICO 真机验证；需重建项目 | 用户决策后重建 UE5.6 项目，迁移 Source/ 和 Content/ | 高 | open |
+| TD-001 | UE5.8 与 PICO Neo3 不兼容，项目需降级到 UE5.6 | 引擎版本 / 全项目 | M00-T004 真机验证发现 Neo3 运行时 3.0.1 与 UE5.8 xrCreateSession 不兼容 | 阻塞 PICO 真机验证；需重建项目 | **已偿还（2026-08-11）**：项目已重建为 UE5.6（EngineAssociation=5.6）+ PICO OpenXR Plugin OS5，Source/ 与 Content/ 迁移完成，Neo3 真机场景可见；遗留链路债务见 TD-005（swapchain 补丁） | 高 | resolved |
 | TD-002 | systems/ 指引缺少接口契约定义 | systems/01-07 | M00 规划期侧重职责边界，未到接口定义阶段 | M01+ 实现时接口依赖隐式约定 | 已补充规划级接口契约（2026-08-11） | 中 | resolved |
 | TD-003 | 决策登记缺少 ADR 上下文 | registers/01-decision-register.md | 表格格式侧重快速浏览，未记录备选方案和后果 | 关键决策的"为什么"不可追溯 | 已补充关键决策 ADR 上下文（2026-08-11） | 中 | resolved |
 | TD-004 | 无代码-文档漂移检测机制 | governance/ReviewProtocol.md | M00 阶段无实际代码，漂移问题尚未显现 | 实现推进后 systems/ 指引可能静默失效 | 已在 ReviewProtocol 增加文档同步验证（2026-08-11） | 中 | resolved |
@@ -17,6 +17,8 @@
 | TD-007 | 输入映射为 Quest 风格，未按 PICO Touch 绑定；OpenXR Input 缺 PlayerMappableInputConfig | Content/VRTemplate/Input/*.uasset、Config/DefaultInput.ini | 基于 UE5.6 官方 VR 模板（Quest 默认按键）；PICO 官方文档要求绑定 PICO Touch 按键 | 真机手柄按键不可用、手柄模型不显示 | **已偿还（2026-08-12）**：5 个 IMC 已按 PICO 官方文档绑定 PICO Neo3 键（IMC_Default/Hands/Menu/Weapon×2，二进制核验通过）；遗留项（PlayerMappableInputConfig、手柄模型挂载、真机复测）转 M00-T004 跟踪 | 高 | resolved |
 | TD-008 | `DefaultInput.ini` 曾指向不存在的 `/Game/XRFramework/Input/`（5.8 迁移残留） | Config/DefaultInput.ini | UE5.8→5.6 迁移时 IMC 路径未同步 | 曾导致 5 个 IMC 全部加载失败、输入不可用 | 已修复为 `/Game/VRTemplate/Input/`（2026-08-11，v3 日志确认 IMC 加载成功） | 高 | resolved |
 | TD-009 | 安装版引擎 `Engine\Intermediate\Build\BuildRules\` 被误删（UE5Rules.dll） | 引擎目录（项目外） | 排障时误将引擎 BuildRules 当缓存删除 | UE5Rules.dll 本机无法从源码完整重建（引擎裁剪工具源码），曾阻塞全部构建 | 已用 Epic Launcher「验证/修复」恢复（2026-08-11）；经验已写入 PicoNeo3BuildGuide「已知构建坑」 | 高 | resolved |
+| TD-010 | 编辑器自动化工具链变更：安装 UEBridgeMCP（GPL-3.0），移除未编译通过的 UnrealMCP（MIT） | Plugins/UEBridgeMCP、VRSanguoYanWuchang.uproject | UE5.6 无官方 MCP（官方仅 5.8）；UnrealMCP 在 5.6 编译失败（TraceServices/Material/StateTree/Niagara API 不兼容），UEBridgeMCP 5.6 编译零改动通过 | 编辑器可通过 HTTP 8080 被 AI 自动化操作（407 工具）；GPL-3.0 许可证对商业分发有传染风险，上架前需评估 | **评估结论（2026-08-13）**：开发期使用无碍；上架前需评估 GPL-3.0 是否影响分发，必要时移除插件或更换方案；UnrealMCP 源码备份在临时目录可恢复 | 中 | open |
+| TD-011 | PICO Neo3 真机运行时卡顿 | 全项目运行时 | 2026-08-13 真机验收时用户报告"有些卡顿"（隐藏骨骼手部动画后仍存在） | 影响 VR 体验流畅度，可能触发晕动 | 后续用 T006 性能门禁定位瓶颈（绘制调用/着色器/分辨率/帧率），针对优化 | 中 | open |
 
 ## 债务管理规则
 

@@ -3,6 +3,17 @@
 > 适用于：模型、骨骼、动画、材质、纹理、音效、特效、UI 等 UE Content 资产的生产任务。
 > 不适用于：C++ 代码、Blueprint 逻辑、系统架构等代码任务（使用 `task-template.md`）。
 
+## 0. 认领协议（在任何文件修改之前完成）
+
+执行方在开始实施前必须认领任务：
+1. 读取根 `.trae/execution/active/STATUS.json`，确认目标任务 `status` 为 `ready`
+2. 检查五件套完整、无白名单冲突
+3. 更新根 STATUS.json：`status` -> `in_progress`，`claimedBy` 填写会话标识
+4. 同步更新任务目录 STATUS.json
+5. 重新读取根 STATUS.json 确认更新成功
+
+未完成认领不得修改任何文件。用户执行任务由 AI 监督模型代为更新。
+
 ## 1. 任务标识
 
 - 任务编号：`MXX-TNNN`

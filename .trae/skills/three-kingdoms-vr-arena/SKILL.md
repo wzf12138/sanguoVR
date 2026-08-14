@@ -67,6 +67,7 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 执行模式必须逐份读取并同时满足：
 
+0. **认领（必须在任何文件修改之前）**：从根 STATUS.json 选择 `status` 为 `ready` 的任务，检查五件套完整、无白名单冲突后，立即将根 STATUS.json 中对应条目 `status` 更新为 `in_progress`、`claimedBy` 填写会话标识。用户执行任务由 AI 监督模型代为更新。未完成认领不得修改任何文件。
 1. `.trae/execution/active/STATUS.json`（根 STATUS.json，任务状态唯一权威）：`activeTasks` 数组中至少存在一个 `status` 为 `ready` 或 `in_progress` 的任务。
 2. 认领目标任务后，`.trae/execution/active/{taskId}/ALLOWLIST.txt`：至少一行非空、非注释的明确相对路径（路径相对于项目根目录 `VRSanguoYanWuchang/`）。
 3. `.trae/execution/active/{taskId}/TASK.md`：目标、范围、步骤、停止条件、回退和报告路径完整。

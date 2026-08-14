@@ -1,0 +1,10 @@
+{
+  "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
+  "taskId": "M01-T005",
+  "milestone": "M01",
+  "status": "in_progress",
+  "claimedBy": "session-20260813-001",
+  "startedAt": "2026-08-13",
+  "updatedAt": "2026-08-13",
+  "info": "审核打回（用户：真机验证未做）。继续执行：PIE/真机性能验证、编辑器目视确认。"
+}

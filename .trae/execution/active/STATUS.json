@@ -3,20 +3,47 @@
     {
       "taskId": "M00-T004",
       "milestone": "M00",
-      "status": "in_progress",
-      "claimedBy": "session-20260811-execution",
+      "status": "approved",
+      "claimedBy": null,
       "startedAt": "2026-08-09",
-      "updatedAt": "2026-08-12",
-      "note": "UE5.6 迁移执行中：swapchain 补丁生效、Neo3 真机场景可见；输入映射已按 PICO 官方文档绑定（5 个 IMC 全部配好 PICO Neo3 键，2026-08-12 完成）；遗留：VRPawn 手柄模型挂载（StaticMesh 组件）、OpenXR Input PlayerMappableInputConfig、真机复测输入。"
+      "updatedAt": "2026-08-13",
+      "note": "审核批准（2026-08-13）。"
     },
     {
       "taskId": "M00-T005",
       "milestone": "M00",
+      "status": "in_progress",
+      "claimedBy": "session-20260813-t005",
+      "startedAt": "2026-08-13",
+      "updatedAt": "2026-08-13",
+      "note": "系统骨架与数据驱动边界。执行完成：Step 1-6 代码+关卡全部就绪（7 接口/8 DA/流程状态机/能力组件/TestDummy/L_SkeletonTest）。遗留：PIE 运行验证待用户确认。修复：.uproject 补 Modules 字段（用户批准）、Build.cs 加 GameplayTags+AIModule（用户批准）。"
+    },
+    {
+      "taskId": "M00-T006",
+      "milestone": "M00",
       "status": "ready",
       "claimedBy": null,
       "startedAt": null,
-      "updatedAt": "2026-08-11",
-      "note": "T004 因 PICO 设备阻塞，用户批准并发启动 T005。"
+      "updatedAt": "2026-08-13",
+      "note": "自动化、诊断与交付门禁。原'已批准'纠正为 ready。前置依赖 T005。"
+    },
+    {
+      "taskId": "M01-T005",
+      "milestone": "M01",
+      "status": "in_progress",
+      "claimedBy": "session-20260813-001",
+      "startedAt": "2026-08-13",
+      "updatedAt": "2026-08-13",
+      "note": "审核打回（用户：真机验证未做）。继续执行：PIE/真机性能验证、编辑器目视确认。"
+    },
+    {
+      "taskId": "M02-PREP-001",
+      "milestone": "M02",
+      "status": "in_progress",
+      "claimedBy": "user-20260813-001",
+      "startedAt": "2026-08-13",
+      "updatedAt": "2026-08-13",
+      "note": "审核 requires_changes。规格定稿（平台/骨架/武器/动画/六武将）。剩余：Step 2 参考图片收集。继续在本任务下完成后重新提交审核。"
     }
   ]
 }

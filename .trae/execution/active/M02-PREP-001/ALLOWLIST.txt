@@ -1,0 +1,12 @@
+# M02-PREP-001 白名单
+# 用户执行任务，主要工作在项目外部进行
+# 以下为交付物落盘路径（相对于项目根目录 VRSanguoYanWuchang/）
+# 美术参考图片
+Content/VRSanguo/Art/References/**
+# 任务报告与登记册
+.trae/execution/reports/tasks/M02-PREP-001.md
+.trae/registers/10-asset-register.md
+.trae/execution/active/M02-PREP-001/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/CHANGELOG.md
+# 白名单外：所有 Source/、Config/、Plugins/、治理锁定文件、VR 模板资产

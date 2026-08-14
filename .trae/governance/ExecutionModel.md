@@ -13,15 +13,51 @@
 - 按任务包实施
 - 继续执行任务
 
-## 任务认领
+## 任务认领（必须在任何文件修改之前完成）
+
+> **硬性门禁**：未完成认领不得开始实施、不得修改任何文件。此规则对 AI 执行和用户执行同样适用。
 
 执行模型启动时，从 `.trae/execution/active/STATUS.json`（下称**根 STATUS.json**）的 `activeTasks` 数组中选择一个 `status` 为 `ready` 的任务认领。认领**必须先检查后更新**：
 
 1. **检查五件套**：确认 `.trae/execution/active/{taskId}/` 下存在 `TASK.md`、`ALLOWLIST.txt`、`INPUTS.md`、`CHECKS.md`、`STATUS.json` 五个文件且内容完整。
 2. **冲突检测**：读取其它 `in_progress` 任务的 `ALLOWLIST.txt`，确认无独占路径重叠。共享文件（`.trae/CHANGELOG.md`、登记册、`integrity.yaml`）不视为冲突。ALLOWLIST 中所有路径相对于项目根目录 `VRSanguoYanWuchang/`。
-3. **认领**：以上两步通过后，更新根 STATUS.json 中对应条目的 `status` 为 `in_progress`，`claimedBy` 填写当前会话标识。格式：`"session-{YYYYMMDD}-{序号}"`，如 `"session-20260811-001"`。同时同步更新 `.trae/execution/active/{taskId}/STATUS.json`。
+3. **认领（写操作）**：以上两步通过后，立即更新根 STATUS.json 中对应条目的 `status` 为 `in_progress`，`claimedBy` 填写当前会话标识。格式：`"session-{YYYYMMDD}-{序号}"`，如 `"session-20260811-001"`。同时同步更新 `.trae/execution/active/{taskId}/STATUS.json`。
+4. **认领后验证**：重新读取根 STATUS.json，确认 `status` 确实为 `in_progress` 且 `claimedBy` 为当前会话。确认通过后才能进入前置门禁。
+
+用户执行任务的认领：由 AI 监督模型代为更新根 STATUS.json（`status` 为 `in_progress`，`claimedBy` 填写 `"user-{YYYYMMDD}-{序号}"`），或提示用户确认后更新。
 
 根 STATUS.json 是任务状态的**唯一权威**。任务目录下的 `STATUS.json` 为本地便利副本，冲突时以根 STATUS.json 为准。
+
+### 状态更新时机（强制）
+
+| 时机 | 操作 | 谁负责 |
+|------|------|--------|
+| 开始执行前 | `ready` -> `in_progress`，填写 `claimedBy` | 执行模型或 AI 监督模型 |
+| 遇到阻塞时 | `in_progress` -> `blocked`，记录原因 | 执行模型 |
+| 完成实施后 | `in_progress` -> `awaiting_review`，写入报告 | 执行模型 |
+| 审核通过后 | `awaiting_review` -> `approved` | 审核模型/用户 |
+| 审核需修改 | `awaiting_review` -> `in_progress` | 审核模型 |
+| 审核拒绝 | `awaiting_review` -> `blocked` | 审核模型 |
+
+每次状态变更必须同时更新根 STATUS.json 和任务目录 STATUS.json，并在 CHANGELOG 记录。
+
+## 提交审核前自检（硬性门禁）
+
+> **执行模型在将任务状态更新为 `awaiting_review` 之前，必须逐项完成以下自检。任一自检项未通过，任务必须保持 `in_progress`，不得提交审核。**
+
+### 自检清单
+
+1. **交付物完整性**：逐项核对 `TASK.md` 中列出的全部交付物，确认每个交付物**实际存在、非空且不是占位正文**。未产出的交付物不得以"待办"、"后续补充"、"已规划"等理由跳过。
+2. **CHECKS.md 全项通过**：逐项核对 `CHECKS.md` 中"执行后"段的每一条检查项，确认全部通过且有实际证据。未通过的检查项不得以"待用户执行"、"后续验证"等理由豁免。
+3. **禁止路径未修改**：对照 `ALLOWLIST.txt` 确认无越界修改。禁止路径（`Source/`、`Config/`、`Plugins/`、治理锁定文件等）未被修改。
+4. **验证证据可定位**：每项通过的检查均有对应的可定位证据（文件路径、日志行号、编辑器截图引用等），不存在"已确认"但无证据链的声明。
+5. **无遗留待办伪装**：任务报告中不得出现将未完成交付物包装为"遗留待办"、"风险"或"后续工作"的表述，除非该交付物在 `TASK.md` 中明确标注为"可选"或"条件性"（如"如时间允许"、"P2 优先级"）。
+
+### 自检失败处理
+
+- 任一自检项失败 → 任务保持 `in_progress`，继续实施缺失项。
+- 自检项失败但执行模型无法自行完成（如依赖用户操作）→ 任务转为 `blocked`，在报告中明确列出阻塞项和所需用户操作。
+- **禁止**：自检失败后仍将状态更新为 `awaiting_review`。
 
 ## 前置门禁
 

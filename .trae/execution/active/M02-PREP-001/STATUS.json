@@ -1,0 +1,10 @@
+{
+  "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
+  "taskId": "M02-PREP-001",
+  "milestone": "M02",
+  "status": "in_progress",
+  "claimedBy": "session-20260813-m02prep",
+  "startedAt": "2026-08-13",
+  "updatedAt": "2026-08-13",
+  "info": "审核结论 requires_changes（2026-08-13）：规格决策完成，但参考图片未收集。待用户收集图片后重新提交审核。"
+}

@@ -3,6 +3,16 @@
 	"EngineAssociation": "5.6",
 	"Category": "",
 	"Description": "",
+	"Modules": [
+		{
+			"Name": "VRSanguoYanWuchang",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	],
 	"Plugins": [
 		{
 			"Name": "OpenXR",
@@ -43,6 +53,10 @@
 				"Linux",
 				"Android"
 			]
+		},
+		{
+			"Name": "UEBridgeMCP",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [

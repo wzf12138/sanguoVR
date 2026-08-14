@@ -1,5 +1,157 @@
 # ChangeLog
 
+## 2026-08-13（M00-T005 系统骨架执行完成）
+
+- Step 1-6 全部完成，状态 awaiting_review：
+  - Core/：VRTypes（12 枚举 + 9 结构体）、VRLogChannels（8 日志分类）、VRGameplayTags（11 个 Native Tag）
+  - Interfaces/：7 项接口（IInteractable/IWeaponSource/IDamageable/IDefenseProvider/IMovementMode/IBattleParticipant/ICharacterCapability）
+  - Data/：8 个 DA 基类（Weapon/Armor/MovementProfile/MatchRuleSet/Unit/Commander/Arena/Avatar，SchemaVersion+PostLoad+ValidateData）
+  - Flow/：VRGameFlowComponent 状态机；Combat/：VRCharacterCapabilityComponent + VRTestDummy
+  - L_SkeletonTest.umap 关卡（VRTestDummy_0 + Floor_Graybox，12223B 落盘验证）
+  - 编译通过（13 动作 Succeeded），编辑器加载 DLL + 类注册验证通过
+- 工程修复（用户批准）：`.uproject` 补 Modules 字段（此前缺失导致编辑器不加载游戏模块）；Build.cs 加 GameplayTags + AIModule 依赖
+- 实施偏差记录：EMovementMode→EVRMovementMode（引擎同名冲突）；IInteractable 手部参数用 AActor*（AVRHand M01 收紧）
+- 遗留：PIE 运行验证（可转 T006 VRGameFlowSpec 自动化覆盖）；VRPawn 挂载 Capability 组件（M01）
+- 报告：`execution/reports/tasks/M00-T005.md`
+
+## 2026-08-13（M01-T005 执行完成：灰盒竞技场关卡）
+
+- AI 执行（session-20260813-001）完成 `M01-T005: 灰盒竞技场关卡`，状态 in_progress -> awaiting_review。
+- 交付物：`Content/VRSanguo/Dev/L_Prototype_1v1.umap`（26 Actor）——20x20m 地面、4m 围墙、掩体 A/B（1.2m 半身高）、高台 C（1m + 26.6° 斜坡）、PlayerStart/AI TargetPoint 对称出生、武器生成位 x2、NavMeshBoundsVolume 20x20x4、RecastNavMesh（Static 已构建）、DirectionalLight/SkyLight/ExponentialHeightFog、9 个 TextRender 尺寸标注。
+- World Settings GameMode 使用模板 `VRGameMode`（M00-T005 的 BP_VRGameMode 未就绪，按任务约定回退）。
+- 自动化验证：关卡加载、几何尺寸/对称/材质断言、出生区无障碍、NavMesh 构建日志（`BuildPaths` 触发 `UNavigationSystemV1::Build`）全部 PASS。
+- 偏差记录：标注用英文（缺中文字体资产）；Lightmass 烘焙未执行（无头编辑器 DDC/Zen 写入受限，需 GUI 会话）；PIE fps >= 90 待编辑器/真机验证；MapCheck Nanite/VSM 警告待变更申请。
+- 登记册同步：07-task-register、10-asset-register（新增 AST-009 MAP）；报告 `execution/reports/tasks/M01-T005.md`。
+- 并发说明：执行期间根 STATUS.json 被并行会话更新（M02-PREP-001 用户认领 in_progress、各任务 note 精简），认领写入被覆盖；已重新读取最新内容合并，保留并行条目并将 M01-T005 更新为 awaiting_review。
+
+## 2026-08-13（M02-PREP-002 撤销：回归 M02-PREP-001 统一执行）
+
+- 用户反馈：M02-PREP-001 本身已包含 Step 2（参考图片收集），审核 `requires_changes` 回退到 `in_progress` 后应继续在本任务下完成，无需拆分独立任务包。
+- 撤销 M02-PREP-002：删除 `active/M02-PREP-002/` 全部五件套，从根 STATUS.json 和 07-task-register 移除。
+- 将 M02-PREP-002 的收集协议细节（子目录结构、命名格式、搜索关键词、六武将名单）合并到 M02-PREP-001 的 TASK.md Step 2 中。
+- M02-PREP-001 状态保持 `in_progress`，继续完成 Step 2 后重新提交审核。
+
+## 2026-08-13（M02-PREP-002 任务包创建：美术参考图片收集）
+
+- M02-PREP-001 审核反馈 `requires_changes`：规格决策全部定稿，唯一缺口是参考图片未收集。
+- 创建用户执行任务包 `M02-PREP-002: 汉末三国美术参考图片收集`。
+- 5 批次逐项收集：五武器（环首刀/盾/戟/矛/弓）、甲胄（札甲/皮甲/盔/护臂/胫甲）、兵种（5 类）、场景（校场/夯土/营帐/军旗/战鼓）、武将（关羽/张飞/赵云）。
+- 每批次含搜索关键词、文件命名规则、子目录结构，执行模型逐项引导用户收集并验证。
+- 补齐后 M02-PREP-001 可一并提交审核通过。
+- 活动任务包五件套创建于 `active/M02-PREP-002/`。
+
+## 2026-08-13（治理修复：禁止执行模型未完成即提交审核）
+
+- 问题：执行模型频繁将未完成交付物包装为"待办"后直接提交 `awaiting_review`，绕过完成定义。M02-PREP-001 为典型案例：参考图片未收集即提交审核。
+- 修复（2 个文件，用户直接批准）：
+  - `governance/ExecutionModel.md`：新增"提交审核前自检（硬性门禁）"段落，含 5 项自检清单（交付物完整性、CHECKS 全项通过、禁止路径未修改、验证证据可定位、无遗留待办伪装）和自检失败处理规则。位于状态更新时机表之后、前置门禁之前。
+  - `governance/definition-of-done.md` §6：新增"禁止提前提交审核"条款，明确未完成交付物不得以"待办/遗留/后续补充/已规划/待用户执行"等任何形式包装为已交付，也不得通过挪入报告"风险/待办"段落绕过完整性检查。
+
+## 2026-08-13（M02-PREP-001 审核：requires_changes）
+
+- 审核模型复核 M02-PREP-001，结论 `requires_changes`。
+- 通过项：平台选型（5 平台完整对比）、骨架规格（MannequinXR 兼容）、武器规格（5 类定稿）、动画清单（37 个）、ALLOWLIST 合规、无第二 Skill、无治理锁定文件修改、无新增技术债、无总纲偏离。
+- 未通过项：`Content/VRSanguo/Art/References/` 目录未创建，参考图片（35-55 张）未收集。CHECKS.md 要求"参考图片已导入且可在编辑器中预览"，当前不满足。
+- 附加发现：`integrity.yaml` 过时（仍记录 2026-08-11 状态），不阻塞本任务但需后续治理同步。
+- 状态：`awaiting_review` → `in_progress`。待用户收集图片后重新提交审核。
+
+## 2026-08-13（M02-PREP-001 执行完成：资产生成准备与平台选型）
+
+- 用户执行、AI 监督任务完成 5 步交互引导：平台调研、美术参考收集、骨架规格、武器规格、动画需求清单。
+- 平台选型：腾讯混元 3D（每日 20 免费资格）为主生成工具 + 3ds Max 自建修正 + 免费资源补充；动画完全自建（P1 备选 Mixamo 重定向 12 个基础动画）。
+- 骨架定稿：UE5.6 MannequinXR 兼容；兵卒 170cm / 武将 180cm；五指骨骼；`weapon_r/weapon_l/weapon_back/weapon_hip/armor_*` 挂载点；FBX。
+- 五武器形制定稿：环首刀、钩镶/长方盾、戟、矛/槊、角弓/反曲弓；长度以美术指南为准；模型命名按形制（`Shield_Han`/`Polearm_Ji`），命名标准待变更申请同步。
+- 六武将名单：吕布、典韦、关羽、张飞、赵云、马超（"一吕二典三关四张五赵六马"）。
+- 动画清单约 37 个（含瞄准姿态、阵线推进、收放/换手；弓箭不做连射；保留盾牌推挤）。
+- 报告写入 `execution/reports/tasks/M02-PREP-001.md`；状态 `awaiting_review`；资产登记册新增 AST-002~008（draft）。
+- 待办：参考图片收集（用户执行，AI 统一重命名）；命名标准变更申请；混元 3D 输出验证。
+
+## 2026-08-13（认领门禁治理加固：7 文件 + 4 任务包同步）
+
+- 问题：执行模型在另一个会话中开始执行任务但未更新 STATUS.json 状态（仍为 `ready`），导致状态追踪失效。
+- 根因：认领规则虽在 ExecutionModel.md 中定义，但缺少强制性前置门禁，执行模型可能跳过认领直接开工。
+- 修复（7 个治理文件）：
+  - `rules/project_rules.md`：执行规则新增"认领门禁（最高优先级）"为第一条，明确"未认领不得开始实施"。
+  - `governance/ExecutionModel.md`：任务认领段提升为第一节，标题加"必须在任何文件修改之前完成"；新增"硬性门禁"声明、认领后验证步骤（第 4 步）、用户执行任务认领说明、状态更新时机表（6 个时机）。
+  - `skills/three-kingdoms-vr-arena/SKILL.md`：active 门禁路径新增第 0 步"认领"，明确"未完成认领不得修改任何文件"。
+  - `governance/SessionCommands.md`：`执行当前任务`命令增加"先认领任务"前置要求。
+  - `execution/task-template.md`：新增"§0 认领协议"段（5 步认领流程）。
+  - `execution/task-template-asset.md`：同上。
+  - `execution/task-template-level.md`：同上。
+- 修复（4 个已有任务包 CHECKS.md）：
+  - M00-T005、M00-T006、M01-T005、M02-PREP-001 的"执行前"段新增认领检查项。
+  - M02-PREP-001（用户任务）特别标注"AI 监督模型代为更新"。
+
+## 2026-08-13（M01-T005 任务包创建：灰盒竞技场）
+
+- 创建 AI 执行任务包 `M01-T005: 灰盒竞技场关卡`。
+- 无前置依赖，可与 T005/T006 并行执行。
+- 使用 LevelPrototyping 搭建 20x20m 1v1 测试场景：出生点、掩体、高台、NavMesh、光照。
+- 活动任务包五件套创建于 `active/M01-T005/`。
+- 根 STATUS.json、07-task-register 同步。
+
+## 2026-08-13（M00-T006 复核与详规扩充：纠正"已批准"状态）
+
+- 调查发现 T006 标记"已批准"但交付物从未实现：V-006 验证状态为"待验证"、Source 无测试文件、无活动任务包、原报告因"4 行记号级"已删除。
+- 详规从 25 行扩充为 6 步可执行方案：
+  - Step 1：构建门禁验证（Win64 + Android，无 T005 依赖可并行）
+  - Step 2：8 个日志分类运行时验证
+  - Step 3：DataAsset 校验自动化测试（8 个 DA 基类）
+  - Step 4：接口与流程状态机自动化测试
+  - Step 5：性能采样基线配置
+  - Step 6：测试场景规划表（1v1/4v4/武器训练场）
+- M01 范围交付物（武器命中去重、格挡、VR 调试面板）explicitly deferred。
+- 活动任务包五件套创建于 `active/M00-T006/`。
+- 状态纠正：已批准 -> ready（前置依赖 T005 Step 1-5）。
+- 根 STATUS.json、M00/README.md、07-task-register 同步。
+
+## 2026-08-13（M02-PREP-001 任务包创建：用户资产生成准备）
+
+- 创建用户执行任务包 `M02-PREP-001: M02 资产生成准备与平台选型`。
+- 执行方：用户执行，AI 监督。可立即开始，与 T005/M01 并行。
+- 包含 5 步：平台调研、美术参考收集、骨架规格确定、武器规格确定、动画需求清单。
+- 活动任务包五件套创建于 `active/M02-PREP-001/`。
+- 根 STATUS.json、07-task-register 同步新增任务条目。
+
+## 2026-08-13（M00-T005 详规修订：对齐架构改版）
+
+- T005 详规全面修订，对齐 2026-08-11 架构改版后的系统接口契约与标准：
+  - 接口签名：7 项接口方法全面对齐 `standards/05` C++ 声明和 `systems/01-07` 接口契约（IInteractable/IWeaponSource/IDamageable/IDefenseProvider/IMovementMode/IBattleParticipant/ICharacterCapability）。
+  - Data Asset 类名：从 `UVRS*Data` 改为 `UVR*Definition/Profile/RuleSet`，对齐 `systems/index.md` 数据资产目录和 `standards/02` 命名标准；新增 SchemaVersion 与 PostLoad 迁移（对齐 `standards/04`）。
+  - 流程状态机：`EGamePhase` -> `EGameSessionPhase`，`UVRSGameFlowSubsystem` -> `UVRGameFlowComponent`，方法签名对齐 `systems/01` 契约（RequestPhaseTransition/StartMatch/EndMatch/ResetMatch）。
+  - 公共类型：新增 `FAttackRequest`/`FCombatResult`/`FDefenseResult`/`FMovementTarget`/`FMovementResult` 等（对齐 systems/02-04），替换原 `FDamageResult`。
+  - 文件/类命名前缀：`VRS` -> `VR`（对齐 `standards/02`）。
+  - VR 模板引用：更新为 UE5.6 模板实际资产路径（`Content/VRTemplate/`）。
+  - 前置依赖：T004 状态从 `blocked` 更新为 `approved`。
+- 活动任务包五件套同步更新（TASK.md/ALLOWLIST.txt/INPUTS.md/CHECKS.md/STATUS.json）。
+- `M00/README.md` 任务状态表同步：T004 -> approved，T005 -> ready（详规修订）。
+- `07-task-register.md` T005 条目同步。
+
+## 2026-08-13（M00-T004 审核批准：approved）
+
+- 审核模型复核通过，用户批准。M00-T004 状态：awaiting_review → approved。
+- 核心成果：PICO Neo3 真机场景可见、输入可用、手柄模型显示、VRPawn 稳定生成。
+- 遗留：Neo3 卡顿（TD-011）、swapchain 补丁（TD-005）、UEBridgeMCP 工具链（TD-010），不阻塞 M00。
+- STATUS.json（根+任务）、07-task-register 同步。
+
+## 2026-08-13（M00-T004 审核修正：4 项状态同步）
+
+- 审核模型提出 4 项修正，全部处理：
+  1. V-008 状态更新为"已验证（2026-08-13）"，证据链含输入绑定、手柄挂载、碰撞修复（`09-verification-register.md`）。
+  2. PicoValidationMatrix 回填真机列：VR-001~VR-005 通过（2026-08-13），VR-006/007/008 保持待验证（未专项测试不包装）（`vr/PicoValidationMatrix.md`）。
+  3. 补齐任务报告 `execution/reports/tasks/M00-T004.md`（TASK.md Phase 7 要求）。
+  4. TD-001 标记 resolved（UE5.8→UE5.6 降级已于 2026-08-11 完成）（`11-tech-debt-register.md`）。
+
+## 2026-08-13（M00-T004 真机验收通过：手柄模型显示、输入生效）
+
+- VRPawn 手柄模型与碰撞修复（MCP 自动化 + 真机验证）：
+  - 挂载 `SM_PICONeo3_L/R` 静态网格到 MotionControllerLeftGrip/RightGrip 下；原骨骼手部组件 HandLeft/HandRight 已隐藏（bVisible=false，生成实例实测验证）。
+  - 手柄 StaticMesh 碰撞预设改为 NoCollision（解决 SpawnActor failed at spawn location 导致 VRPawn 无法生成、手柄/输入全失效的根因）。
+  - 真机验证（2026-08-13，新 APK 9:46）：手柄单独显示、无手部重叠、操作可用；日志无 SpawnActor 失败。
+- 编辑器自动化工具链（TD-010）：安装 UEBridgeMCP（UE5.6 原生兼容，HTTP 8080，407 工具）；UnrealMCP 因 5.6 编译失败移除（备份在临时目录）。GPL-3.0 许可证上架前需评估。
+- 遗留（TD-011）：PICO Neo3 真机运行时卡顿，待 T006 性能门禁定位优化。
+- 任务状态：M00-T004 → awaiting_review（根 STATUS.json、07-task-register、TD-007 resolved 同步）。
+
 ## 2026-08-12（M00-T004：输入映射按 PICO 官方文档绑定完成）
 
 - 编辑器内配置（用户执行，AI 核验）：

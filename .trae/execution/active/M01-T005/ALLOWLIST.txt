@@ -1,0 +1,15 @@
+# M01-T005 白名单
+# 所有路径相对于项目根目录 VRSanguoYanWuchang/
+# 关卡文件（新增）
+Content/VRSanguo/Dev/L_Prototype_1v1.umap
+# 编译产物
+Intermediate/**
+Binaries/**
+# .trae 可写文件
+.trae/registers/07-task-register.md
+.trae/registers/10-asset-register.md
+.trae/execution/reports/tasks/M01-T005.md
+.trae/execution/active/M01-T005/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/CHANGELOG.md
+# 白名单外：Source/、Config/、Plugins/、治理锁定文件、VR 模板资产、T004/T005/T006 白名单内文件

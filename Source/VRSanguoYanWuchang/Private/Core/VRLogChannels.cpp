@@ -1,0 +1,12 @@
+// VR 三国演武场 - 日志分类定义
+
+#include "Core/VRLogChannels.h"
+
+DEFINE_LOG_CATEGORY(LogVRSanguoCore);
+DEFINE_LOG_CATEGORY(LogVRSanguoVR);
+DEFINE_LOG_CATEGORY(LogVRSanguoCombat);
+DEFINE_LOG_CATEGORY(LogVRSanguoWeapon);
+DEFINE_LOG_CATEGORY(LogVRSanguoMovement);
+DEFINE_LOG_CATEGORY(LogVRSanguoAI);
+DEFINE_LOG_CATEGORY(LogVRSanguoFlow);
+DEFINE_LOG_CATEGORY(LogVRSanguoPerf);

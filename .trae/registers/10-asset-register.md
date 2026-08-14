@@ -37,7 +37,16 @@
 
 ## 当前资产
 
-*暂无登记资产。资产随里程碑任务产出后登记。*
+| 资产ID | 类型 | 路径 | 状态 | 前置资产 | 关联任务 | 备注 |
+|---|---|---|---|---|---|---|
+| AST-002 | SKM | Content/VRSanguo/Art/Characters/SK_Character_Body | draft | — | M02-PREP-001 | MannequinXR 兼容骨架，规格已定 |
+| AST-003 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Sword_Han | draft | AST-002 | M02-PREP-001 | 环首刀，<3K tris，全长~100cm |
+| AST-004 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Shield_Han | draft | AST-002 | M02-PREP-001 | 钩镶/长方盾 60×40cm，<2K tris |
+| AST-005 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Polearm_Ji | draft | AST-002 | M02-PREP-001 | 戟，<4K tris，全长~250cm |
+| AST-006 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Spear_Qiang | draft | AST-002 | M02-PREP-001 | 矛/槊，<3K tris，全长~300cm |
+| AST-007 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Bow_Recurve | draft | AST-002 | M02-PREP-001 | 角弓/反曲弓，<3K tris，弦独立骨骼 |
+| AST-008 | TEX | Content/VRSanguo/Art/References/** | draft | — | M02-PREP-001 | 参考图片集（35-55 张），待用户收集后 AI 统一重命名 |
+| AST-009 | MAP | Content/VRSanguo/Dev/L_Prototype_1v1.umap | awaiting_review | — | M01-T005 | 1v1 灰盒竞技场测试关卡：20x20m 地面、4m 围墙、掩体 A/B、高台 C、NavMesh（Static 已构建）、VRGameMode；26 Actor |
 
 ## 登记规则
 

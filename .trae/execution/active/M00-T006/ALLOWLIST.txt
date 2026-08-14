@@ -1,0 +1,23 @@
+# M00-T006 白名单
+# 所有路径相对于项目根目录 VRSanguoYanWuchang/
+# C++ 测试文件（新增）
+Source/VRSanguoYanWuchang/Public/Tests/VRDataAssetSpec.h
+Source/VRSanguoYanWuchang/Private/Tests/VRDataAssetSpec.cpp
+Source/VRSanguoYanWuchang/Public/Tests/VRInterfaceSpec.h
+Source/VRSanguoYanWuchang/Private/Tests/VRInterfaceSpec.cpp
+Source/VRSanguoYanWuchang/Public/Tests/VRGameFlowSpec.h
+Source/VRSanguoYanWuchang/Private/Tests/VRGameFlowSpec.cpp
+# 模块依赖（修改现有文件）
+Source/VRSanguoYanWuchang/VRSanguoYanWuchang.Build.cs
+# 编译产物
+Intermediate/**
+Binaries/**
+# .trae 可写文件
+.trae/registers/07-task-register.md
+.trae/registers/09-verification-register.md
+.trae/execution/reports/tasks/M00-T006.md
+.trae/execution/active/M00-T006/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/CHANGELOG.md
+.trae/integrity.yaml
+# 白名单外：治理锁定文件、Skill、总纲、Design 产品详规、T004/T005 白名单内文件
