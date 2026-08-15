@@ -8,6 +8,13 @@
 - 弃用：骑砍 .brf 模型与来源不明 DDS 贴图，仅临时区留存。
 - 待办：6 模型减面+贴图压缩+导入 UE（M02 正式任务）；Bow 参考图补 1-3 张。
 
+## 2026-08-15（M00-T005 审核批准：approved）
+
+- M00-T005 审核批准（用户审批）。CHECKS 修正后按新标准逐项核对全部通过。
+- 交付：22 个 C++ 文件编译通过、7 接口/8 DA/状态机/能力组件/TestDummy + L_SkeletonTest 关卡。
+- M01 接管项：流程状态机运行时验证（Combat→Damage→Reset 链路）、VRPawn 挂载 VRCharacterCapabilityComponent。
+- 状态：in_progress → approved。T006 前置依赖已解除。
+
 ## 2026-08-15（治理修复：决策模型 CHECKS-ALLOWLIST 交叉验证门禁 + 任务详规矛盾修复）
 
 - 根因：M00-T005 执行模型以"白名单外/编排职责"为由跳过 CHECKS 检查项，溯源发现任务详规自身存在 CHECKS 与 ALLOWLIST 的结构性矛盾。全量审计发现 4 个任务共 7 处矛盾。

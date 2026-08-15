@@ -12,11 +12,11 @@
     {
       "taskId": "M00-T005",
       "milestone": "M00",
-      "status": "in_progress",
-      "claimedBy": "session-20260813-t005",
+      "status": "approved",
+      "claimedBy": null,
       "startedAt": "2026-08-13",
-      "updatedAt": "2026-08-13",
-      "note": "系统骨架与数据驱动边界。执行完成：Step 1-6 代码+关卡全部就绪（7 接口/8 DA/流程状态机/能力组件/TestDummy/L_SkeletonTest）。遗留：PIE 运行验证待用户确认。修复：.uproject 补 Modules 字段（用户批准）、Build.cs 加 GameplayTags+AIModule（用户批准）。"
+      "updatedAt": "2026-08-15",
+      "note": "审核批准（2026-08-15）。CHECKS 修正后全部通过：22 个 C++ 文件编译通过、7 接口/8 DA/状态机/能力组件/TestDummy 就绪。M01 接管项：运行时流程验证 + VRPawn 组件挂载。"
     },
     {
       "taskId": "M00-T006",

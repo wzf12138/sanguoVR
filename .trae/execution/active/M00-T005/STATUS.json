@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M00-T005",
   "milestone": "M00",
-  "status": "awaiting_review",
-  "claimedBy": "session-20260813-t005",
+  "status": "approved",
+  "claimedBy": null,
   "startedAt": "2026-08-13",
-  "updatedAt": "2026-08-13",
-  "info": "执行完成：Step 1-6 就绪（7 接口/8 DA/流程状态机/能力组件/TestDummy/L_SkeletonTest 关卡）。遗留 PIE 运行验证。工程修复：.uproject 补 Modules、Build.cs 加依赖（均用户批准）。报告见 reports/tasks/M00-T005.md。"
+  "updatedAt": "2026-08-15",
+  "info": "审核批准（2026-08-15）。CHECKS 修正后全部通过。M01 接管项：运行时流程验证 + VRPawn 组件挂载。"
 }
