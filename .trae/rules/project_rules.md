@@ -16,6 +16,25 @@
 - 临时脚本、下载和调试输出：不得进入项目。
 - NTFS 管理脚本：仅项目外 `D:/AWork/TraeAdmin/VRSanguoYanWuchang/`。
 
+## 磁盘与下载规则
+
+本机三盘布局：`C:`（SSD 系统盘）、`D:`（SSD 工作盘）、`E:`（HDD 机械盘）。
+
+| 磁盘 | 用途 | 示例 |
+|------|------|------|
+| `C:` | 仅系统、已安装软件、项目核心依赖 | UE 引擎、VS、Git、Python 等已安装工具 |
+| `D:` | 项目工作区、高频工具、SDK | UE 项目、Android SDK/NDK/JDK、Gradle 缓存 |
+| `E:` | 大文件下载、低频工具、归档、备份 | 安装包、模型素材包、旧版本备份、参考图集归档 |
+
+**强制规则**：
+
+- **禁止默认下载到 C 盘**。任何下载操作（浏览器、`curl`、`wget`、PowerShell `Invoke-WebRequest`、包管理器等）必须显式指定目标路径为 `D:` 或 `E:`。
+- 执行模型下载文件前，必须先确认目标磁盘有足够空间。
+- 一次性使用的大文件（>500MB）直接放 `E:`。
+- 安装包、素材包、SDK 压缩包等低频调用文件放 `E:`。
+- 构建缓存（`Intermediate/`、`Binaries/`、`.gradle/`）仅限 `D:` 项目内或 Gradle 全局缓存目录。
+- 下载完成后应清理临时文件和重复压缩包，不保留冗余副本。
+
 ## 执行规则
 
 - **认领门禁（最高优先级）**：执行模型或用户在任何文件修改之前，必须先将根 `.trae/execution/active/STATUS.json` 中对应任务状态更新为 `in_progress` 并填写 `claimedBy`（格式 `session-{YYYYMMDD}-{序号}`）。未认领不得开始实施。用户执行任务同样适用（由 AI 监督模型代为更新或提示用户）。认领流程详见 `governance/ExecutionModel.md`。
