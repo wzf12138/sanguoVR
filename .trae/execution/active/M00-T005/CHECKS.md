@@ -23,13 +23,20 @@
 - 七项接口编译通过，头文件可被外部引用
 - 8 个日志分类可用，`UE_LOG` 不报错
 - 八个 Data Asset 基类可在编辑器中创建蓝图子类，SchemaVersion 字段存在
-- 流程状态机合法迁移与幂等重置通过（RequestPhaseTransition / StartMatch / EndMatch / ResetMatch）
-- 玩家 VRPawn 挂载 `VRCharacterCapabilityComponent`
+- 流程状态机代码审查通过（合法迁移矩阵 + 幂等重置逻辑正确，不要求运行时编排验证）
 - 不删除任何模板 VR 交互（手部、抓取、瞬移仍可用）
-- 空场景可生成玩家占位 + TestDummy + 重置
 - 接口签名与 systems/01-07 接口契约一致
 - 任务报告写入 `.trae/execution/reports/tasks/M00-T005.md`
 - `active/M00-T005/STATUS.json` 更新为 `awaiting_review`
+
+### M01 接管项（T005 范围外，不阻塞 T005 审核）
+
+以下两项需要 M01 编排逻辑或 ALLOWLIST 外路径，T005 只搭建骨架，M01 完成集成验证：
+
+| 接管项 | 原因 | 接管方 |
+|--------|------|--------|
+| 流程状态机运行时验证（Combat→Damage→Reset 完整链路） | 需要 M01 的编排逻辑驱动阶段切换和伤害调用；T005 无编排职责 | M01 战斗切片 / T006 自动化门禁 |
+| 玩家 VRPawn 挂载 `VRCharacterCapabilityComponent` | 需创建蓝图子类，路径 `Content/VRSanguo/VR/` 不在 T005 ALLOWLIST；详规集成策略划给 M01 | M01 战斗切片 |
 
 ## 阻塞处理
 - 编译失败：检查 UE 5.6 API 兼容性，记录错误日志

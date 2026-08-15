@@ -8,6 +8,20 @@
 - 弃用：骑砍 .brf 模型与来源不明 DDS 贴图，仅临时区留存。
 - 待办：6 模型减面+贴图压缩+导入 UE（M02 正式任务）；Bow 参考图补 1-3 张。
 
+## 2026-08-15（治理修复：决策模型 CHECKS-ALLOWLIST 交叉验证门禁 + 任务详规矛盾修复）
+
+- 根因：M00-T005 执行模型以"白名单外/编排职责"为由跳过 CHECKS 检查项，溯源发现任务详规自身存在 CHECKS 与 ALLOWLIST 的结构性矛盾。全量审计发现 4 个任务共 7 处矛盾。
+- 修复（5 个文件，用户直接批准）：
+
+**任务详规修正（3 个）：**
+- `execution/active/M00-T005/CHECKS.md`：流程状态机验证从"运行时通过"改为"代码审查通过"；VRPawn 挂载 + 空场景运行时验证标记为 M01 接管项。新增"M01 接管项"段。
+- `execution/active/M00-T006/CHECKS.md`：测试场景规划表从"完整"改为"初版完整（写入任务报告）"，终版标记 M01 接管。新增"M01 接管项"段。
+- `execution/active/M02-PREP-001/CHECKS.md`：4 份规格文档明确标注"写入任务报告"。新增"里程碑归属说明"段，标注骨架/武器/动画规格的终版回溯时机（M03）。
+- `execution/M00/T005-SystemSkeleton.md`：完成定义 checkbox 同步修正，验收清单新增"归属"列区分 T005/M01。
+
+**治理门禁（1 个）：**
+- `governance/DecisionModel.md`：新增"任务生成门禁"段，4 项强制交叉验证：CHECKS-ALLOWLIST 交叉验证、里程碑归属标注、ALLOWLIST 路径完整性、禁止路径冲突检测。在任务设为 ready 前必须逐项核对。
+
 ## 2026-08-15（治理修复：ALLOWLIST 缺口禁止跳过检查项）
 
 - 问题：M00-T005 执行模型以"VRPawn 在白名单外"为由跳过 CHECKS.md 硬性检查项（VRPawn 挂载 Capability 组件），将缺口甩给 M01。

@@ -249,17 +249,18 @@ Calibration -> Ready -> Generate -> Combat -> Settlement -> Reset -> Ready
 
 ## 验收清单
 
-| # | 验收项 | 验证方式 |
-|---|--------|----------|
-| 1 | 七项接口编译通过，头文件可被外部引用 | 编译 + `#include` 测试 |
-| 2 | 8 个日志分类可用，`UE_LOG(LogVRSanguoCombat, ...)` 不报错 | 运行时 Output Log 可见 |
-| 3 | 八个 Data Asset 基类可在编辑器中创建蓝图子类，SchemaVersion 字段存在 | Content Browser 右键 -> Miscellaneous -> Data Asset -> 选择基类 |
-| 4 | 游戏流程状态机启动、合法迁移、幂等重置 | 自动化测试：`RequestPhaseTransition(Combat)` 成功，`Combat->Reset` 后所有委托清理 |
-| 5 | 玩家 VRPawn 挂载 `VRCharacterCapabilityComponent`，AI 桩角色走同一接口 | `IsActionAllowed()` 在玩家和 AI 上返回一致结果 |
-| 6 | 不删除任何模板 VR 交互（手部、抓取、瞬移仍可用） | 编辑器 PIE 模式下手柄操作验证 |
-| 7 | 无 1v1 硬编码、无单武器引用、无联网依赖 | 代码审查 |
-| 8 | 空场景可生成玩家全身占位 + TestDummy + 重置 | 编辑器运行验证关卡 |
-| 9 | 接口签名与 systems/01-07 接口契约一致 | 代码审查对照 |
+| # | 验收项 | 验证方式 | 归属 |
+|---|---|---|---|
+| 1 | 七项接口编译通过，头文件可被外部引用 | 编译 + `#include` 测试 | T005 |
+| 2 | 8 个日志分类可用，`UE_LOG(LogVRSanguoCombat, ...)` 不报错 | 运行时 Output Log 可见 | T005 |
+| 3 | 八个 Data Asset 基类可在编辑器中创建蓝图子类，SchemaVersion 字段存在 | Content Browser 右键 -> Miscellaneous -> Data Asset -> 选择基类 | T005 |
+| 4 | 游戏流程状态机代码审查通过（合法迁移矩阵 + 幂等重置逻辑） | 代码审查 | T005 |
+| 5 | 运行时流程验证（Combat→Damage→Reset 完整链路） | 自动化测试 / PIE 编排验证 | **→ M01/T006** |
+| 6 | 玩家 VRPawn 挂载 `VRCharacterCapabilityComponent`（蓝图子类） | 编辑器蓝图验证 | **→ M01** |
+| 7 | 不删除任何模板 VR 交互（手部、抓取、瞬移仍可用） | 编辑器 PIE 模式下手柄操作验证 | T005 |
+| 8 | 无 1v1 硬编码、无单武器引用、无联网依赖 | 代码审查 | T005 |
+| 9 | 空场景关卡已创建，TestDummy 已放置 | 代码审查 + 编辑器确认 | T005 |
+| 10 | 接口签名与 systems/01-07 接口契约一致 | 代码审查对照 | T005 |
 
 ---
 
@@ -268,13 +269,20 @@ Calibration -> Ready -> Generate -> Combat -> Settlement -> Reset -> Ready
 - [ ] Step 1：公共类型与日志分类编译通过、运行时可用
 - [ ] Step 2：七项核心接口定义完整，编译通过，签名对齐系统契约
 - [ ] Step 3：八个 Data Asset 基类可创建、可编辑、SchemaVersion 与 ValidateData() 可用
-- [ ] Step 4：流程状态机合法迁移与幂等重置通过测试
-- [ ] Step 5：角色能力适配组件挂载成功，玩家与 AI 走统一接口
-- [ ] Step 6：空场景中玩家占位 + TestDummy 生成/交互/重置流程正常
+- [ ] Step 4：流程状态机代码审查通过（合法迁移矩阵 + 幂等重置逻辑正确）
+- [ ] Step 5：角色能力适配组件代码审查通过，接口签名一致
+- [ ] Step 6：空场景关卡已创建，TestDummy 已放置（代码审查验证，不要求运行时编排）
 - [ ] VR 模板交互能力完整保留（零删除）
 - [ ] 代码无 1v1 / 单武器 / 联网硬编码
 - [ ] 代码编译通过（Win64 Development Editor）
 - [ ] `STATUS.json` 更新为 `awaiting_review`
+
+### M01 接管项（T005 范围外，不阻塞 T005 审核）
+
+| 接管项 | 原因 | 接管方 |
+|--------|------|--------|
+| 流程状态机运行时验证（Combat→Damage→Reset 完整链路） | 需要 M01 编排逻辑驱动阶段切换和伤害调用；T005 无编排职责 | M01 战斗切片 / T006 自动化门禁 |
+| VRPawn 挂载 `VRCharacterCapabilityComponent`（蓝图子类） | 需创建蓝图子类，路径不在 T005 ALLOWLIST；集成策略划给 M01 | M01 战斗切片 |
 
 ---
 

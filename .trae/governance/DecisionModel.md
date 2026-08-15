@@ -35,6 +35,15 @@
 - 将新任务状态最多设置为 `ready`。
 - 审核变更申请并向用户提出明确选择。
 
+### 任务生成门禁（五件套生成后必须逐项核对）
+
+> **在将任务状态设为 `ready` 之前，必须完成以下交叉验证。任一未通过，不得发布任务。**
+
+1. **CHECKS-ALLOWLIST 交叉验证**：逐项核对 `CHECKS.md` "执行后"段的每一条检查项，确认每条检查项所需的文件路径在 `ALLOWLIST.txt` 中已覆盖。若检查项产出为文字报告/表格，需在 CHECKS 中明确标注"写入任务报告 `{taskId}.md` 作为章节"。
+2. **里程碑归属标注**：逐项核对 `CHECKS.md` 检查项，确认每条检查项在**当前里程碑**内是否可完整验证。若某项需要后续里程碑的编排能力或产出物才能闭环，必须在 CHECKS 中标注"→ Mxx 接管"或"初版完成，终版 Mxx 回溯"，并明确列出接管方和回溯时机。
+3. **ALLOWLIST 路径完整性**：`ALLOWLIST.txt` 至少包含所有交付物所需的落盘路径。禁止出现 CHECKS 要求交付但 ALLOWLIST 无对应路径的情况。
+4. **禁止路径冲突检测**：`ALLOWLIST.txt` 不得包含治理锁定文件（`governance/policy.md`、`definition-of-done.md`、`responsibility-matrix.md`）、总纲（`GameMasterPlan.md`）或 Skill 文件。
+
 ## 禁止
 
 - 不执行自己刚生成的任务。
