@@ -6,6 +6,7 @@
 - 目标：建立最小自动化测试、日志验证、性能采样基线和构建门禁。
 
 > **修订说明（2026-08-13）**：原 T006 详规仅 25 行、标记"已批准"但交付物从未实现（V-006 待验证、Source 无测试文件、无活动任务包）。本次修订：扩充为可执行步骤，拆分 T005 后可做与 M01 后 deferred 部分，纠正状态为 ready。
+> **修订说明（2026-08-15）**：T005 已批准。核对 T005 实际代码后修正 3 处测试用例不一致：`ValidateData()` 实际校验 DamageRange（非 WeaponID）、`EquipmentRefs`（复数）、`HitZoneBoneMapping`（单一字段）。
 
 ---
 
@@ -16,7 +17,7 @@
   T001-T004 ✅ -> 治理、Git、编译、VR/PICO 基线全部 approved
 
 前置：
-  T005 系统骨架（ready）-> 提供接口、DA 基类、日志分类、流程状态机
+  T005 系统骨架（approved）-> 提供接口、DA 基类、日志分类、流程状态机
 
 本任务 T006：
   为 T005 产出建立自动化测试、构建门禁和性能基线
@@ -77,14 +78,14 @@
 
 | 测试 | 验证项 |
 |------|--------|
-| `FVRWeaponDefinitionSpec` | SchemaVersion 默认值 = 1；ValidateData() 检测空 WeaponID |
-| `FVRArmorDefinitionSpec` | CoverageMap 非空；ResistanceMap 值在 0-1 范围 |
+| `FVRWeaponDefinitionSpec` | SchemaVersion 默认值 = 1；ValidateData() 检测 DamageRange 区间合法性（`DamageRange.X >= 0` 且 `DamageRange.Y >= DamageRange.X`） |
+| `FVRArmorDefinitionSpec` | CoverageMap 非空；HitZoneModifier 值在 0-1 范围 |
 | `FVRMovementProfileSpec` | TeleportMaxDist > 0；TeleportCooldown >= 0 |
 | `FVRMatchRuleSetSpec` | DefaultTeamSize = 3；AllowedSizes 包含 2-4 |
-| `FVRUnitDefinitionSpec` | UnitType 有效；EquipmentRef 非空时可解析 |
+| `FVRUnitDefinitionSpec` | UnitType 有效；EquipmentRefs 非空时可解析 |
 | `FVRCommanderDefinitionSpec` | CommanderID 非空；WeaponPool 非空 |
 | `FVRArenaDefinitionSpec` | Boundary 非空；SpawnPoints 数量 >= 2 |
-| `FVRAvatarProfileSpec` | HitZone->BoneMapping 覆盖 6 个部位 |
+| `FVRAvatarProfileSpec` | HitZoneBoneMapping 覆盖 6 个部位（Head/Torso/LeftArm/RightArm/LeftLeg/RightLeg） |
 
 **验证方式**：`Running Tests` 面板运行自动化测试，全部通过。
 
@@ -195,7 +196,7 @@
 
 | 依赖 | 状态 | 说明 |
 |------|------|------|
-| T005 完成 | ready | T006 Step 2-4 依赖 T005 的接口、DA 基类和流程状态机 |
+| T005 完成 | approved（2026-08-15） | T006 Step 2-4 依赖 T005 的接口、DA 基类和流程状态机 |
 | Android 构建环境 | ✅ | T004 已验证 APK 构建 |
 
 | 风险 | 概率 | 缓解 |
