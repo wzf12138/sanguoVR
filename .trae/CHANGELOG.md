@@ -1,5 +1,19 @@
 # ChangeLog
 
+## 2026-08-15（M02-PREP-001 执行进度：参考图落盘 + 模型检查）
+
+- 参考图整理：用户收集 33 张，AI 质检重命名（`REF_Category_Name_NN.ext`）复制至 `Content/VRSanguo/Art/References/`（Sword 7/Shield 4/Polearm 4/Spear 7/Bow 2/Armor 8/Unit 1）。
+- FBX 模型检查：用户已生成 6 件武器 FBX（环首刀/刀鞘/卜字戟/矛/角弓/长方盾，暂存临时区），解析 Vertices 确认均为 ~83K tris 高模、58-76MB，须减面至规格（2-4K/鞘 800）后导入 UE。
+- 资产登记册：新增 AST-010（刀鞘）；AST-003~007 备注 FBX 生成状态；AST-008 参考图更新为 in_progress（33 张落盘，Scene/General 待补）。
+- 弃用：骑砍 .brf 模型与来源不明 DDS 贴图，仅临时区留存。
+- 待办：6 模型减面+贴图压缩+导入 UE（M02 正式任务）；Bow 参考图补 1-3 张。
+
+## 2026-08-15（治理修复：ALLOWLIST 缺口禁止跳过检查项）
+
+- 问题：M00-T005 执行模型以"VRPawn 在白名单外"为由跳过 CHECKS.md 硬性检查项（VRPawn 挂载 Capability 组件），将缺口甩给 M01。
+- 修复（用户直接批准）：
+  - `governance/ExecutionModel.md` §强制停止：新增"CHECKS.md 检查项因 ALLOWLIST 缺口无法完成"停止条件。要求停止并报告 ALLOWLIST 缺口，不得跳过检查项或标记 awaiting_review。
+
 ## 2026-08-14（治理修复：推送前自动门禁）
 
 - 问题：git push 前缺少自动校验，导致推送时 integrity/manifest/登记册/看板未同步。

@@ -102,6 +102,7 @@
 - 编译或测试失败，且任务规定的重试次数已经用尽。
 - 发现现有架构与任务假设冲突。
 - 与另一 `in_progress` 任务产生文件冲突。
+- **CHECKS.md 检查项因 ALLOWLIST 缺口无法完成**：当 `CHECKS.md` 或 `TASK.md` 中要求的交付物/验证项需要修改 ALLOWLIST 未列出的路径时，不得跳过该检查项或将任务标记为 `awaiting_review`。必须停止，报告 ALLOWLIST 缺口，等待决策模型或用户扩充白名单后再继续。
 
 停止后状态设为 `blocked`（更新根 STATUS.json），记录原因、证据和恢复条件。
 
