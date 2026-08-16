@@ -10,6 +10,7 @@ public class VRSanguoYanWuchang : ModuleRules
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "GameplayTags", "AIModule" });
 
+		// Automation 测试宏（IMPLEMENT_SIMPLE_AUTOMATION_TEST）位于 Core 模块 Misc/AutomationTest.h，无需独立模块依赖
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
 		// VR / OpenXR

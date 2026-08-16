@@ -10,7 +10,7 @@
 | V-004 | OpenXR 编辑器启动与 VR 能力 | M00-T004 | 编辑器 | 部分验证（编辑器阶段已完成，真机未完成） | `xrCreateInstance succeeded`（SteamVR/OpenXR 2.14.5）；插件运行中全部启用；VR 模板资产核对通过（详见 `../vr/PicoValidationMatrix.md`） |
 | V-005 | PICO Neo3 安装、启动、输入与断网（UE5.8 路线） | M00-T004 | 真机 | 验证失败（xrCreateSession 拒绝，引擎/运行时组合不兼容） | APK 构建安装成功；经三轮配置修复（Swappy 禁用/多视图关闭/OpenXR 启用）后，OpenXR 运行时加载成功（Pico XRT 3.0.1）但 `xrCreateSession` 返回 `XR_ERROR_INITIALIZATION_FAILED`，应用停在 LOADING；UE5.8 与 Neo3 系统 OpenXR 运行时不兼容，非配置可解；已决策降级 UE5.6（详见 `../knowledge/TechnicalDecisions.md`） |
 | V-008 | UE5.6 + PICO OpenXR Plugin（OS 5）真机：swapchain、场景渲染、输入与手柄模型 | M00-T004 | 真机 | 已验证（2026-08-13） | UE5.6 项目重建 + PICO 插件（v1.6.1）迁移至项目 `Plugins/`；swapchain 补丁（`PICO_HMD.cpp` 拦截 `xrCreateSwapchain` 剥离 format list）符号已确认编译进 libUnreal.so（`PICOLayerCreateSwapchain` 等 3 符号）；Neo3 真机场景可见、无 swapchain 崩溃；2026-08-12 输入映射按 PICO 官方文档绑定 5 个 IMC（二进制核验）；2026-08-13 手柄模型挂载（`SM_PICONeo3_L/R` + 隐藏骨骼手部，实例实测 bVisible=False）+ 碰撞修复（NoCollision，解决 SpawnActor 失败），真机确认手柄显示、输入生效；遗留：Neo3 卡顿性能优化（TD-011） |
-| V-006 | 系统骨架自动化测试 | M00-T005/T006 | 自动化 | 待验证 | Automation 报告 |
+| V-006 | 系统骨架自动化测试 | M00-T005/T006 | 自动化 | 已验证（2026-08-16，12/12 通过） | `UnrealEditor-Cmd -unattended` 运行 `Automation RunTests VRSanguo`：8 个 DataAsset 校验 + 2 个 GameFlow 状态机 + 2 个接口测试全部成功；日志见 `Saved/Logs/VRSanguoYanWuchang.log`；报告 `execution/reports/tasks/M00-T006.md` |
 | V-007 | NTFS ACL 应用与恢复 | M00-T001 | 系统权限 | 待用户管理员执行 | 管理脚本输出 |
 
 ## 旧编号映射

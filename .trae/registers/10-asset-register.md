@@ -40,12 +40,13 @@
 | 资产ID | 类型 | 路径 | 状态 | 前置资产 | 关联任务 | 备注 |
 |---|---|---|---|---|---|---|
 | AST-002 | SKM | Content/VRSanguo/Art/Characters/SK_Character_Body | draft | — | M02-PREP-001 | MannequinXR 兼容骨架，规格已定 |
-| AST-003 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Sword_Han | draft | AST-002 | M02-PREP-001 | 环首刀，规格<3K tris 全长~100cm；FBX 高模已生成（~83K tris, 66MB，临时区），待减面后导入 UE |
-| AST-004 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Shield_Han | draft | AST-002 | M02-PREP-001 | 钩镶/长方盾 60×40cm，<2K tris；FBX 高模已生成（~83K tris, 76MB，临时区），待减面后导入 UE |
-| AST-005 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Polearm_Ji | draft | AST-002 | M02-PREP-001 | 戟（卜字戟），<4K tris 全长~250cm；FBX 高模已生成（~83K tris, 58MB，临时区），待减面后导入 UE |
-| AST-006 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Spear_Qiang | draft | AST-002 | M02-PREP-001 | 矛/槊，<3K tris 全长~300cm；FBX 高模已生成（~83K tris, 68MB，临时区），待减面后导入 UE |
-| AST-007 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Bow_Recurve | draft | AST-002 | M02-PREP-001 | 角弓/反曲弓，<3K tris 弓长~120cm，弦独立骨骼；FBX 高模已生成（~83K tris, 64MB，临时区），待减面后导入 UE |
-| AST-010 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Sword_Sheath | draft | AST-002 | M02-PREP-001 | 环首刀刀鞘（空鞘），<800 tris；FBX 高模已生成（~83K tris, 65MB，临时区），待减面后导入 UE |
+| AST-003 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Sword_Han | draft | AST-002 | M02-PREP-001 | 环首刀；低模 OBJ 已产出（3,000 面/UV 保留，临时区 FBX_Low），待导入 UE |
+| AST-004 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Shield_Han | draft | AST-002 | M02-PREP-001 | 钩镶/长方盾 60×40cm；低模 OBJ 已产出（2,000 面/UV 保留，临时区 FBX_Low），待导入 UE |
+| AST-005 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Polearm_Ji | draft | AST-002 | M02-PREP-001 | 戟（卜字戟）全长~250cm；低模 OBJ 已产出（4,000 面/UV 保留，临时区 FBX_Low），待导入 UE |
+| AST-006 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Spear_Qiang | draft | AST-002 | M02-PREP-001 | 矛/槊 全长~300cm；低模 OBJ 已产出（3,000 面/UV 保留，临时区 FBX_Low），待导入 UE |
+| AST-007 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Bow_Recurve | draft | AST-002 | M02-PREP-001 | 角弓/反曲弓 弓长~120cm，弦独立骨骼；低模 OBJ 已产出（3,000 面/UV 保留，临时区 FBX_Low），待导入 UE |
+| AST-010 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Sword_Sheath | draft | AST-002 | M02-PREP-001 | 环首刀刀鞘（空鞘）；低模 OBJ 已产出（800 面/UV 保留，临时区 FBX_Low），待导入 UE |
+| AST-011 | SKM | Content/VRSanguo/Art/Weapons/SK_Weapon_Mashuo | draft | AST-002 | M02-PREP-001 | 马槊（槊类，全长 300cm）；用户混元图生 3D 生成 + AI 定标缩放，低模 OBJ 已产出（1,535 面/UV 保留，临时区 FBX_Low），待导入 UE |
 | AST-008 | TEX | Content/VRSanguo/Art/References/** | in_progress | — | M02-PREP-001 | 参考图 33 张已落盘（Sword 7/Shield 4/Polearm 4/Spear 7/Bow 2/Armor 8/Unit 1），Bow 偏少；Scene/General 待补（后续里程碑） |
 | AST-009 | MAP | Content/VRSanguo/Dev/L_Prototype_1v1.umap | awaiting_review | — | M01-T005 | 1v1 灰盒竞技场测试关卡：20x20m 地面、4m 围墙、掩体 A/B、高台 C、NavMesh（Static 已构建）、VRGameMode；26 Actor |
 

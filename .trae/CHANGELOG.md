@@ -1,5 +1,41 @@
 # ChangeLog
 
+## 2026-08-16（M01-T001 任务包生成：武器抓取与 VRE 集成）
+
+- 决策模型生成 M01-T001 五件套。利用 VRExpansionPlugin 5.6 建立手部物理抓取武器能力。
+- 交付：`TASK.md`、`ALLOWLIST.txt`、`INPUTS.md`、`CHECKS.md`、`STATUS.json`。
+- 参考：VRE 示例项目（`E:\AWork\VRExpPluginExample\`）近战武器/双手握持/手部姿势蓝图。
+- 状态：ready，待认领。预估 1.5h。
+
+## 2026-08-16（M00-T006 执行完成：自动化测试 12/12 通过）
+
+- Step 1-6 全部完成，状态 awaiting_review：
+  - 新增 6 个自动化测试文件（`Source/.../Tests/`）：VRDataAssetSpec（8 DA 校验）、VRInterfaceSpec（2 接口）、VRGameFlowSpec（2 状态机）
+  - `Automation RunTests VRSanguo` 12/12 通过（8 DA + 2 GameFlow + 2 接口），V-006 更新为已验证
+  - 8 个日志分类运行时验证（Flow 48/Combat 3/其余各 1）
+  - 性能基线：stat unit/fps/scenerendering 可用 + LogVRSanguoPerf 注册；场景规划初版（1v1/武器训练/4v4）
+  - Win64 门禁通过（73 动作）；Android 门禁遗留
+- 工具链修复（用户批准/指示）：
+  - UEBridgeMCP 5 模块 Build.cs 加 `bUseUnity=false`（UE5.6 Unity Build 匿名 namespace 重定义）
+  - VRExpansionPlugin 替换为官方 5.6-Locked 分支（原 master 源码 UE5.6 不兼容，4 类 API 错误；官方分支编译通过）
+  - 测试代码修正：BlueprintNativeEvent 用 `Execute_` 包装；未注册 Actor 桩值用 `_Implementation` 直验
+- 报告：`execution/reports/tasks/M00-T006.md`
+
+## 2026-08-16（M02-PREP-001 执行进度：马槊定稿 + 工具链迁移 E 盘）
+
+- 马槊（AST-011）：用户混元 3D 生成两版，首版（上传骑砍 OBJ 重制）枪头变形弃用；二版（图生 3D）用户确认形制 OK。AI 定标缩放至全长 300cm（混元单位=cm 校准，环首刀 101.89 单位=100cm 验证），1,535 面/UV 保留，OBJ 存临时区 FBX_Low。
+- 工具链迁移：用户要求软件与临时文件不得占用 C/D 盘。临时文件迁至 `E:\AWork\Temp\VRSanguoRef`（483MB）；Python 资产处理环境迁移至 `E:\AWork\Tools\venv_asset`（pymeshlab/trimesh/matplotlib 等）；C 盘误装包已卸载；OpenBRF Redux 装至 `E:\AWork\Tools\OpenBRF`。
+- 模型预览方案：3ds Max 不可用（GUI 与批处理均无法启动），采用 matplotlib 无头渲染三视角 PNG 供用户确认形制。
+- 待办：6 件武器 + 马槊 OBJ 导入 UE 验证（M02 正式任务）；骑砍 OBJ/brf 弃用（面数 140 过低）。
+
+## 2026-08-15（M02-PREP-001 执行进度：六武器低模减面完成）
+
+- 6 件武器 FBX 高模（~50 万面/件）全自动减面完成，输出低模 OBJ（环首刀 3K/刀鞘 800/戟 4K/矛 3K/弓 3K/盾 2K），UV 全部保留。
+- 工具链：3ds Max 批处理被许可证阻塞不可用；fast-simplification 不保留 UV；最终采用 pymeshlab（MeshLab 引擎）quadric edge collapse 减面成功，贴图 4096² 压缩至 ≤1024（100-180KB/张）。
+- 从 FBX 提取内嵌 PBR 贴图（4 张 4096² + 辅助图），压缩版存 `textures_1024/`。
+- 产出位置：`D:\AWork\Temp\VRSanguoRef\FBX_Low\`（项目外临时区），资产登记册 AST-003~007/010 备注同步。
+- 待办：6 件 OBJ 导入 UE 验证（材质贴图关联）+ 高模 FBX 备份（PC 端 LOD 源）。
+
 ## 2026-08-15（M02-PREP-001 执行进度：参考图落盘 + 模型检查）
 
 - 参考图整理：用户收集 33 张，AI 质检重命名（`REF_Category_Name_NN.ext`）复制至 `Content/VRSanguo/Art/References/`（Sword 7/Shield 4/Polearm 4/Spear 7/Bow 2/Armor 8/Unit 1）。

@@ -57,6 +57,17 @@
 		{
 			"Name": "UEBridgeMCP",
 			"Enabled": true
+		},
+		{
+			"Name": "OpenXRExpansionPlugin",
+			"Enabled": false,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Linux",
+				"Android",
+				"Mac",
+				"IOS"
+			]
 		}
 	],
 	"TargetPlatforms": [

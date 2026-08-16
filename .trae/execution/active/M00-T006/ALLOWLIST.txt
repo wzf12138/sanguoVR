@@ -9,6 +9,12 @@ Source/VRSanguoYanWuchang/Public/Tests/VRGameFlowSpec.h
 Source/VRSanguoYanWuchang/Private/Tests/VRGameFlowSpec.cpp
 # 模块依赖（修改现有文件）
 Source/VRSanguoYanWuchang/VRSanguoYanWuchang.Build.cs
+# 工具链修复（用户批准 2026-08-16：UEBridgeMCP 插件 UE5.6 Unity Build 兼容）
+Plugins/UEBridgeMCP/Source/UEBridgeMCP/UEBridgeMCP.Build.cs
+Plugins/UEBridgeMCP/Source/UEBridgeMCPEditor/UEBridgeMCPEditor.Build.cs
+Plugins/UEBridgeMCP/Source/UEBridgeMCPExternalAI/UEBridgeMCPExternalAI.Build.cs
+Plugins/UEBridgeMCP/Source/UEBridgeMCPPCG/UEBridgeMCPPCG.Build.cs
+Plugins/UEBridgeMCP/Source/UEBridgeMCPControlRig/UEBridgeMCPControlRig.Build.cs
 # 编译产物
 Intermediate/**
 Binaries/**

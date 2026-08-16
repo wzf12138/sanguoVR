@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M00-T006",
   "milestone": "M00",
-  "status": "ready",
-  "claimedBy": null,
-  "startedAt": null,
-  "updatedAt": "2026-08-13",
-  "info": "自动化、诊断与交付门禁。原标记'已批准'但交付物从未实现（V-006 待验证）。2026-08-13 修订详规并创建任务包。前置依赖 T005 Step 1-5。"
+  "status": "awaiting_review",
+  "claimedBy": "session-20260815-t006",
+  "startedAt": "2026-08-15",
+  "updatedAt": "2026-08-16",
+  "info": "执行完成：12/12 自动化测试通过（8 DA + 2 GameFlow + 2 接口）、8 日志分类验证、性能基线、场景规划初版；Win64 门禁通过，Android 门禁遗留。工具链修复：UEBridgeMCP bUseUnity=false、VRExpansionPlugin 换 5.6-Locked（均用户批准/指示）。报告见 reports/tasks/M00-T006.md。"
 }

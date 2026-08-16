@@ -1,0 +1,22 @@
+# M01-T001 白名单
+# 所有路径相对于项目根目录 VRSanguoYanWuchang/
+# 蓝图（新增）
+Content/VRSanguo/VR/BP_WeaponBase.uasset
+Content/VRSanguo/VR/BP_TestSword.uasset
+# 关卡（修改现有）
+Content/VRSanguo/Dev/L_SkeletonTest.umap
+# VRE 插件（只读参考，不修改源码）
+Plugins/VRExpansionPlugin/**
+# 编译产物
+Intermediate/**
+Binaries/**
+# .trae 可写文件
+.trae/registers/07-task-register.md
+.trae/registers/10-asset-register.md
+.trae/execution/reports/tasks/M01-T001.md
+.trae/execution/active/M01-T001/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/CHANGELOG.md
+.trae/integrity.yaml
+# 白名单外：治理锁定文件、Skill、总纲、Design 产品详规、T004/T005/T006 白名单内文件
+# 禁止修改 VRE 插件源码（Plugins/VRExpansionPlugin/Source/）
