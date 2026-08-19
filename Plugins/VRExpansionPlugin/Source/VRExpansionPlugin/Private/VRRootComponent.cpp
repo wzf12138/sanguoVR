@@ -329,6 +329,13 @@ public:
 		return reinterpret_cast<size_t>(&UniquePointer);
 	}
 
+	/** UE5.6 引擎在 Android 平台 RHI_RAYTRACING=1 但引擎库不导出基类实现（头文件声明无条件、实现被 #if RHI_RAYTRACING 包裹且未编入 Android 库），
+	 *  此 override 使 vtable 槽位指向派生实现且不引用基类符号，避免 Android 链接失败。该代理为 VR 调试线框代理，无需光追。 */
+	virtual ERayTracingPrimitiveFlags GetCachedRayTracingInstance(FRayTracingInstance& OutRayTracingInstance) override
+	{
+		return ERayTracingPrimitiveFlags::None;
+	}
+
 	FDrawVRCylinderSceneProxy(const UVRRootComponent* InComponent)
 		: FPrimitiveSceneProxy(InComponent)
 		, bDrawOnlyIfSelected(InComponent->bDrawOnlyIfSelected)
