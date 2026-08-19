@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M01-T001",
   "milestone": "M01",
-  "status": "ready",
-  "claimedBy": null,
-  "startedAt": null,
-  "updatedAt": "2026-08-16",
+  "status": "in_progress",
+  "claimedBy": "session-20260819-001",
+  "startedAt": "2026-08-19",
+  "updatedAt": "2026-08-19",
   "info": "武器抓取与 VRE 集成。利用 VRExpansionPlugin 5.6 建立手部物理抓取武器能力。参考 VRE 示例项目。"
 }

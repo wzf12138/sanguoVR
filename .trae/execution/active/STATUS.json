@@ -48,10 +48,10 @@
     {
       "taskId": "M01-T001",
       "milestone": "M01",
-      "status": "ready",
-      "claimedBy": null,
-      "startedAt": null,
-      "updatedAt": "2026-08-16",
+      "status": "in_progress",
+      "claimedBy": "session-20260819-001",
+      "startedAt": "2026-08-19",
+      "updatedAt": "2026-08-19",
       "note": "武器抓取与 VRE 集成。前置：M00-T005 approved、VRE 已编译。"
     }
   ]
