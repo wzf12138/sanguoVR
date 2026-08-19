@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M01-T005",
   "milestone": "M01",
-  "status": "in_progress",
-  "claimedBy": "session-20260813-001",
+  "status": "approved",
+  "claimedBy": null,
   "startedAt": "2026-08-13",
-  "updatedAt": "2026-08-13",
-  "info": "审核打回（用户：真机验证未做）。继续执行：PIE/真机性能验证、编辑器目视确认。"
+  "updatedAt": "2026-08-19",
+  "info": "审核批准（2026-08-19）。1v1 灰盒竞技场就绪。遗留：TD-012 PICO 串流、中文标注、PIE 帧率、Lightmass。"
 }

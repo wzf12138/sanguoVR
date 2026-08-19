@@ -15,6 +15,9 @@ Plugins/UEBridgeMCP/Source/UEBridgeMCPEditor/UEBridgeMCPEditor.Build.cs
 Plugins/UEBridgeMCP/Source/UEBridgeMCPExternalAI/UEBridgeMCPExternalAI.Build.cs
 Plugins/UEBridgeMCP/Source/UEBridgeMCPPCG/UEBridgeMCPPCG.Build.cs
 Plugins/UEBridgeMCP/Source/UEBridgeMCPControlRig/UEBridgeMCPControlRig.Build.cs
+# VRExpansionPlugin Android 兼容修复（用户批准 2026-08-18：SceneProxy override 绕开 UE5.6 引擎无光追符号 bug）
+Plugins/VRExpansionPlugin/Source/VRExpansionPlugin/Private/VRRootComponent.cpp
+Plugins/VRExpansionPlugin/Source/VRExpansionPlugin/Private/VRStereoWidgetComponent.cpp
 # 编译产物
 Intermediate/**
 Binaries/**

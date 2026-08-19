@@ -1,5 +1,40 @@
 # ChangeLog
 
+## 2026-08-19（M00 里程碑验收通过：正式进入 M01）
+
+- M00 里程碑验收结论：**通过**。
+- 退出条件全部满足：空场景可生成占位角色（T005/T006）、双平台构建门禁通过（T003/T004/T006）、规则层无 1v1/单武器/联网硬编码（T005 代码审查）。
+- 交付物全部满足：VR 真机可用（V-008）、七大模块边界 + 统一能力接口（T005）、八个 DA 基类（T005）、自动化测试 + 日志 + 性能基线（T006/V-006）。
+- 任务状态：T001-T006 + DOC-001 全部 approved（T001 ACL V-007 待管理员，不阻塞）。
+- 风险审查：无 M00 阻塞开放风险。技术债 TD-005/006/010/011 均 open 但不阻塞。
+- 正式进入 M01 核心战斗技术切片。
+- M01 当前状态：M01-T001（武器抓取与 VRE 集成）ready、M01-T005（灰盒竞技场）awaiting_review。
+
+## 2026-08-19（M00-T006 审核批准：approved）
+
+- 审核模型复核通过，用户批准。M00-T006 状态：awaiting_review → approved。
+- 核验项：12/12 自动化测试（8 DataAsset + 2 GameFlow + 2 接口）、8 日志分类运行时验证、Win64 + Android（含 APK）双平台构建门禁、性能基线（stat + LogVRSanguoPerf）、V-006 验证登记同步。
+- 抽查测试代码质量：VRGameFlowSpec 用例对齐 systems/01 迁移矩阵（合法链路/非法拒绝/幂等/生命周期），断言含中文诊断。
+- 偏差均接受：无人值守测试方式（UnrealEditor-Cmd -unattended）、Execute_ 静态包装调用、工具链修复（bUseUnity=false、VRE 5.6-Locked）均用户批准并记录。
+- 遗留：测试场景规划表终版 M01 接管。
+- **M00 里程碑任务全部 approved**（T001-T006 + DOC-001；T001 ACL 应用 V-007 待用户管理员执行，不阻塞）。
+- STATUS.json（根+任务）、07-task-register、M00/README.md 同步。
+
+## 2026-08-16（M01-T005 VR 验证补验：编辑器 GUI + MCP 自动化）
+
+- 用户审核打回：真机验证未完成，不能进审核。
+- 补验完成：通过 UEBridgeMCP（HTTP 8080）自动化采集 VR 渲染证据：
+  - OpenXR 运行时切换为 PICO Streaming Runtime（绕过 SteamVR pipe broken 问题）
+  - XR Session 完整生命周期：IDLE → SYNCHRONIZED → VISIBLE → FOCUSED → STOPPING → EXITING
+  - VR Preview 窗口标题确认：`OpenXR PICO XR Runtime (1.1.46)`
+  - 截图确认：灰盒竞技场场景在 VR Preview 视口正确渲染（网格地面、围墙、掩体、高台、标注、光照阴影）
+  - PICO 驱动姿态正常：`pose recovery mode` 处理 HMD 姿态数据
+  - PIE 世界：46 Actor，GameMode=VRGameMode_C
+- **未完成**：PICO Connect 10.6.6 串流未自动切换到 VR 模式（停留在桌面串流），头显内未显示 VR 场景。登记 TD-012。
+- Config 还原：`bStartInVR=True` 已移除（临时验证用途，验证后还原）。
+- 任务报告更新：追加 VR Preview 验证段落、偏差清单更新。
+- 技术债新增 TD-012：PICO Connect VR 串流模式切换问题（中优先级 open）。
+
 ## 2026-08-16（M01-T001 任务包生成：武器抓取与 VRE 集成）
 
 - 决策模型生成 M01-T001 五件套。利用 VRExpansionPlugin 5.6 建立手部物理抓取武器能力。
@@ -14,7 +49,7 @@
   - `Automation RunTests VRSanguo` 12/12 通过（8 DA + 2 GameFlow + 2 接口），V-006 更新为已验证
   - 8 个日志分类运行时验证（Flow 48/Combat 3/其余各 1）
   - 性能基线：stat unit/fps/scenerendering 可用 + LogVRSanguoPerf 注册；场景规划初版（1v1/武器训练/4v4）
-  - Win64 门禁通过（73 动作）；Android 门禁遗留
+  - Win64 门禁通过（73 动作）；Android 门禁通过（UBT Development 构建 + APK 打包成功，2026-08-19）
 - 工具链修复（用户批准/指示）：
   - UEBridgeMCP 5 模块 Build.cs 加 `bUseUnity=false`（UE5.6 Unity Build 匿名 namespace 重定义）
   - VRExpansionPlugin 替换为官方 5.6-Locked 分支（原 master 源码 UE5.6 不兼容，4 类 API 错误；官方分支编译通过）

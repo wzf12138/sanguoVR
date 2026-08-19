@@ -16,25 +16,25 @@
       "claimedBy": null,
       "startedAt": "2026-08-13",
       "updatedAt": "2026-08-15",
-      "note": "审核批准（2026-08-15）。CHECKS 修正后全部通过：22 个 C++ 文件编译通过、7 接口/8 DA/状态机/能力组件/TestDummy 就绪。M01 接管项：运行时流程验证 + VRPawn 组件挂载。"
+      "note": "审核批准（2026-08-15）。M01 接管项：运行时流程验证 + VRPawn 组件挂载。"
     },
     {
       "taskId": "M00-T006",
       "milestone": "M00",
-      "status": "awaiting_review",
-      "claimedBy": "session-20260815-t006",
+      "status": "approved",
+      "claimedBy": null,
       "startedAt": "2026-08-15",
-      "updatedAt": "2026-08-16",
-      "note": "执行完成：12/12 自动化测试通过、8 日志分类验证、性能基线、场景规划初版；Win64 门禁通过，Android 门禁遗留。工具链修复：UEBridgeMCP bUseUnity=false、VRExpansionPlugin 换 5.6-Locked（均用户批准/指示）。"
+      "updatedAt": "2026-08-19",
+      "note": "审核批准（2026-08-19）。"
     },
     {
       "taskId": "M01-T005",
       "milestone": "M01",
-      "status": "in_progress",
-      "claimedBy": "session-20260813-001",
+      "status": "approved",
+      "claimedBy": null,
       "startedAt": "2026-08-13",
-      "updatedAt": "2026-08-13",
-      "note": "审核打回（用户：真机验证未做）。继续执行：PIE/真机性能验证、编辑器目视确认。"
+      "updatedAt": "2026-08-19",
+      "note": "审核批准（2026-08-19）：1v1 灰盒竞技场关卡就绪（26 定制 Actor + NavMesh + 光照），VR Preview 补验通过（XR Session FOCUSED + PICO Runtime + 截图确认）。遗留：TD-012 PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE stat fps（待串流解决）、Lightmass 烘焙（需 GUI）。"
     },
     {
       "taskId": "M02-PREP-001",
@@ -43,7 +43,7 @@
       "claimedBy": "user-20260813-001",
       "startedAt": "2026-08-13",
       "updatedAt": "2026-08-13",
-      "note": "审核 requires_changes。规格定稿（平台/骨架/武器/动画/六武将）。剩余：Step 2 参考图片收集。继续在本任务下完成后重新提交审核。"
+      "note": "审核 requires_changes。规格定稿。剩余：Step 2 参考图片收集。"
     },
     {
       "taskId": "M01-T001",
@@ -52,7 +52,7 @@
       "claimedBy": null,
       "startedAt": null,
       "updatedAt": "2026-08-16",
-      "note": "武器抓取与 VRE 集成。利用 VRExpansionPlugin 5.6 建立手部物理抓取武器能力。参考 VRE 示例项目。前置：M00-T005 approved、VRE 已编译。"
+      "note": "武器抓取与 VRE 集成。前置：M00-T005 approved、VRE 已编译。"
     }
   ]
 }
