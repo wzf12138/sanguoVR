@@ -18,17 +18,18 @@
 - 确认 PICO Neo3 输入映射可用
 
 ## 执行后
-- BP_WeaponBase 蓝图可创建，继承 `GrippableSkeletalMeshActor`
-- 抓取参数配置完成（GripScriptType、bAllowSecondaryGrip）
-- HandSocket 握持姿势配置完成
-- BP_TestSword 已创建并放置到 L_SkeletonTest 关卡
-- 编辑器 PIE 验证：可单手抓取武器
-- 编辑器 PIE 验证：可释放武器
-- 编辑器 PIE 验证：双手握持可用（副手靠近时自动吸附）
-- 现有 VR 交互不被破坏（手部动画、抓取、瞬移仍可用）
-- 任务报告写入 `.trae/execution/reports/tasks/M01-T001.md`
-- 资产登记册同步更新
-- `active/M01-T001/STATUS.json` 更新为 `awaiting_review`
+
+- [ ] `[文件]` BP_WeaponBase 蓝图可创建，继承 `GrippableSkeletalMeshActor`
+- [ ] `[文件]` 抓取参数配置完成（GripScriptType、bAllowSecondaryGrip）
+- [ ] `[文件]` HandSocket 握持姿势配置完成
+- [ ] `[文件]` BP_TestSword 已创建并放置到 L_SkeletonTest 关卡
+- [ ] `[PIE]` 编辑器 PIE 验证：可单手抓取武器 [PICO Neo3 + VR Preview]
+- [ ] `[PIE]` 编辑器 PIE 验证：可释放武器 [PICO Neo3 + VR Preview]
+- [ ] `[PIE]` 编辑器 PIE 验证：双手握持可用（副手靠近时自动吸附） [PICO Neo3 + VR Preview]
+- [ ] `[PIE]` 现有 VR 交互不被破坏（手部动画、抓取、瞬移仍可用） [PICO Neo3 + VR Preview]
+- [ ] `[文件]` 任务报告写入 `.trae/execution/reports/tasks/M01-T001.md`，包含结构化验证证据表
+- [ ] `[文件]` 资产登记册同步更新
+- [ ] `[文件]` `active/M01-T001/STATUS.json` 更新为 `awaiting_review`（非 `[PIE]` 项全部通过后）或 `blocked`（`[PIE]` 项待用户验证时）
 
 ### M02 接管项（T001 范围外，不阻塞 T001 审核）
 
