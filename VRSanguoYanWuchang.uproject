@@ -68,6 +68,10 @@
 				"Mac",
 				"IOS"
 			]
+		},
+		{
+			"Name": "Water",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
