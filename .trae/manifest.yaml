@@ -3,7 +3,7 @@ project: VRSanguoYanWuchang
 root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang"
 trae_root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae"
 source_of_truth: ".trae/index.md"
-updated: "2026-08-14"
+updated: "2026-08-24"
 indexes:
   standards: ".trae/standards/index.md"
   vr: ".trae/vr/index.md"
@@ -34,14 +34,17 @@ active_gate:
       status: approved
       package_dir: ".trae/execution/active/M00-T005/"
     - task_id: M00-T006
-      status: ready
+      status: approved
       package_dir: ".trae/execution/active/M00-T006/"
     - task_id: M01-T005
-      status: ready
+      status: approved
       package_dir: ".trae/execution/active/M01-T005/"
     - task_id: M02-PREP-001
-      status: in_progress
+      status: approved
       package_dir: ".trae/execution/active/M02-PREP-001/"
+    - task_id: M01-T001
+      status: blocked
+      package_dir: ".trae/execution/active/M01-T001/"
   milestone: M00
   concurrency: multi
 collections:
