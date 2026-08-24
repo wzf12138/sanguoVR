@@ -34,8 +34,8 @@
 | 武器类别 | DataAsset | 蓝图 | 模型 | 动画蒙太奇 | C++ 类 |
 |---|---|---|---|---|---|
 | 单手刀剑 | `DA_Weapon_Sword_T1` | `BP_Weapon_Sword` | `SK_Weapon_Sword_Han` | `AM_Sword_Attack_A`, `AM_Sword_Block` | `AVRWeaponSword` |
-| 盾牌 | `DA_Weapon_Shield_T1` | `BP_Weapon_Shield` | `SK_Weapon_Shield_Round` | `AM_Shield_Bash`, `AM_Shield_Block` | `AVRWeaponShield` |
-| 双手长柄 | `DA_Weapon_Polearm_T1` | `BP_Weapon_Polearm` | `SK_Weapon_Polearm_Glaive` | `AM_Polearm_Swing_A`, `AM_Polearm_Thrust` | `AVRWeaponPolearm` |
+| 盾牌 | `DA_Weapon_Shield_T1` | `BP_Weapon_Shield` | `SK_Weapon_Shield_Han` | `AM_Shield_Bash`, `AM_Shield_Block` | `AVRWeaponShield` |
+| 双手长柄 | `DA_Weapon_Polearm_T1` | `BP_Weapon_Polearm` | `SK_Weapon_Polearm_Ji` | `AM_Polearm_Swing_A`, `AM_Polearm_Thrust` | `AVRWeaponPolearm` |
 | 长矛 | `DA_Weapon_Spear_T1` | `BP_Weapon_Spear` | `SK_Weapon_Spear_Qiang` | `AM_Spear_Thrust_A`, `AM_Spear_Sweep` | `AVRWeaponSpear` |
 | 弓箭 | `DA_Weapon_Bow_T1` | `BP_Weapon_Bow` | `SK_Weapon_Bow_Recurve` | `AM_Bow_Draw`, `AM_Bow_Release` | `AVRWeaponBow` |
 
