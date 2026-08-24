@@ -30,11 +30,11 @@
     {
       "taskId": "M01-T005",
       "milestone": "M01",
-      "status": "approved",
+      "status": "in_progress",
       "claimedBy": null,
       "startedAt": "2026-08-13",
-      "updatedAt": "2026-08-19",
-      "note": "审核批准（2026-08-19）：1v1 灰盒竞技场关卡就绪（26 定制 Actor + NavMesh + 光照），VR Preview 补验通过（XR Session FOCUSED + PICO Runtime + 截图确认）。遗留：TD-012 PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE stat fps（待串流解决）、Lightmass 烘焙（需 GUI）。"
+      "updatedAt": "2026-08-24",
+      "note": "口径修正（2026-08-24）：任务恢复为执行中。核心交付已于 2026-08-19 通过 VR Preview 补验；TD-012 偿还项未闭环——PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE stat fps（待串流解决）、Lightmass 烘焙（需 GUI）。偿还完成后重新提交审批。"
     },
     {
       "taskId": "M02-PREP-001",

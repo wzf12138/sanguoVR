@@ -11,7 +11,7 @@
 | M00-T005 | 系统骨架与数据驱动边界 | approved（2026-08-15：审核批准。CHECKS 修正后全部通过，M01 接管运行时验证+VRPawn 挂载） | 22 个 C++ 文件编译通过；7 接口/8 DA/状态机/能力组件/TestDummy + L_SkeletonTest 关卡 |
 | M00-T006 | 自动化、诊断与交付门禁 | approved（2026-08-19：审核批准。12/12 测试通过、V-006 已验证；遗留场景规划表终版 M01 接管） | 6 个自动化测试文件（VRDataAssetSpec/VRInterfaceSpec/VRGameFlowSpec）；12/12 通过（8 DA + 2 GameFlow + 2 接口）；8 日志分类验证；性能基线（stat 命令 + LogVRSanguoPerf）；场景规划初版（1v1/武器训练/4v4）；Win64 与 Android 门禁通过（Android 含 APK 打包）；工具链修复：UEBridgeMCP bUseUnity=false（用户批准）、VRExpansionPlugin 换官方 5.6-Locked + SceneProxy override（用户批准）；报告 `execution/reports/tasks/M00-T006.md` |
 | M00-DOC-001 | 治理文档最终收口 | approved | 合并重复事实源、迁移引用、删除清单与完整性报告 |
-| M01-T005 | 灰盒竞技场关卡 | approved（2026-08-19：1v1 灰盒竞技场就绪，VR Preview 补验通过；遗留 TD-012 PICO 串流、中文标注、PIE 帧率、Lightmass） | 1v1 测试场景 `Content/VRSanguo/Dev/L_Prototype_1v1.umap`、NavMesh、灰盒布局、VR Preview 验证 |
+| M01-T005 | 灰盒竞技场关卡 | 执行中（2026-08-24 口径修正：TD-012 偿还未闭环——PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE 帧率（待串流解决）、Lightmass 烘焙（需 GUI）；2026-08-19 核心交付曾通过 VR Preview 补验，偿还完成后重新提交审批） | 1v1 测试场景 `Content/VRSanguo/Dev/L_Prototype_1v1.umap`、NavMesh、灰盒布局、VR Preview 验证 |
 | M02-PREP-001 | M02 资产生成准备与平台选型 | approved（2026-08-24：验收通过，两附带条件闭环——CR-20260824-001 命名对齐实施关闭 + AST-009 关卡路径对齐 v2；证据 V-009） | 平台选型、骨架/武器/动画规格、美术参考 |
 | M01-T001 | 武器抓取与 VRE 集成 | blocked（2026-08-22：4 条 [PIE] 检查未完成，资产创建已完成。需用户在 PICO Neo3 VR Preview 中完成抓取/释放/双手握持/VR交互验证） | BP_WeaponBase 蓝图、BP_TestSword、HandSocket 握持姿势、关卡放置、实施指南 `execution/reports/tasks/M01-T001.md` |
 

@@ -94,8 +94,12 @@ def classify_task_status(ts):
         return "ready"
     if "blocked" in ts_lower or ts.startswith("阻塞"):
         return "blocked"
+    if "in_progress" in ts_lower or "执行中" in ts or "进行中" in ts:
+        return "in_progress"
     if "approved" in ts_lower or "已验证" in ts or "已实施" in ts or "已批准" in ts:
         return "completed"
+    if "部分" in ts:
+        return "partial"
     if "awaiting" in ts_lower or "待审核" in ts:
         return "awaiting_review"
     return "unknown"
@@ -181,6 +185,43 @@ def build_health_indicators():
     indicators.append({"name": "白名单冲突", "passed": allow_c.get("passed", False), "detail": allow_c.get("detail", "未检查")})
 
     return indicators
+
+
+# ── 路线图：解析里程碑规划文档（目标/交付）────────────────
+ROADMAP_FILES = [
+    ("M00", "execution/M00-Foundation.md"),
+    ("M01", "execution/M01-CombatSlice.md"),
+    ("M02", "execution/M02-PlayerSystems.md"),
+    ("M03", "execution/M03-SquadCombat.md"),
+    ("M04", "execution/M04-GameModes.md"),
+    ("M05", "execution/M05-ContentComplete.md"),
+    ("M06", "execution/M06-Release.md"),
+]
+
+def build_roadmap():
+    roadmap = {}
+    for mid, rel in ROADMAP_FILES:
+        txt = read_text(rel)
+        if not txt.strip():
+            continue
+        title, goal, deliverables = "", "", []
+        section = None
+        for raw in txt.split("\n"):
+            s = raw.strip()
+            if not s:
+                continue
+            if s.startswith("## "):
+                h = s[3:].strip()
+                section = h if h in ("目标", "交付") else None
+            elif s.startswith("# ") and not title:
+                title = s[2:].strip()
+            elif section == "目标" and not goal:
+                goal = s
+            elif section == "交付" and s.startswith("- "):
+                deliverables.append(s[2:].strip())
+        if title:
+            roadmap[mid] = {"title": title, "goal": goal, "deliverables": deliverables}
+    return roadmap
 
 
 def build_api_data():
@@ -434,6 +475,7 @@ def build_api_data():
         "current_mode": current_mode,
         "stats": stats,
         "milestones": ms_data,
+        "roadmap": build_roadmap(),
         "active_risks": active_risks,
         "verif_items": verif_items,
         "decision_items": decision_items,
@@ -920,7 +962,15 @@ body {
 .tbadge-blocked { background: rgba(248,81,73,0.1); color: var(--vermillion); border: 1px solid rgba(248,81,73,0.2); }
 .tbadge-ready { background: rgba(88,166,255,0.1); color: var(--steel); border: 1px solid rgba(88,166,255,0.2); }
 .tbadge-review { background: rgba(163,113,247,0.1); color: var(--violet); border: 1px solid rgba(163,113,247,0.2); }
+.tbadge-partial { background: rgba(210,153,34,0.12); color: var(--gold); border: 1px solid rgba(210,153,34,0.25); }
+.tbadge-inprogress { background: rgba(45,212,191,0.1); color: #2dd4bf; border: 1px solid rgba(45,212,191,0.25); }
 .tbadge-unknown { background: rgba(90,104,120,0.1); color: var(--dim); border: 1px solid var(--border-bright); }
+
+.plan-scope { margin: 10px 16px 14px 34px; padding: 10px 14px; background: rgba(88,166,255,0.04); border: 1px dashed var(--border-bright); border-radius: 8px; }
+.ps-head { font-size: 0.78rem; color: var(--fg); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; line-height: 1.5; }
+.ps-tag { flex: none; font-size: 0.62rem; padding: 2px 7px; border-radius: 4px; background: rgba(210,153,34,0.12); color: var(--gold); border: 1px solid rgba(210,153,34,0.25); white-space: nowrap; }
+.ps-list { margin: 0; padding-left: 18px; font-size: 0.74rem; color: var(--dim); line-height: 1.8; }
+.ps-chip { flex: none; font-size: 0.62rem; padding: 2px 7px; border-radius: 10px; background: rgba(88,166,255,0.08); color: var(--steel); border: 1px solid rgba(88,166,255,0.18); white-space: nowrap; }
 
 .task-card .tchevron {
   color: var(--dim);
@@ -1828,7 +1878,8 @@ function renderFlow() {
   document.getElementById('flowMode').textContent = D.current_mode || '决策模式';
   const html = D.milestones.map((m, mi) => {
     const hasTasks = m.tasks.length > 0;
-    const isOpen = m.has_active;
+    const rm = (D.roadmap || {})[m.id];
+    const isOpen = m.has_active || !!rm;
 
     const decisionNode = `
       <div class="flow-decision">
@@ -1843,8 +1894,8 @@ function renderFlow() {
       </div>`;
 
     const branches = m.tasks.map((t, ti) => {
-      const badgeClass = t.status==='completed'?'tbadge-completed':t.status==='blocked'?'tbadge-blocked':t.status==='ready'?'tbadge-ready':t.status==='awaiting_review'?'tbadge-review':'tbadge-unknown';
-      const badgeText = t.status==='completed'?'已完成':t.status==='blocked'?'阻塞':t.status==='ready'?'待认领':t.status==='awaiting_review'?'待审核':'未知';
+      const badgeClass = t.status==='completed'?'tbadge-completed':t.status==='blocked'?'tbadge-blocked':t.status==='ready'?'tbadge-ready':t.status==='awaiting_review'?'tbadge-review':t.status==='partial'?'tbadge-partial':t.status==='in_progress'?'tbadge-inprogress':'tbadge-unknown';
+      const badgeText = t.status==='completed'?'已完成':t.status==='blocked'?'阻塞':t.status==='ready'?'待认领':t.status==='awaiting_review'?'待审核':t.status==='partial'?'部分完成':t.status==='in_progress'?'执行中':'未知';
 
       if (t.status === 'completed') {
         return `<div class="task-branch">
@@ -1863,6 +1914,9 @@ function renderFlow() {
       let execState, execText;
       if (t.status === 'blocked') {
         execState = 'blocked'; execText = '执行阻塞';
+        if (t.note) execText += ' — ' + t.note;
+      } else if (t.status === 'in_progress') {
+        execState = 'active'; execText = '执行中';
         if (t.note) execText += ' — ' + t.note;
       } else if (t.status === 'ready') {
         execState = 'pending'; execText = '等待认领';
@@ -1934,10 +1988,17 @@ function renderFlow() {
           <div class="ms-bar"><div class="ms-fill${m.pct===100?' done':''}" style="width:${m.pct}%"></div></div>
           <span class="ms-pct">${m.pct}%</span>
           <span class="ms-cnt" style="min-width:36px;text-align:right;">${m.done}/${m.total}</span>
+          ${rm ? `<span class="ps-chip">规划 ${rm.deliverables.length} 项</span>` : ''}
         </div>
       </div>
       <div class="flow-ms-body ${isOpen?'open':''}" id="msBody${mi}">
-        ${hasTasks ? decisionNode + '<div class="branch-trunk">' + branches + '</div>' : '<div style="padding:16px;color:var(--dim);font-size:0.78rem;">暂无任务</div>'}
+        ${(hasTasks ? decisionNode + '<div class="branch-trunk">' + branches + '</div>' : '') + (rm ? `
+        <div class="plan-scope">
+          <div class="ps-head"><span class="ps-tag">规划交付</span><span>${rm.goal}</span></div>
+          <ul class="ps-list">${rm.deliverables.map(d => `<li>${d}</li>`).join('')}</ul>
+          ${!hasTasks ? '<div style="margin-top:8px;font-size:0.72rem;color:var(--dimmer);">以上为里程碑规划范围，尚未拆解立项；任务包由决策模型按需生成后进入登记册。</div>' : ''}
+        </div>` : '')}
+        ${(!hasTasks && !rm) ? '<div style="padding:16px;color:var(--dim);font-size:0.78rem;">暂无任务</div>' : ''}
       </div>
     </div>`;
   }).join('');

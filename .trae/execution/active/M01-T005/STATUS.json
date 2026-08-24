@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M01-T005",
   "milestone": "M01",
-  "status": "approved",
+  "status": "in_progress",
   "claimedBy": null,
   "startedAt": "2026-08-13",
-  "updatedAt": "2026-08-19",
-  "info": "审核批准（2026-08-19）。1v1 灰盒竞技场就绪。遗留：TD-012 PICO 串流、中文标注、PIE 帧率、Lightmass。"
+  "updatedAt": "2026-08-24",
+  "info": "口径修正（2026-08-24）：任务恢复为执行中。核心交付曾于 2026-08-19 通过 VR Preview 补验；TD-012 偿还项未闭环——PICO 串流、中文标注、PIE 帧率、Lightmass。偿还完成后重新提交审批。"
 }

@@ -37,7 +37,7 @@ active_gate:
       status: approved
       package_dir: ".trae/execution/active/M00-T006/"
     - task_id: M01-T005
-      status: approved
+      status: in_progress
       package_dir: ".trae/execution/active/M01-T005/"
     - task_id: M02-PREP-001
       status: approved
