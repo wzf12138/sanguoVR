@@ -79,6 +79,7 @@ Profiling/
 Plugins/**/Binaries/
 Plugins/**/Intermediate/
 Plugins/**/*.pdb
+Content/**/*_BuiltData.uasset
 Content/__ExternalActors__/
 Content/__ExternalObjects__/
 Content/Developers/

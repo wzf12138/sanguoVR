@@ -1,5 +1,85 @@
 # ChangeLog
 
+## 2026-08-24（M02-PREP-001 验收通过：CR 实施关闭 + 同批治理维护）
+
+- **验收结论：通过**。四份规格齐备且用户逐项确认，33 张参考图交付核验吻合。任务状态 `awaiting_review` → `in_progress`（附条件回炉）→ `approved`（两级 STATUS.json 同步），验证证据登记 V-009。
+- **CR-20260824-001 实施关闭**：命名标准盾牌/长柄示例名改为 `SK_Weapon_Shield_Han`、`SK_Weapon_Polearm_Ji`，有效标准正文零旧名残留；CR §7/§8 回填关闭。
+- **资产登记册**：AST-009 路径对齐 `L_Prototype_1v1_v2.umap` 转 approved；AST-008 批量条目（33 图）转 approved 并补分类计数。
+- **登记册同步**：07-task-register M02-PREP-001 行改 approved 口径；09-verification-register 新增 V-009。
+- **索引补全**：reports/tasks/README 由 3 条补至 9 条；根 index.md Execution 基线补齐 M00-T006/M01-T001/M01-T005/M02-PREP-001 四个任务包链接。
+- **文件卫生**：删除误放脚本 CreateWeaponBlueprints.py；清理 dashboard/__pycache__/；.gitignore 增补 `Content/**/*_BuiltData.uasset`。
+- **integrity.yaml**：active_gate 快照同步（补 M01-T001 blocked、修正两处 ready→approved、updated=2026-08-24）。
+
+## 2026-08-24（M02-PREP-001 收尾：动画清单澄清 + 参考图收口 + 命名 CR）
+
+- Step 5 动画清单加用途澄清：37 个动画全部服务于 AI 角色；玩家动作由头显/手柄追踪 + Full Body IK 实时生成，受击反馈用镜头+手柄震动，M02 不得为玩家重复制作移动/攻击动画。
+- 参考图收集收口：弓类维持 2 张、Unit 维持 1 张（用户决定不再补）；Scene/General 确认归 M05 启动时再补。Step 2 待办关闭。
+- 命名标准变更申请 `CR-20260824-001`（draft）：`Shield_Round`→`Shield_Han`、`Polearm_Glaive`→`Polearm_Ji`，待用户批准后修改 `standards/02-naming-and-path-standard.md`。
+- 任务状态 `in_progress` → `awaiting_review`，待用户最终确认关闭 M02-PREP-001。
+
+## 2026-08-24（模块化角色系统架构定稿）
+
+- M02-PREP-001 报告新增 Step 6：模块化角色系统架构。采用 UE `Set Master Pose Component` 方案，头/身体/甲胄分离。
+- 三种体型变体：Standard（175cm）、Heavy（180cm，许褚/典韦）、Lean（170cm，赵云/弓兵），共用 MannequinXR 骨架。
+- 头部独立：8 个武将头部 + 2 个士兵头部，按里程碑逐步生成。许褚裸上身方案：Heavy 体型 + 不穿躯干甲胄。
+- 甲胄模块化：4 级躯干甲胄（布衣/皮甲/札甲/筒袖铠）+ 2 种头盔 + 臂甲/胫甲，对应六部位护甲系统。
+- AI 生成工作流优化：分部件生成比完整角色效率高 4-8 倍。混元 3D 每日 20 次额度，17 次可完成全部原型。
+- 资产登记册更新：AST-002 废弃，新增 AST-014~026 共 13 个模块化资产。武器前置资产从 AST-002 改为 AST-014。
+
+## 2026-08-22（M01 规划文档结构化 + 登记册同步）
+
+- M01-CombatSlice.md 重构：新增任务依赖链、M00→M01 接管项追踪表、TD-012 解决计划（三条路径 + 复审时机）、退出条件逐项验证方案、M01→M02 前置依赖清单。
+- 任务登记册：M01-T001 状态 `awaiting_review` → `blocked`（4 条 PIE 检查未完成，资产创建已完成）。
+- 技术债登记册：TD-012 偿还计划更新（Direct Preview 为首选路径，M01 结束前复审）。
+- M01-T001 根 STATUS.json + 任务目录 STATUS.json 状态修正为 `blocked`。
+
+## 2026-08-22（审核反馈修复：M01 任务规划补全 + M00 验收记录 + 规划纪律）
+
+- **P0**：M00→M01 接管项整合进已有规划——VRPawn 挂载 CapabilityComponent 作为 M01-T002（伤害结算）前置步骤，运行时流程验证作为 M01-T006（1v1 测试流程）验证步骤。不新建任务，不破坏原始任务编号。
+- **P1**：创建 M00 里程碑验收记录（`milestones/M00-acceptance.md`），声明"玩家全身占位"由 M02 全身 IK 任务承接，M00 有条件通过。
+- **P1**：TD-012 新增 M01-T007（Direct Preview 验证），不占用原规划 T001-T006 编号。
+- **治理**：DecisionModel 新增任务生成门禁第 7 条（任务编号冲突检测），禁止在未读取里程碑规划文档的情况下分配任务编号。
+- **回滚**：删除此前错误创建的 M01-T002（能力组件挂载）和 M01-T006（Direct Preview），恢复根 STATUS.json。
+
+## 2026-08-20（治理增强：执行模型证据打包 + 多模态拆分规则）
+
+- ExecutionModel.md：新增"证据打包"硬性要求，提交审核前必须填写结构化验证表（每条 CHECKS 项 → 证据类型 → 状态 → 证据路径），禁止模糊表述。
+- ExecutionModel.md：新增"多模态任务特殊规则"，`[PIE]` 检查项执行模型无法完成时任务必须设为 `blocked`，不得设为 `awaiting_review`。
+- DecisionModel.md：新增任务生成门禁第 5 条（多模态任务拆分：`[PIE]` ≥ 3 条必须拆分为两个任务）和第 6 条（CHECKS.md 证据类型标注：`[文件]`/`[截图]`/`[日志]`/`[PIE]`）。
+- M01-T001 CHECKS.md：更新为新格式示例，所有检查项增加 `[证据类型]` 标注和复选框。
+
+## 2026-08-20（M01-T001 蓝图创建完成 - UEBridgeMCP）
+
+- 使用UEBridgeMCP（HTTP MCP工具，407个工具）完成武器蓝图创建。
+- 创建 `BP_WeaponBase`：继承 `GrippableSkeletalMeshActor`，添加2个 `HandSocketComponent`（Primary + Secondary）。
+- 创建 `BP_TestSword`：继承 `BP_WeaponBase`。
+- 放置 `TestSword_01` 到关卡中（位置 [0, 0, 100]）。
+- 任务状态更新为 `awaiting_review`。
+- UEBridgeMCP配置：`Config/DefaultUEBridgeMCP.ini`（端口8080，自动启动）。
+
+## 2026-08-19（M01-T001 实施指南生成）
+
+- M01-T001 状态：`ready` → `in_progress` → `awaiting_review`。
+- 会话 `session-20260819-001` 认领任务。
+- VRExpansionPlugin 5.4 编译状态确认（Binaries/Win64 目录存在）。
+- 生成实施指南：`execution/reports/tasks/M01-T001.md`，包含完整蓝图创建步骤、组件配置、HandSocket 握持姿势配置、测试武器创建和编辑器验证流程。
+- 资产登记册更新：新增 AST-012（BP_WeaponBase）、AST-013（BP_TestSword），状态 `awaiting_review`。
+- 任务登记册更新：M01-T001 状态 `awaiting_review`。
+- 待用户在 UE 编辑器中执行蓝图创建和验证后，更新状态为 `approved`。
+
+## 2026-08-19（Git 提交与推送：4 原子 commit + origin/master 同步）
+
+- 校验程序修复：`dashboard/check-integrity.py` 21/21 通过（含 M01-T005 awaiting_review 超时、open 技术债 ≤3、状态交叉引用）。
+- 4 个原子 commit 推送到 `origin/master`（`f41fd6b..7843f73`）：
+  1. `docs(governance)` M01-T005 审核批准 + TD-011 偿还 + TD-012 deferred（含债务状态定义新增）
+  2. `fix(plugins)` PICO 串流还原 Config + UEBridgeMCP 子模块更新 + VRE SceneProxy override
+  3. `feat(level)` M01-T005 灰盒竞技场 v2 增量 (L_Prototype_1v1_v2)
+  4. `chore(status)` M01-T001 由其他执行模型认领 (session-20260819-001)
+- LFS：35 个对象（51 MB）已上传。
+- M01-T005 完成：状态 `approved`，VR Preview 补验通过（XR Session FOCUSED + PICO Runtime + 截图）。
+- TD-011 偿还（性能基线已建），TD-012 改 `deferred` 状态（PICO 串流问题短期不解决）。
+- 新增"债务状态定义"段（`open` / `deferred` / `resolved`），明确门禁规则与复审承诺要求。
+
 ## 2026-08-19（M00 里程碑验收通过：正式进入 M01）
 
 - M00 里程碑验收结论：**通过**。

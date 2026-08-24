@@ -39,20 +39,20 @@
     {
       "taskId": "M02-PREP-001",
       "milestone": "M02",
-      "status": "in_progress",
-      "claimedBy": "user-20260813-001",
+      "status": "approved",
+      "claimedBy": null,
       "startedAt": "2026-08-13",
-      "updatedAt": "2026-08-13",
-      "note": "审核 requires_changes。规格定稿。剩余：Step 2 参考图片收集。"
+      "updatedAt": "2026-08-24",
+      "note": "审核批准（2026-08-24）：验收通过，两附带条件闭环——① CR-20260824-001 命名对齐已实施关闭（有效标准正文零旧名残留）；② AST-009 关卡路径对齐 v2 并转 approved。证据链 V-009。"
     },
     {
       "taskId": "M01-T001",
       "milestone": "M01",
-      "status": "in_progress",
-      "claimedBy": "session-20260819-001",
+      "status": "blocked",
+      "claimedBy": "session-20260820-001",
       "startedAt": "2026-08-19",
-      "updatedAt": "2026-08-19",
-      "note": "武器抓取与 VRE 集成。前置：M00-T005 approved、VRE 已编译。"
+      "updatedAt": "2026-08-22",
+      "note": "阻塞：4 条 [PIE] 检查项未完成（单手抓取/释放/双手握持/VR交互不被破坏）。资产创建部分已完成（BP_WeaponBase + BP_TestSword + 关卡放置）。需用户在 PICO Neo3 VR Preview 中完成 PIE 验证后更新状态。"
     }
   ]
 }

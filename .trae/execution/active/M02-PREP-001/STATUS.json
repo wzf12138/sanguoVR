@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M02-PREP-001",
   "milestone": "M02",
-  "status": "in_progress",
-  "claimedBy": "session-20260813-m02prep",
+  "status": "approved",
+  "claimedBy": null,
   "startedAt": "2026-08-13",
-  "updatedAt": "2026-08-13",
-  "info": "审核结论 requires_changes（2026-08-13）：规格决策完成，但参考图片未收集。待用户收集图片后重新提交审核。"
+  "updatedAt": "2026-08-24",
+  "info": "审核批准（2026-08-24）：验收通过，两附带条件闭环——① CR-20260824-001 命名对齐已实施关闭（有效标准正文零旧名残留）；② AST-009 关卡路径对齐 v2 并转 approved。证据链 V-009。"
 }

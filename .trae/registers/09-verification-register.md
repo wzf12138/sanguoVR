@@ -12,6 +12,7 @@
 | V-008 | UE5.6 + PICO OpenXR Plugin（OS 5）真机：swapchain、场景渲染、输入与手柄模型 | M00-T004 | 真机 | 已验证（2026-08-13） | UE5.6 项目重建 + PICO 插件（v1.6.1）迁移至项目 `Plugins/`；swapchain 补丁（`PICO_HMD.cpp` 拦截 `xrCreateSwapchain` 剥离 format list）符号已确认编译进 libUnreal.so（`PICOLayerCreateSwapchain` 等 3 符号）；Neo3 真机场景可见、无 swapchain 崩溃；2026-08-12 输入映射按 PICO 官方文档绑定 5 个 IMC（二进制核验）；2026-08-13 手柄模型挂载（`SM_PICONeo3_L/R` + 隐藏骨骼手部，实例实测 bVisible=False）+ 碰撞修复（NoCollision，解决 SpawnActor 失败），真机确认手柄显示、输入生效；遗留：Neo3 卡顿性能优化（TD-011） |
 | V-006 | 系统骨架自动化测试 | M00-T005/T006 | 自动化 | 已验证（2026-08-16，12/12 通过） | `UnrealEditor-Cmd -unattended` 运行 `Automation RunTests VRSanguo`：8 个 DataAsset 校验 + 2 个 GameFlow 状态机 + 2 个接口测试全部成功；日志见 `Saved/Logs/VRSanguoYanWuchang.log`；报告 `execution/reports/tasks/M00-T006.md` |
 | V-007 | NTFS ACL 应用与恢复 | M00-T001 | 系统权限 | 待用户管理员执行 | 管理脚本输出 |
+| V-009 | M02-PREP-001 验收核验：平台选型/骨架/武器/动画四份规格齐备且用户逐项确认；33 张参考图实际文件数与报告吻合；CR-20260824-001 命名对齐实施且标准正文零旧名残留；AST-009 关卡路径对齐 v2 | M02-PREP-001 | 文件 | 已验证（2026-08-24） | 报告 `execution/reports/tasks/M02-PREP-001.md`；变更请求 `execution/active/M02-PREP-001/CR-20260824-001.md`（§7/§8 已回填）；Glob 核验 References 目录 33 uasset + 源图 |
 
 ## 旧编号映射
 

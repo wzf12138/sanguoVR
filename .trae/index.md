@@ -55,6 +55,10 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 - [active 状态](execution/active/STATUS.json)
 - [M00-T004 任务包](execution/active/M00-T004/)
 - [M00-T005 任务包](execution/active/M00-T005/)
+- [M00-T006 任务包](execution/active/M00-T006/)
+- [M01-T001 任务包](execution/active/M01-T001/)
+- [M01-T005 任务包](execution/active/M01-T005/)
+- [M02-PREP-001 任务包](execution/active/M02-PREP-001/)
 - [M00 正式任务详规](execution/M00/)
 
 当前 active 任务与状态以 [`execution/active/STATUS.json`](execution/active/STATUS.json) 为唯一权威，此处不复制动态状态；任务进度历史见 `registers/07-task-register.md`。active 五件套位于各任务子目录 `active/{taskId}/` 下。

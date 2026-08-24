@@ -5,7 +5,7 @@ forbidden_root: "D:/AWork/Unreal/Project/.trae"
 verification:
   method: "absolute_path_read_and_local_link_check"
   status: passed
-  updated: "2026-08-14"
+  updated: "2026-08-24"
   checks:
     lowercase_indexes:
       expected: 5
@@ -35,14 +35,17 @@ verification:
           status: approved
           package_dir: ".trae/execution/active/M00-T005/"
         - task_id: M00-T006
-          status: ready
+          status: approved
           package_dir: ".trae/execution/active/M00-T006/"
         - task_id: M01-T005
-          status: ready
+          status: approved
           package_dir: ".trae/execution/active/M01-T005/"
         - task_id: M02-PREP-001
-          status: in_progress
+          status: approved
           package_dir: ".trae/execution/active/M02-PREP-001/"
+        - task_id: M01-T001
+          status: blocked
+          package_dir: ".trae/execution/active/M01-T001/"
     task_templates:
       expected: 3
       passed: 3
@@ -66,7 +69,7 @@ verification:
     local_markdown_links:
       checked: 115
       broken: 0
-      note: "2026-08-14 治理修复（禁止提前提交审核）+ M02-PREP-001 审核 + M00-T004 批准。ExecutionModel 新增提交审核前自检门禁，definition-of-done 新增禁止提前提交审核条款。"
+      note: "2026-08-14 全量检查 115 链接 0 断链。2026-08-24 补全报告索引与根索引 active 任务包链接，链接全量复查顺延至下次完整性验证。"
     files_read_back: 22
 limitations:
   git: installed_and_pushed_2026-08-09
