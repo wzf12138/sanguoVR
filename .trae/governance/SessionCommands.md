@@ -86,6 +86,24 @@
 
 **禁止**：跳过校验直接推送；校验未通过仍推送；推送后不确认远程同步成功。
 
+**推送卡住时的网络恢复流程**（直连失败 ≥2 次后启用；本流程是推送命令权威正文的组成部分）：
+
+症状：`Failed to connect to github.com port 443 ... timed out` 或 `Recv failure: Connection was reset`。
+
+1. **TCP 短超时探测连通性**。不要用 `Invoke-WebRequest` 判断连通性（不可靠），用 TcpClient：
+
+   ```powershell
+   $c = New-Object System.Net.Sockets.TcpClient
+   $iar = $c.BeginConnect('github.com', 443, $null, $null)
+   if ($iar.AsyncWaitHandle.WaitOne(5000, $false) -and $c.Connected) { '可达' } else { '不可达' }
+   $c.Close()
+   ```
+
+2. **不可达**：检查常见本机代理端口（7890 / 7897 / 10809 / 1080 / 8118）是否监听，再查 Windows 系统代理开关（注册表 `ProxyEnable`）。全部关闭时如实报告"网络未恢复"，停止反复空推，等用户确认网络后再试。
+3. **可达但 git 仍失败**：把「探测 → 成功才执行 `git push origin master`」写成临时 PowerShell 脚本循环执行：最多 30 次、每次探测超时 5 秒、间隔 60 秒，成功立即退出。脚本放系统临时目录，用完删除，绝不进项目。
+4. **脚本陷阱**：以 `-File` 方式运行时，双引号字符串内的 `$变量` 可能不展开——脚本内的路径、次数、间隔一律硬编码字面量，复杂逻辑写 `.ps1` 文件而非 `-Command` 行内执行。
+5. **成功后核验**：确认远程两个 Actions（治理校验 CI 门禁、看板部署）均为 success、远程 `status.json` 与本地一致，然后删除临时脚本。
+
 ## 安全默认
 
 用户意图无法明确归类时，自动使用“只读分析”。不得猜测进入执行模式。

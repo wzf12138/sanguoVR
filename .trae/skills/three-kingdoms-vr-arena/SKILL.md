@@ -64,6 +64,8 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 短指令以 `SessionCommands.md` 为准。意图不明确时进入只读模式。
 
+推送因网络阻塞反复失败（443 超时 / Connection was reset）时不要空推：按 `SessionCommands.md` §推送·网络恢复流程 先做 TCP 短超时探测，可达才重试，不可达如实报告并等待用户确认。
+
 ## active 完整门禁路径
 
 执行模式必须逐份读取并同时满足：

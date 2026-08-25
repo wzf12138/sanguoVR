@@ -1,0 +1,1 @@
+会话记录目录。执行模型在认领任务后在此创建 {sessionId}.md 记录执行进度。详见 governance/ExecutionModel.md 会话记录。

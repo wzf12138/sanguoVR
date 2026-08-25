@@ -3,7 +3,7 @@ project: VRSanguoYanWuchang
 root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang"
 trae_root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae"
 source_of_truth: ".trae/index.md"
-updated: "2026-08-24"
+updated: "2026-08-25"
 indexes:
   standards: ".trae/standards/index.md"
   vr: ".trae/vr/index.md"
@@ -15,6 +15,7 @@ governance_contracts:
   - ".trae/governance/change-request-template.md"
   - ".trae/governance/definition-of-done.md"
   - ".trae/governance/responsibility-matrix.md"
+  - ".trae/governance/TestSpecification.md"
 operation_models:
   - ".trae/governance/DecisionModel.md"
   - ".trae/governance/ExecutionModel.md"
@@ -45,7 +46,7 @@ active_gate:
     - task_id: M01-T001
       status: blocked
       package_dir: ".trae/execution/active/M01-T001/"
-  milestone: M00
+  milestone: M01
   concurrency: multi
 collections:
   task_templates: 3

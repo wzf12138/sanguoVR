@@ -1,5 +1,23 @@
 # ChangeLog
 
+## 2026-08-25（推送网络恢复流程沉淀：SessionCommands + SKILL 路由）
+
+- 背景：本会话 git push 多次因网络阻塞失败（443 超时 / Connection was reset），最终以「TCP 短超时探测 → 可达才推送」的临时脚本成功推送 5698e3b。应用户要求把该方法沉淀为权威正文，避免后续会话反复空推。
+- `governance/SessionCommands.md`：§推送 末尾新增「推送卡住时的网络恢复流程」5 步——症状识别、TcpClient 短超时探测（不用 Invoke-WebRequest）、不可达时代理端口与系统代理排查、可达但 git 失败时临时脚本循环推送（30 次 × 60 秒、硬编码参数）、成功后核验远程 Actions 与 status.json。
+- `skills/three-kingdoms-vr-arena/SKILL.md`（**锁定文件修改，记录如下**）：
+  - 批准依据：用户在会话内明确选择"同时更新 SKILL.md"（2026-08-25）。
+  - 影响：仅模式路由段新增 1 行摘要+链接指向 SessionCommands 权威正文，不复制流程细节，不改变任何门禁与路由规则。
+  - 回滚：删除该 1 行即恢复原文；或 git revert 对应提交。
+  - 验证：check-integrity 全过（结果见下方验证记录），SKILL frontmatter 唯一性不变。
+- 依据：项目规则第 19c 条（用户本次明确批准的变更）；政策 §4.1 锁定文件修改记录要求。
+
+## 2026-08-25（测试用例补全：M01-T001 / M01-T005 正式化 TC 章节）
+
+- 依据 `governance/TestSpecification.md` 对缺测试用例的未结任务补全（用户批准方案后实施；approved 任务 M00-T004/T005/T006 不回填，M02-PREP-001 按规范豁免）。
+- M01-T001：TASK.md 新增「测试用例」章节（TC-01~06，新增蓝图 ≥2 条标准，含功能 4 条 + 边界 2 条）；CHECKS.md 原 4 条 `[PIE]` 检查项升级为 `[测试]` TC 编号并新增 TC-04/05。原阻塞说明中"4 条 [PIE] 检查项"对应现 TC-01/02/03/06，语义不变。
+- M01-T005：TASK.md 在验收清单后新增「测试用例」章节（TC-01~04，关卡创建 ≥2 条标准：加载 + PIE）；CHECKS.md 执行后段新增「测试用例核验」4 条勾选项。
+- 本次为决策模型规划维护（用户明确批准，规则第 19c 条路径授权），不改变两任务执行状态与认领关系（M01-T005 in_progress / session-20260825-001，M01-T001 blocked）。
+
 ## 2026-08-25（看板修正：规划任务进入登记册与看板）
 
 - 根因（决策模型-pro 诊断）：`parse_markdown_table` 只解析第一个表格，登记册的"M01 规划任务"段被跳过；`classify_task_status` 不识别"待生成"。

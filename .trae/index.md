@@ -16,6 +16,10 @@
 3. [集中式完成定义](governance/definition-of-done.md)
 4. [集中式职责边界](governance/responsibility-matrix.md)
 
+## 补充治理规范
+
+- [测试规范](governance/TestSpecification.md)（测试用例设计、执行、证据标准）
+
 ## 四份操作模型
 
 1. [决策模型](governance/DecisionModel.md)
@@ -60,6 +64,8 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 - [M01-T005 任务包](execution/active/M01-T005/)
 - [M02-PREP-001 任务包](execution/active/M02-PREP-001/)
 - [M00 正式任务详规](execution/M00/)
+- [M01 核心战斗技术切片](execution/M01-CombatSlice.md)
+- [会话记录目录](execution/sessions/)（执行模型上下文保留）
 
 当前 active 任务与状态以 [`execution/active/STATUS.json`](execution/active/STATUS.json) 为唯一权威，此处不复制动态状态；任务进度历史见 `registers/07-task-register.md`。active 五件套位于各任务子目录 `active/{taskId}/` 下。
 

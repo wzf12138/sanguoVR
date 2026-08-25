@@ -19,7 +19,7 @@
 
 1. 对照 `ALLOWLIST.txt` 检查实际修改范围。
 2. 检查锁定文件哈希和第二 Skill。
-3. 检查任务完成定义和全部验证证据。
+3. 检查任务完成定义和全部验证证据，**逐条对照 `definition-of-done.md` §7 生产就绪基准**（LV-01~05 / BP-01~04 / CP-01~05 / AS-01~04）核验。基准未满足的检查项标记 `requires_changes`。
 4. 区分代码回读验证、UE 编辑器视觉验证、Android 构建和 PICO 真机证据：
    - **代码任务**：读回文件内容，确认逻辑正确。
    - **资产任务**：用户在 UE Content Browser 中导航到资产路径，确认模型/动画/材质视觉效果符合规格。
@@ -29,6 +29,8 @@
 7. 检查结果报告是否与实际文件一致。
 8. **文档同步验证（漂移检测）**：若任务修改了 `Source/` 代码或 `Content/` 资产，检查对应 `systems/` 工程指引的接口契约是否仍与实现一致。若文档需更新但不在任务白名单内，在审核报告中标记待更新文档并登记到 [`../registers/11-tech-debt-register.md`](../registers/11-tech-debt-register.md)。若文档在白名单内但未更新，标记为 `requires_changes`。
 9. **技术债检查**：检查任务是否引入新的技术债（临时实现、占位方案、硬编码数值等），若有则在 [`../registers/11-tech-debt-register.md`](../registers/11-tech-debt-register.md) 中登记。
+10. **测试结果核验**：若任务涉及代码/蓝图/关卡，检查 TASK.md 中定义的测试用例是否全部执行，测试结果是否全部通过，证据是否齐全。测试未全部通过 → `requires_changes`。
+11. **会话记录核验**：检查 `.trae/execution/sessions/{claimedBy}.md` 是否存在且内容完整（执行进度、沟通记录、关键决策、恢复上下文）。会话记录缺失或内容不完整 → `requires_changes`。
 
 ## 允许结论
 

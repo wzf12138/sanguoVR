@@ -31,10 +31,10 @@
       "taskId": "M01-T005",
       "milestone": "M01",
       "status": "in_progress",
-      "claimedBy": null,
+      "claimedBy": "session-20260825-001",
       "startedAt": "2026-08-13",
-      "updatedAt": "2026-08-24",
-      "note": "口径修正（2026-08-24）：任务恢复为执行中。核心交付已于 2026-08-19 通过 VR Preview 补验；TD-012 偿还项未闭环——PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE stat fps（待串流解决）、Lightmass 烘焙（需 GUI）。偿还完成后重新提交审批。"
+      "updatedAt": "2026-08-25",
+      "note": "口径修正（2026-08-24）：任务恢复为执行中。认领续期（2026-08-25）：L_Prototype_1v1_v2 校场灰盒布局迭代与光照修复进行中（补建 SkyAtmosphere/SkyLight/ExponentialHeightFog 并开启 AtmosphereSunLight，待重启编辑器确认天空效果与重新烘焙）。核心交付已于 2026-08-19 通过 VR Preview 补验；TD-012 偿还项未闭环——PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE stat fps（待串流解决）、Lightmass 烘焙（需 GUI）。偿还完成后重新提交审批。"
     },
     {
       "taskId": "M02-PREP-001",

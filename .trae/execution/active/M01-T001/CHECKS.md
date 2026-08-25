@@ -23,10 +23,12 @@
 - [ ] `[文件]` 抓取参数配置完成（GripScriptType、bAllowSecondaryGrip）
 - [ ] `[文件]` HandSocket 握持姿势配置完成
 - [ ] `[文件]` BP_TestSword 已创建并放置到 L_SkeletonTest 关卡
-- [ ] `[PIE]` 编辑器 PIE 验证：可单手抓取武器 [PICO Neo3 + VR Preview]
-- [ ] `[PIE]` 编辑器 PIE 验证：可释放武器 [PICO Neo3 + VR Preview]
-- [ ] `[PIE]` 编辑器 PIE 验证：双手握持可用（副手靠近时自动吸附） [PICO Neo3 + VR Preview]
-- [ ] `[PIE]` 现有 VR 交互不被破坏（手部动画、抓取、瞬移仍可用） [PICO Neo3 + VR Preview]
+- [ ] `[测试]` TC-01 单手抓取武器：手柄对准 BP_TestSword 扣扳机，武器吸附 HandSocket 姿势、Grip 生效 [PICO Neo3 + VR Preview]
+- [ ] `[测试]` TC-02 释放武器掉落：抓取中松开扳机，武器脱手受重力落地不穿地 [PICO Neo3 + VR Preview]
+- [ ] `[测试]` TC-03 双手握持自动吸附：主手握持中副手靠近副握点，副手自动吸附并协同转动 [PICO Neo3 + VR Preview]
+- [ ] `[测试]` TC-04 双手握持释放主手（边界）：双手握持中松开主手，副手接管或按 VRE 规则掉落，不卡死不穿模 [PICO Neo3 + VR Preview]
+- [ ] `[测试]` TC-05 快速连抓连放（边界）：1 秒内连续抓取/释放 3 次，无崩溃、无幽灵握持残留 [PICO Neo3 + VR Preview]
+- [ ] `[测试]` TC-06 现有 VR 交互回归：模板手部动画、瞬移、原抓取全部正常无退化 [PICO Neo3 + VR Preview]
 - [ ] `[文件]` 任务报告写入 `.trae/execution/reports/tasks/M01-T001.md`，包含结构化验证证据表
 - [ ] `[文件]` 资产登记册同步更新
 - [ ] `[文件]` `active/M01-T001/STATUS.json` 更新为 `awaiting_review`（非 `[PIE]` 项全部通过后）或 `blocked`（`[PIE]` 项待用户验证时）

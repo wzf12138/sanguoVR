@@ -21,6 +21,13 @@
 - NavMesh 覆盖全部可行走区域，高台可达
 - PIE 运行 >= 90fps
 - 灰盒材质正确
+
+### 测试用例核验（TC 定义见 TASK.md「测试用例」章节）
+- [ ] `[截图]` TC-01 关卡加载：编辑器打开 `L_Prototype_1v1_v2.umap` 无报错、无丢失资产警告
+- [ ] `[截图]` TC-02 NavMesh 覆盖与可达：Navigation 全覆盖绿色，两出生点寻路至高台可达，掩体边距 ≥0.5m
+- [ ] `[stat 截图]` TC-03 PIE 帧率达标：PIE 运行 stat fps ≥90，无渲染报错
+- [ ] `[截图]` TC-04 光照烘焙结果：SkyAtmosphere/SkyLight/Fog 烘焙后天空雾效正确，无漏光黑斑
+
 - 任务报告写入 `.trae/execution/reports/tasks/M01-T005.md`
 - 资产登记册同步更新
 - `active/M01-T005/STATUS.json` 更新为 `awaiting_review`

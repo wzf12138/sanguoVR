@@ -5,7 +5,7 @@ forbidden_root: "D:/AWork/Unreal/Project/.trae"
 verification:
   method: "absolute_path_read_and_local_link_check"
   status: passed
-  updated: "2026-08-24"
+  updated: "2026-08-25"
   checks:
     lowercase_indexes:
       expected: 5
