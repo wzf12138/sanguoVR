@@ -54,24 +54,34 @@ def read_text(path):
     return ""
 
 def parse_markdown_table(text):
+    """解析 markdown 中所有表格（主表 + 规划表），返回所有行的列表。
+    修复历史：2026-08-25 之前只读第一个表格，规划任务表被跳过。
+    """
     rows = []
     lines = text.strip().split("\n")
-    if len(lines) < 2:
-        return rows
-    header_line = None
-    for i, line in enumerate(lines):
-        if i + 1 < len(lines) and "|" in line and "---" in lines[i + 1]:
-            header_line = i
-            break
-    if header_line is None:
-        return rows
-    headers = [h.strip() for h in lines[header_line].split("|")[1:-1]]
-    for line in lines[header_line + 2:]:
-        if not line.strip().startswith("|"):
-            break
-        cells = [c.strip() for c in line.split("|")[1:-1]]
-        if len(cells) == len(headers):
-            rows.append(dict(zip(headers, cells)))
+    n = len(lines)
+    i = 0
+    while i < n - 1:
+        # 寻找表格头（当前行含 | 且下一行是分隔行）
+        if "|" not in lines[i] or "---" not in lines[i + 1]:
+            i += 1
+            continue
+        # 防止把分隔行误判为表头：表头必须本身含有 | 但不含 ---
+        if "---" in lines[i]:
+            i += 1
+            continue
+        headers = [h.strip() for h in lines[i].split("|")[1:-1]]
+        if not headers:
+            i += 1
+            continue
+        i += 2  # 跳过分隔行
+        # 读取本表的所有行
+        while i < n and lines[i].strip().startswith("|"):
+            cells = [c.strip() for c in lines[i].split("|")[1:-1]]
+            if len(cells) == len(headers):
+                rows.append(dict(zip(headers, cells)))
+            i += 1
+        # 继续外层 while，寻找下一个表格
     return rows
 
 def get_session_id():
@@ -102,6 +112,8 @@ def classify_task_status(ts):
         return "partial"
     if "awaiting" in ts_lower or "待审核" in ts:
         return "awaiting_review"
+    if "待生成" in ts or "planned" in ts_lower:
+        return "planned"
     return "unknown"
 
 
@@ -964,6 +976,7 @@ body {
 .tbadge-review { background: rgba(163,113,247,0.1); color: var(--violet); border: 1px solid rgba(163,113,247,0.2); }
 .tbadge-partial { background: rgba(210,153,34,0.12); color: var(--gold); border: 1px solid rgba(210,153,34,0.25); }
 .tbadge-inprogress { background: rgba(45,212,191,0.1); color: #2dd4bf; border: 1px solid rgba(45,212,191,0.25); }
+.tbadge-planned { background: rgba(163,113,247,0.06); color: var(--violet); border: 1px dashed rgba(163,113,247,0.35); opacity: 0.85; }
 .tbadge-unknown { background: rgba(90,104,120,0.1); color: var(--dim); border: 1px solid var(--border-bright); }
 
 .plan-scope { margin: 10px 16px 14px 34px; padding: 10px 14px; background: rgba(88,166,255,0.04); border: 1px dashed var(--border-bright); border-radius: 8px; }
@@ -1894,8 +1907,8 @@ function renderFlow() {
       </div>`;
 
     const branches = m.tasks.map((t, ti) => {
-      const badgeClass = t.status==='completed'?'tbadge-completed':t.status==='blocked'?'tbadge-blocked':t.status==='ready'?'tbadge-ready':t.status==='awaiting_review'?'tbadge-review':t.status==='partial'?'tbadge-partial':t.status==='in_progress'?'tbadge-inprogress':'tbadge-unknown';
-      const badgeText = t.status==='completed'?'已完成':t.status==='blocked'?'阻塞':t.status==='ready'?'待认领':t.status==='awaiting_review'?'待审核':t.status==='partial'?'部分完成':t.status==='in_progress'?'执行中':'未知';
+      const badgeClass = t.status==='completed'?'tbadge-completed':t.status==='blocked'?'tbadge-blocked':t.status==='ready'?'tbadge-ready':t.status==='awaiting_review'?'tbadge-review':t.status==='partial'?'tbadge-partial':t.status==='in_progress'?'tbadge-inprogress':t.status==='planned'?'tbadge-planned':'tbadge-unknown';
+      const badgeText = t.status==='completed'?'已完成':t.status==='blocked'?'阻塞':t.status==='ready'?'待认领':t.status==='awaiting_review'?'待审核':t.status==='partial'?'部分完成':t.status==='in_progress'?'执行中':t.status==='planned'?'待生成':'未知';
 
       if (t.status === 'completed') {
         return `<div class="task-branch">
@@ -1918,6 +1931,9 @@ function renderFlow() {
       } else if (t.status === 'in_progress') {
         execState = 'active'; execText = '执行中';
         if (t.note) execText += ' — ' + t.note;
+      } else if (t.status === 'planned') {
+        execState = 'pending'; execText = '待生成（已规划，未启动）';
+        if (t.note) execText += ' — ' + t.note;
       } else if (t.status === 'ready') {
         execState = 'pending'; execText = '等待认领';
       } else if (t.status === 'awaiting_review') {
@@ -1932,6 +1948,8 @@ function renderFlow() {
         outState = 'done'; outText = t.deliverable || '已产出';
       } else if (t.status === 'blocked') {
         outState = 'pending'; outText = '执行阻塞，待恢复';
+      } else if (t.status === 'planned') {
+        outState = 'pending'; outText = t.deliverable || '待生成任务包';
       } else {
         outState = 'pending'; outText = '待产出';
       }
@@ -1941,6 +1959,8 @@ function renderFlow() {
         revState = 'done'; revText = '已审核通过';
       } else if (t.status === 'awaiting_review') {
         revState = 'active'; revText = '等待审核';
+      } else if (t.status === 'planned') {
+        revState = 'pending'; revText = '待任务包生成后启动';
       } else {
         revState = 'pending'; revText = '等待执行完成';
       }
