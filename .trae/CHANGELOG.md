@@ -1,5 +1,15 @@
 # ChangeLog
 
+## 2026-08-26（V-007 NTFS ACL 应用与 M00-T001 收尾推进）
+
+- 背景：M00-T001 长期挂起在"部分验证"——V-001 已确认，V-007 等待用户在管理员 PowerShell 中执行 ACL 脚本。本日用户在管理员身份中跑完 Apply（`Set-TraeGovernanceAcl.ps1 -Mode Apply -Confirm:$false`），治理目录 `.trae/` 与管理员脚本目录 `D:\AWork\TraeAdmin\VRSanguoYanWuchang` 均 `Protected: True`、Users 写权限移除、PC 用户保留 Modify 维护能力，V-007 验收通过。
+- `registers/09-verification-register.md`：V-007 状态「待用户管理员执行」→「已验证（2026-08-26）」，附 ACL 证据索引。
+- `registers/07-task-register.md`：M00-T001 状态「部分验证（V-001 已确认，V-007 ACL 待管理员）」→「待审核（2026-08-26：V-001 / V-007 全部通过，证据齐全，等待用户最终批准）」。**未自标 approved**——按 ReviewProtocol §禁止「执行模型自审自批」，最终批准权保留给用户/审核员。
+- 新建 `execution/reports/tasks/M00-T001-acl-2026-08-26.md`：完整 ACL 输出、修复过程、验收表、恢复方式。
+- 脚本侧修复（不涉及 .trae/，属项目外维护）：`Set-TraeGovernanceAcl.ps1` 文件编码从 UTF-8 无 BOM 改 UTF-8 with BOM（首字节 0xEF 0xBB 0xBF），并修复 4 处 `${var}:` 变量界定（原写法 `"$currentUser:"` 被 PS5.1 误识为「驱动器:路径」）。修复为幂等命令，业务逻辑零变化。
+- 看板效果：M00-T001 徽章从「部分完成（金）」→「待审核（紫）」；M00 任务完成度仍 6/7（不构成自审自批）。
+- 2026-08-26 用户最终批准：M00-T001 状态从「待审核」→「approved（2026-08-26：用户最终批准；V-001 / V-007 全部通过，证据完整）」，完成度 6/7 → 7/7。check-integrity 21/21 全过。
+
 ## 2026-08-25（推送网络恢复流程沉淀：SessionCommands + SKILL 路由）
 
 - 背景：本会话 git push 多次因网络阻塞失败（443 超时 / Connection was reset），最终以「TCP 短超时探测 → 可达才推送」的临时脚本成功推送 5698e3b。应用户要求把该方法沉淀为权威正文，避免后续会话反复空推。

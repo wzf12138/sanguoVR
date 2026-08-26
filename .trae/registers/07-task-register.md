@@ -4,7 +4,7 @@
 
 | 任务 | 名称 | 状态 | 交付物 |
 |---|---|---|---|
-| M00-T001 | 治理与事实源基线 | 部分验证（V-001 已确认，V-007 ACL 待管理员） | governance、rules、索引、登记册 |
+| M00-T001 | 治理与事实源基线 | approved（2026-08-26：用户最终批准；V-001 / V-007 全部通过，证据完整，ACL 核验输出见 `execution/reports/tasks/M00-T001-acl-2026-08-26.md`） | governance、rules、索引、登记册 |
 | M00-T002 | Git 与仓库基线 | 已验证（Git 安装、仓库初始化与推送完成，2026-08-09 用户确认） | `.gitignore`、`.gitattributes`、`.editorconfig`、`.lfsconfig`；Git for Windows + Git LFS 已安装（用户执行）；仓库已初始化并推送远程 |
 | M00-T003 | UE5.8 工程与工具链基线 | 已验证（approved，编译成功） | 编译成功、编辑器启动验证通过、MCP 连通性已记录 |
 | M00-T004 | VR/OpenXR/PICO 基线 | approved（2026-08-13：真机验收通过，审核批准；遗留 Neo3 卡顿 TD-011） | Step 1-3 编辑器核验已完成（UE5.8）；UE5.6 迁移完成：项目重建、PICO 插件迁移至项目 Plugins、swapchain 补丁编译生效、Neo3 真机场景可见；2026-08-12 输入映射按 PICO 官方文档绑定（5 个 IMC 全部配置 PICO Neo3 键）；2026-08-13 VRPawn 挂载 SM_PICONeo3_L/R 手柄模型、隐藏骨骼手部、修复手柄模型碰撞导致的 SpawnActor 失败（均经 MCP 自动化 + 真机验证）；遗留：Neo3 卡顿性能优化 |
