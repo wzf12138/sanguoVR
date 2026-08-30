@@ -86,7 +86,12 @@
 > 以下规则适用于执行模型。详见 `governance/ExecutionModel.md` 沟通检查点。
 
 24. **执行模型必须主动沟通，不得静默执行全程。** 开始前确认（CK-01）、进度过半汇报（CK-02）、遇到决策征询（CK-03）、阻塞时告知（CK-04）、完成前确认（CK-05）。
-25. **每次会话必须维护会话记录。** 记录位置：`.trae/execution/sessions/{sessionId}.md`。内容：执行进度、沟通记录、关键决策、阻塞待办、恢复上下文。会话中断后，下次执行模型可通过读取会话记录恢复上下文。
+25. **每次会话必须维护会话记录。** 记录位置：`.trae/execution/sessions/{sessionId}.md`。内容：执行进度、沟通记录、关键决策、阻塞待办、恢复上下文。会话中断后，下次执行模型可通过读取会话记录恢复上下文。认领任务与创建会话记录必须同一轮完成；会话记录缺失 = 认领未完成，治理一致性校验（check-integrity.py）将判定失败。
+26. **跨会话信箱纪律（AgentHub）。** 多会话协作时，跨会话消息一律走全局信箱 `D:\App\trae\AgentHub\`（协议：`AgentHub\PROTOCOL.md`，全局 Skill：agent-hub）。检查点：会话开始后、认领任务前、修改共享文件后（向 `channels/registry-changes` 发广播）、阻塞或遇到需拍板的决策问题时（`type: question` 投 `inboxes/manager/` 或 `inboxes/decision/`，然后 `hub_await` 值班等回复，来信自醒，不得空等用户传话）。信箱只是传输：认领、决策、验收等治理后果仍按本规则落 STATUS.json 与登记册。
+
+## UE 重启后必做
+
+27. **ue-bridge 调用先探活，失败才刷新 MCP，MCP 正常时禁止刷新。** 首次调用 ue-bridge 前先探活（如 `get-project-info`，正常返回即视为通）：通了直接使用，禁止再走刷新流程；仅当探活失败且 UE 正在运行时，按 `governance/UEBridgeRefresh.md` 先确认 UE 完全启动（编辑器渲染完成且关卡已加载），再自主连续完成刷新，全程不逐步请示用户；UE 未运行则等待或告知用户，禁止空刷。
 
 ## 权限规则
 

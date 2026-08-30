@@ -19,6 +19,7 @@
 ## 补充治理规范
 
 - [测试规范](governance/TestSpecification.md)（测试用例设计、执行、证据标准）
+- [UE 重启后 MCP 刷新流程](governance/UEBridgeRefresh.md)（先探活后刷新：ue-bridge 失联且 UE 运行中才走 GUI 自动刷新，含 UE 完全启动前置门禁）
 
 ## 四份操作模型
 

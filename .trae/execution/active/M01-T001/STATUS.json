@@ -2,9 +2,9 @@
   "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
   "taskId": "M01-T001",
   "milestone": "M01",
-  "status": "blocked",
-  "claimedBy": "session-20260820-001",
+  "status": "in_progress",
+  "claimedBy": "session-20260829-001",
   "startedAt": "2026-08-19",
-  "updatedAt": "2026-08-22",
-  "info": "阻塞：4 条 [PIE] 检查项未完成。资产创建已完成。需用户 PIE 验证。"
+  "updatedAt": "2026-08-29",
+  "info": "执行中（2026-08-29 认领续期）。已修复 Interchange 导入崩溃、导入环首刀真剑网格、追加 VRGripP__0/VRGripS__0 握持 socket 并生成原生 GrippableStaticMeshActor 真剑 + 台座。经 OBJ 顶点实测确认剑柄在正 X 端（初版误放刀刃端），拟挪 socket 至剑柄并重摆剑。阻塞：UE 编辑器崩溃退出，修正脚本未执行；TC-01~TC-06 待验证。"
 }

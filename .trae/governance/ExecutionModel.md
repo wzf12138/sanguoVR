@@ -21,8 +21,8 @@
 
 1. **检查五件套**：确认 `.trae/execution/active/{taskId}/` 下存在 `TASK.md`、`ALLOWLIST.txt`、`INPUTS.md`、`CHECKS.md`、`STATUS.json` 五个文件且内容完整。
 2. **冲突检测**：读取其它 `in_progress` 任务的 `ALLOWLIST.txt`，确认无独占路径重叠。共享文件（`.trae/CHANGELOG.md`、登记册、`integrity.yaml`）不视为冲突。ALLOWLIST 中所有路径相对于项目根目录 `VRSanguoYanWuchang/`。
-3. **认领（写操作）**：以上两步通过后，立即更新根 STATUS.json 中对应条目的 `status` 为 `in_progress`，`claimedBy` 填写当前会话标识。格式：`"session-{YYYYMMDD}-{序号}"`，如 `"session-20260811-001"`。同时同步更新 `.trae/execution/active/{taskId}/STATUS.json`。
-4. **认领后验证**：重新读取根 STATUS.json，确认 `status` 确实为 `in_progress` 且 `claimedBy` 为当前会话。确认通过后才能进入前置门禁。
+3. **认领（写操作）**：以上两步通过后，立即更新根 STATUS.json 中对应条目的 `status` 为 `in_progress`，`claimedBy` 填写当前会话标识。格式：`"session-{YYYYMMDD}-{序号}"`，如 `"session-20260811-001"`。同时同步更新 `.trae/execution/active/{taskId}/STATUS.json`，并**在同一轮操作中**创建会话记录 `.trae/execution/sessions/{claimedBy}.md`（按"会话记录（强制）"章节模板，填写会话开始时间、认领任务、当前上下文摘要）。**会话记录未创建 = 认领未完成，不得修改任何任务文件。**
+4. **认领后验证**：重新读取根 STATUS.json，确认 `status` 确实为 `in_progress`、`claimedBy` 为当前会话，且会话记录 `.trae/execution/sessions/{claimedBy}.md` 已存在。确认通过后才能进入前置门禁。
 
 用户执行任务的认领：由 AI 监督模型代为更新根 STATUS.json（`status` 为 `in_progress`，`claimedBy` 填写 `"user-{YYYYMMDD}-{序号}"`），或提示用户确认后更新。
 
@@ -52,6 +52,7 @@
 3. **禁止路径未修改**：对照 `ALLOWLIST.txt` 确认无越界修改。禁止路径（`Source/`、`Config/`、`Plugins/`、治理锁定文件等）未被修改。
 4. **验证证据可定位**：每项通过的检查均有对应的可定位证据（文件路径、日志行号、编辑器截图引用等），不存在"已确认"但无证据链的声明。
 5. **无遗留待办伪装**：任务报告中不得出现将未完成交付物包装为"遗留待办"、"风险"或"后续工作"的表述，除非该交付物在 `TASK.md` 中明确标注为"可选"或"条件性"（如"如时间允许"、"P2 优先级"）。
+6. **会话记录完整**：`.trae/execution/sessions/{claimedBy}.md` 存在且已更新至当前进度（含执行进度、沟通记录、恢复上下文小节）。缺失或长期未更新 = 自检失败，不得提交审核。
 
 ### 证据打包（硬性要求）
 
@@ -121,7 +122,7 @@
    - 认领门禁：已在任务认领步骤完成。
    - 执行规则：不把规划描述为实现，不把桌面验证描述为 PICO 真机验证。
 2. **磁盘规则自检**：在创建任何文件前，确认目标路径符合磁盘规则（项目文件 → D: 项目内；临时文件 → `c:\Users\PC\.trae-cn\work\...`；大文件下载 → E:）。
-3. **会话记录初始化**：在 `.trae/execution/sessions/` 下创建 `{sessionId}.md`，记录会话开始时间、认领任务、当前上下文摘要。
+3. **会话记录确认**：确认 `.trae/execution/sessions/{sessionId}.md` 已在认领时创建（见"任务认领"步骤 3）；若缺失，立即按模板补建后再继续，不得跳过。
 
 铁律验证失败 → 停止，不得修改任何文件。**此规则旨在防止执行模型因上下文缺失而违反磁盘规则或文件边界规则。**
 
@@ -138,6 +139,8 @@
 | CK-05 | 全部步骤完成后、提交审核前 | "全部步骤完成，测试结果 {N/N passed}，是否提交审核？" |
 
 **CK-03 示例场景**：需要用户选择技术方案、需要用户提供外部资源、需要用户在 UE 编辑器中完成操作。
+
+**汇报前置（强制）**：CK-02/CK-04/CK-05 汇报前必须先把本次进展写入会话记录（`.trae/execution/sessions/{sessionId}.md`），先记录、后汇报。
 
 **沟通禁止**：不询问已在 TASK.md/INPUTS.md 中明确的事项；不在每个微小步骤后都询问。
 

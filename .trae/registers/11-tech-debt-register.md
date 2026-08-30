@@ -20,6 +20,7 @@
 | TD-010 | 编辑器自动化工具链变更：安装 UEBridgeMCP（GPL-3.0），移除未编译通过的 UnrealMCP（MIT） | Plugins/UEBridgeMCP、VRSanguoYanWuchang.uproject | UE5.6 无官方 MCP（官方仅 5.8）；UnrealMCP 在 5.6 编译失败（TraceServices/Material/StateTree/Niagara API 不兼容），UEBridgeMCP 5.6 编译零改动通过 | 编辑器可通过 HTTP 8080 被 AI 自动化操作（407 工具）；GPL-3.0 许可证对商业分发有传染风险，上架前需评估 | **评估结论（2026-08-13）**：开发期使用无碍；上架前需评估 GPL-3.0 是否影响分发，必要时移除插件或更换方案；UnrealMCP 源码备份在临时目录可恢复 | 中 | open |
 | TD-011 | PICO Neo3 真机运行时卡顿 | 全项目运行时 | 2026-08-13 真机验收时用户报告"有些卡顿"（隐藏骨骼手部动画后仍存在） | 影响 VR 体验流畅度，可能触发晕动 | **已偿还（2026-08-19）**：M00-T006 性能基线建立（stat unit/fps/scenerendering 可用 + LogVRSanguoPerf 注册），1v1 灰盒关卡（M01-T005）已完成 NavMesh/光照/掩体布局，PIE 帧率采集留待 PICO 串流问题（TD-012）解决后复验 | 中 | resolved |
 | TD-012 | PICO Connect 10.6.6 未自动切换 VR 串流模式（停留在桌面串流） | PICO Connect PC 端 + 头显端串流应用 | PICO Connect 桌面串流默认优先；VR 串流需头显端手动操作且无明确 UI 入口 | 编辑器 VR Preview 渲染正常（XR Session FOCUSED + PICO Runtime）但头显无法接收 VR 帧流 | 三条替代路径：① Direct Preview 设备部署（首选，M01-T007 验证）；② PICO 企业串流 v2.1；③ SteamVR 串流。**复审时机**：M01-T007 执行时验证 ①，M01 结束前必须有一条路径可用。详见 `execution/M01-CombatSlice.md` TD-012 解决计划。 | 中 | deferred |
+| TD-013 | M01-T001 使用 VRE 内置 GripObject 做抓取功能验证，未按 systems/02 IGrabbable 接口封装 | Content/VRSanguo/VR/BP_VRCharacter（待创建）| M01-T001 决策：功能验证优先，Route B（自研 IGrabbable 接口）投入产出比不合理且蓝图调用具体类可能触犯 03-blueprint-cpp-boundary-standard | GripObject 是 VRE 内部实现，不经过项目 IGrabbable 接口（TryGrab/Release/SwitchHand/GetGrabPoints）；武器抓取逻辑与项目交互系统脱钩 | M01 后续任务（T002/T003）或 M02 按 `systems/02-interaction-and-weapon-system.md` 接口标准重构，将 GripObject 调用封装进 IGrabbable 桥接层 | 中 | open |
 
 ## 债务状态定义
 

@@ -5,7 +5,7 @@ forbidden_root: "D:/AWork/Unreal/Project/.trae"
 verification:
   method: "absolute_path_read_and_local_link_check"
   status: passed
-  updated: "2026-08-25"
+  updated: "2026-08-30"
   checks:
     lowercase_indexes:
       expected: 5
@@ -44,7 +44,7 @@ verification:
           status: approved
           package_dir: ".trae/execution/active/M02-PREP-001/"
         - task_id: M01-T001
-          status: blocked
+          status: in_progress
           package_dir: ".trae/execution/active/M01-T001/"
     task_templates:
       expected: 3

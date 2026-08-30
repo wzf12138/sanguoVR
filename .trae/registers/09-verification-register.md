@@ -4,7 +4,7 @@
 
 | ID | 验证 | 关联任务 | 层级 | 状态 | 证据 |
 |---|---|---|---|---|---|
-| V-001 | 治理、规则、VR、系统、登记册与任务文件物理存在与可读；`.trae` 恢复清单逐份读取 | M00-T001 | 文件 | 已确认 | 文件工具逐份读取：治理契约、操作模型、规则、标准、VR、系统、Design 详规、登记册、里程碑任务详规及 active 任务包；报告索引见 `execution/reports/tasks/README.md` |
+| V-001 | 治理、规则、VR、系统、登记册与任务文件物理存在与可读；`.trae` 恢复清单逐份读取 | M00-T001 | 文件 | 已验证（2026-08-10 逐份读取确认） | 文件工具逐份读取：治理契约、操作模型、规则、标准、VR、系统、Design 详规、登记册、里程碑任务详规及 active 任务包；报告索引见 `execution/reports/tasks/README.md` |
 | V-002 | Git 安装、仓库初始化、LFS 配置与远程推送 | M00-T002 | 文件 | 已验证（2026-08-09 用户确认） | `.gitignore`、`.gitattributes`、`.lfsconfig`；`../standards/10-git-standard.md`；Git for Windows + Git LFS 已安装，`origin/master` 已推送远程 |
 | V-003 | UE5.8 工程文件生成与 Editor 编译 | M00-T003 | 构建 | 已验证（编译成功） | `Rebuild.bat VRSanguoYanWuchangEditor Win64 Development` Result: Succeeded（33.35s，10 动作）；UBT 自动生成 makefile；MCP `list_toolsets` 连通、`LogLoad` 无错误 |
 | V-004 | OpenXR 编辑器启动与 VR 能力 | M00-T004 | 编辑器 | 部分验证（编辑器阶段已完成，真机未完成） | `xrCreateInstance succeeded`（SteamVR/OpenXR 2.14.5）；插件运行中全部启用；VR 模板资产核对通过（详见 `../vr/PicoValidationMatrix.md`） |

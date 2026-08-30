@@ -88,3 +88,6 @@ Content/Collections/
 # Trae workspace temp
 .trae-html-share-packages/
 architecture-assessment.html
+
+# AI tool session memory (auto-generated daily, not project content)
+.workbuddy/

@@ -1,14 +1,43 @@
 # ChangeLog
 
-## 2026-08-26（V-007 NTFS ACL 应用与 M00-T001 收尾推进）
+## 2026-08-30（AgentHub 跨会话信箱 P0 落地：全局 Hub + 全局 Skill + 本项目检查点接入）
 
-- 背景：M00-T001 长期挂起在"部分验证"——V-001 已确认，V-007 等待用户在管理员 PowerShell 中执行 ACL 脚本。本日用户在管理员身份中跑完 Apply（`Set-TraeGovernanceAcl.ps1 -Mode Apply -Confirm:$false`），治理目录 `.trae/` 与管理员脚本目录 `D:\AWork\TraeAdmin\VRSanguoYanWuchang` 均 `Protected: True`、Users 写权限移除、PC 用户保留 Modify 维护能力，V-007 验收通过。
-- `registers/09-verification-register.md`：V-007 状态「待用户管理员执行」→「已验证（2026-08-26）」，附 ACL 证据索引。
-- `registers/07-task-register.md`：M00-T001 状态「部分验证（V-001 已确认，V-007 ACL 待管理员）」→「待审核（2026-08-26：V-001 / V-007 全部通过，证据齐全，等待用户最终批准）」。**未自标 approved**——按 ReviewProtocol §禁止「执行模型自审自批」，最终批准权保留给用户/审核员。
-- 新建 `execution/reports/tasks/M00-T001-acl-2026-08-26.md`：完整 ACL 输出、修复过程、验收表、恢复方式。
-- 脚本侧修复（不涉及 .trae/，属项目外维护）：`Set-TraeGovernanceAcl.ps1` 文件编码从 UTF-8 无 BOM 改 UTF-8 with BOM（首字节 0xEF 0xBB 0xBF），并修复 4 处 `${var}:` 变量界定（原写法 `"$currentUser:"` 被 PS5.1 误识为「驱动器:路径」）。修复为幂等命令，业务逻辑零变化。
-- 看板效果：M00-T001 徽章从「部分完成（金）」→「待审核（紫）」；M00 任务完成度仍 6/7（不构成自审自批）。
-- 2026-08-26 用户最终批准：M00-T001 状态从「待审核」→「approved（2026-08-26：用户最终批准；V-001 / V-007 全部通过，证据完整）」，完成度 6/7 → 7/7。check-integrity 21/21 全过。
+- 背景：用户要在 TraeWork 内实现类似 Claude Code Agent Teams / Codex Thread 的多会话沟通（场景：管理者-执行者分离、并行协调、阻塞唤醒、自动接力）。调研确认现成开源（AgentMesh / tap / master-of-puppets / agent-mailbox-mcp / agentbus 等）均不解决 TraeWork 图形会话的唤醒问题，采用混合方案 C：纯文件信箱为底座 + 全局 Skill 挂载 + TraeWork 定时任务 trigger 做唤醒（P1）。
+- 全局 Hub（用户定址 `D:\App\trae\AgentHub\`，不进任何项目 git）：`PROTOCOL.md` v1.0 权威协议（消息格式 / 检查点 / 收发规则 / 唤醒协议 / 治理边界）、`README.md` 速查、`dispatch.md` 派工板模板、`inboxes/{manager,gen-assets,relay}`、`channels/{registry-changes,blockers}`、`scripts/`。
+- 全局 Skill：`C:\Users\PC\.trae-cn\skills\agent-hub\SKILL.md`（经用户批准写入工具扩展目录；只含路由 / 触发词 / 会话纪律，协议正文在 Hub 单点维护）。
+- 本项目接入：`governance/SessionCommands.md` 新增「跨会话信箱」小节（检查点 + Hub 路径 + 治理边界铁律），经用户批准。
+- 待办：P2 可选 MCP 封装（`scripts/` 预留）；P3 可选可视化状态板。
+- P1 完成记录（2026-08-30）：用户在 Trae UI 手动创建常驻任务 `agent-hub-relay`（cron 每月 1 日 04:00，幂等空闲自愈设计）；`MANAGER-PLAYBOOK.md` + 三份派工模板落 hub；端到端自检一次通过——trigger 拉起新会话 → 读 dispatch.md（含工作目录字段，会话自报"已按派工板从默认工作区切换"）→ 读协议与测试信 → 向 `inboxes/manager/` 回合格回执（三要素齐全，仅写 Hub 内，零项目文件触碰）。证据：`D:\App\trae\AgentHub\inboxes\manager\msg-20260830-172125-relay-001.md`（Hub 传输态，不进 git）。测试后派工板已恢复空闲、测试信已归档。
+- 架构定稿 v1.1（2026-08-30，用户提出"项目中继"设想并实验证实）：用户创建 `vrsanguo-relay`（运行环境=本项目）并 trigger 判定实验 #2——被拉起会话在读取任何项目文件前，系统上下文已携带 `<always_applied_workspace_rules>` 完整项目规则（会话逐字引用认领门禁条款并与文件核对一致），初始工作目录即项目根。**结论：项目中继任务的拉起会话获得规则系统注入，长任务不衰减**。定稿：每个治理项目一个项目中继任务（RELAYS.md 登记：vrsanguo-relay=bac32a51 Active；全局 agent-hub-relay=3e1f6854 Paused 仅留轻量用途）；PROTOCOL/PLAYBOOK 升 v1.1；新增 `RELAYS.md`、`templates/relay-project-message.md`。实验 #2 回执归档于 `inboxes/manager/archive/`。
+- 治理接口补全 v1.2（2026-08-30，用户问询驱动）：Hub 新增 `sessions\` 管理者会话记录目录（每轮派工/汇总强制写，恢复上下文用）；PLAYBOOK 新增 §7 会话记录、§8 项目治理接口（任务发现=现场读 RELAYS.md 治理入口列指向的项目 STATUS.json；派工前置=项目须已有 MNN-TNNN 任务包；认领由执行会话自过门禁；管理者不批交付）；RELAYS.md 表增加"治理入口"列。指挥台会话定位：开在 `D:\App\trae\AgentHub\` 的常驻交互会话，与项目中继（自动化拉起执行者）分工协作。
+- P2 MCP 封装完成（2026-08-30）：`AgentHub\scripts\mailbox_mcp.py`（FastMCP，6 工具：hub_check/hub_send/hub_broadcast/hub_dispatch/hub_status/hub_archive，含路径安全校验），独立客户端 `test_mcp_client.py` 全链路自检通过（发→查→派工板→归档→广播→状态）。注册：`.mcp.json` 落 Hub 目录与本项目根（运行时=Trae 工具 VM Python，已内置 mcp SDK，无需 venv）。关键坑位记录：FastMCP 不可与 `from __future__ import annotations` 共存（字符串注解致 issubclass 崩溃）。
+- P3 状态板完成（2026-08-30）：`AgentHub\scripts\build_status.py` 纯 stdlib 生成自包含 `status.html`——派工板/未读与阻塞计数/各项目 STATUS.json 任务表/中继表/信件时间线/最近会话记录；实测渲染本项目 6 任务与 4 封信正确。修复两处缺陷：归档信未进时间线（补扫 archive 子目录）、RELAYS 治理入口列 `.trae` 前导点被 `lstrip("./")` 误剥。
+- 值班模式 v1.3（2026-08-30，调研 loopMarshal/ai-collab 等待链后自研）：MCP 新增 `hub_await(role, timeout_sec≤1800)` 长轮询值班工具——挂起等信、来信即醒、等待期零 token；超时续接。**关键坑位**：初版为同步函数，阻塞 MCP 服务器事件循环导致值班期间全部请求排队（实测 hub_send 被拖 25s），改为 `async def` + `asyncio.sleep` 后解决；值班自检（值班中投递→立即醒来）通过。协议升 v1.3 新增 §6.3 值班模式（适用边界：专职 Worker 可用，指挥台禁用）。
+- MCP 注册踩坑全记录（2026-08-30）：**①路径**：项目根 `.mcp.json` 不被 Trae Work 读取；`.trae/mcp.json` 项目级 MCP 在 Trae SOLO/TraeWork 中**不支持**（官方论坛确认文档有误）[$TRAE_REF](https://forum.trae.cn/t/topic/21308)；唯一正确方式是 **UI 手动添加**（设置→MCP→手动添加）。**②空格**：Trae stdio MCP 的 `command` 字段不能含空格[$TRAE_REF](https://docs.trae.cn/ide/add-mcp-servers)；Python 路径 `D:\App\trae\Traedata\TRAE SOLO CN\...` 含空格→用 NTFS 8.3 短路径 `TRAESO~1` 解决（Fso ShortName 探测确认）。**③超时**：不支持顶层 `timeout` 字段→通过 `env.RUN_MCP_TIMEOUT_MS` 设置[$TRAE_REF](https://docs.trae.cn/ide/add-mcp-servers)。**④会话级**：MCP 配置绑定到具体会话，新会话需重新添加。**⑤`timeout` 字段导致 MCP 静默失败**：初版 `.mcp.json` 含 `timeout` 顶层字段，Trae 遇到不识别字段跳过整个服务器（疑似根因之一）。
+- 跨会话决策链路首次实战（2026-08-30）：M01-T001 执行会话（executor）经 `hub_send` 投递抓握路线决策问题到 manager → manager 基于项目规范决策（路线 A 最简可用 + Grip 键抓取）→ 回复投递 `inboxes/executor/` → 登记 TD-013（VRE GripObject 未按 IGrabbable 封装）。用户指出交互式会话仍需手动传话→定稿值班模式默认化（协议 v1.4）：派工信模板新增「收尾与值班」节，中继拉起的 Worker 回执后自动 `hub_await` 值班循环，实现用户零传话；交互式会话（用户在场对话）的手动传话为平台固有，规律=要聊天的活交互式、不聊天的活值班 Worker。
+- 信箱纪律固化进权威规则（2026-08-30，用户要求防上下文压缩丢失）：`rules/project_rules.md` 新增第 26 条「跨会话信箱纪律」（每回合系统注入，永不丢失）——检查点含决策问题投递（manager/decision）+ `hub_await` 值班等回复；SessionCommands §跨会话信箱同步扩展检查点细则；全局 Skill 新增触发词「遇到问题/卡住了/需要决策」→ question 投递 + 值班。原第 26 条（ue-bridge 探活）顺延为第 27 条。manager+decision 双角色合并定稿同步 RELAYS.md/README（Hub 独立指挥台方案弃用）。
+
+## 2026-08-30（治理维护：资产暂存区索引补全 + 冗余/孤儿文件清理，用户批准 ABCD 批）
+
+- 背景：用户要求全盘审计"索引指引不到 / AI 反复创建副本"问题，审计结论经用户逐批批准后执行。
+- A 批（零风险清理）：删除根目录 `1.0.0`（pip 安装日志误写产物）、空目录 `Design/`、`Backup/`（仅含生成物 .sln）、`dashboard/__pycache__/`、`Content/LevelPrototyping/Meshes/SM_SM_ChamferCube.fbx/.uasset`（双前缀重复导入产物，字节级引用探测全库零引用）、`E:\AWork\Temp\VRSanguoRef\FBX\马槊贴图和模型\马槊.fbx/马槊2.fbx`（0 字节失败产物）。
+- B 批：删除 `E:\AWork\KatanaCombat_Demo\`（4.1GB / 8734 文件，非 VR 下载示例，此前决策已判定不采用，用户批准删除）。
+- C 批结论：`Content/Weapons/Rifle/M_Weapon.uasset`（散落份）被 `Pistol/Materials/MI_Weapon_Pistol` 引用，且自身引用 `Rifle/Materials/M_Weapon`（疑似父子材质链），两份均保留，登记为 M05 模板清理待办（见登记册外部索引章节）；`Content/VRSanguo/VR/Mesh/Material.uasset` 被 `环首刀.uasset` 引用，重命名需 UE 编辑器引用更新，移交 M01-T001 会话处理（该路径属其活跃作业区）。
+- D 批（治本登记）：`registers/10-asset-register.md` 新增「外部源文件索引（E 盘暂存区）」章节——AST-003\~011/027\~034 与磁盘实物映射、贴图版本规则（`_1024`=正式导入版、无后缀=4K 精修源）、生成件与模块化槽位对应注记；`execution/reports/tasks/README.md` 补登 `M00-T001-acl-2026-08-26.md`；新增 `E:\AWork\Temp\VRSanguoRef\README.md` 指针文件（权威映射以登记册为准）。AST-027\~034 已由并发生成会话先行登记，本会话未重复登记。
+- Git 准备：`.gitignore` 追加 `.workbuddy/`（WorkBuddy 工具会话记忆，按日期自动生成、治理文档零引用、与 `.trae/execution/sessions/` 功能重复，经查证不进版本库）；确认本地与远程提交层面零差异（HEAD=origin/master=3695a25），待入库内容全部在工作区未提交状态；UEBridgeMCP 为无 `.gitmodules` 映射的内嵌仓库且内部含未提交编译修复（bUseUnity），已列为 M02 前处置待办，推送时严禁进入该目录执行 git 操作。
+- 说明：工作区未提交变更（含 2026-08-29 会话产物与本次清理/编辑）待用户安排提交与推送。
+
+## 2026-08-26（M01-T001 关卡 Lit 全黑修复：定向光朝向 + 天光捕获 + 存档只读规避）
+
+- 背景：M01-T001 因 `Content/VRSanguo/Dev/L_SkeletonTest.umap` 在 Lit 模式下渲染全黑，PIE 抓取项无法验证。用户批准"重跑：重建关卡光照 + 蓝图文稿"。
+- 根因（逐项核查日志确认，未虚构）：
+  - 定向光朝向向量 `fwd=(0.94,0.00,0.34)`，Z 为正（光朝上/水平），从地板下方照射，地板顶面永远照不到 → Lit 全黑；官方 `VRTemplateMap` 定向光 pitch=-38.3（光向下）故正常。
+  - 天光 `real_time_capture=False`，静态未捕获 + 无烘焙，无环境补光。
+- 修复（`Content/VRSanguo/Dev/L_SkeletonTest.umap`）：定向光改为 pitch=-45°（fwd Z=-0.71 光向下）、置于 (0,0,1000)、强度 3.0、大气太阳光开启、组件设 Movable；天光设 `real_time_capture=True`、强度 1.0、Movable。
+- 存档障碍：`.umap` 文件被置为只读（IsReadOnly=True），`save_current_level()` 返回 False 导致更改无法落盘；按白名单许可清除只读后保存成功（`SAVE4_RET=True`），重载回读确认持久化（`PERSIST4_DL`/`PERSIST4_SL`）。
+- 蓝图文稿校验：`BP_WeaponBase`、`BP_TestSword` 均存在；剑含 VRE 抓取组件（2× HandSocketComponent、OptionalRepSkeletalMeshComponent、PoseableMeshComponent）与临时方块网格 `/Engine/BasicShapes/Cube.Cube`（符合任务 Step 4 临时几何体要求）。
+- 说明：本会话 `capture-viewport`/`take_screenshot` 捕获冻结视口、不反映实时场景，故未产出修复后新视口截图；修复效果待用户在编辑器/PICO 直观确认。
+- 治理：`active/STATUS.json`（根）与任务目录 STATUS.json 已更新为 `blocked`（等待用户 PICO Neo3 VR Preview 验证 PIE 项）；任务报告 `.trae/execution/reports/tasks/M01-T001.md` 已补 2026-08-26 复盘章节。
 
 ## 2026-08-25（推送网络恢复流程沉淀：SessionCommands + SKILL 路由）
 
@@ -24,9 +53,9 @@
 ## 2026-08-25（测试用例补全：M01-T001 / M01-T005 正式化 TC 章节）
 
 - 依据 `governance/TestSpecification.md` 对缺测试用例的未结任务补全（用户批准方案后实施；approved 任务 M00-T004/T005/T006 不回填，M02-PREP-001 按规范豁免）。
-- M01-T001：TASK.md 新增「测试用例」章节（TC-01~06，新增蓝图 ≥2 条标准，含功能 4 条 + 边界 2 条）；CHECKS.md 原 4 条 `[PIE]` 检查项升级为 `[测试]` TC 编号并新增 TC-04/05。原阻塞说明中"4 条 [PIE] 检查项"对应现 TC-01/02/03/06，语义不变。
-- M01-T005：TASK.md 在验收清单后新增「测试用例」章节（TC-01~04，关卡创建 ≥2 条标准：加载 + PIE）；CHECKS.md 执行后段新增「测试用例核验」4 条勾选项。
-- 本次为决策模型规划维护（用户明确批准，规则第 19c 条路径授权），不改变两任务执行状态与认领关系（M01-T005 in_progress / session-20260825-001，M01-T001 blocked）。
+- M01-T001：TASK.md 新增「测试用例」章节（TC-01\~06，新增蓝图 ≥2 条标准，含功能 4 条 + 边界 2 条）；CHECKS.md 原 4 条 `[PIE]` 检查项升级为 `[测试]` TC 编号并新增 TC-04/05。原阻塞说明中"4 条 \[PIE] 检查项"对应现 TC-01/02/03/06，语义不变。
+- M01-T005：TASK.md 在验收清单后新增「测试用例」章节（TC-01\~04，关卡创建 ≥2 条标准：加载 + PIE）；CHECKS.md 执行后段新增「测试用例核验」4 条勾选项。
+- 本次为决策模型规划维护（用户明确批准，规则第 19c 条路径授权），不改变两任务执行状态与认领关系（M01-T005 in\_progress / session-20260825-001，M01-T001 blocked）。
 
 ## 2026-08-25（看板修正：规划任务进入登记册与看板）
 
@@ -44,26 +73,26 @@
 
 - 创建 `execution/sessions/` 目录，确保执行模型会话记录可落盘。
 - index.md 补全：TestSpecification.md、M01-CombatSlice.md、sessions/ 目录链接。
-- DecisionModel 必读清单扩展：新增 project_rules.md（第 3 位）、TestSpecification.md、definition-of-done.md §7，确保生成任务前已读取铁律和测试规范。
+- DecisionModel 必读清单扩展：新增 project\_rules.md（第 3 位）、TestSpecification.md、definition-of-done.md §7，确保生成任务前已读取铁律和测试规范。
 - ReviewProtocol 新增审核项 10（测试结果核验）和 11（会话记录核验），补齐测试和沟通的审核闭环。
 - manifest.yaml 活跃里程碑从 M00 修正为 M01。
 - 审计结论：10 条决策门禁、铁律启动验证、沟通检查点、会话记录、测试用例、生产基准、审核 11 项——全链路闭环，无断链。
 
 ## 2026-08-25（测试职责明确 + 规划任务登记 + 测试标准对齐）
 
-- project_rules.md 新增铁律第 15 条：测试用例由决策模型设计，执行模型执行，不得自行设计或跳过。
+- project\_rules.md 新增铁律第 15 条：测试用例由决策模型设计，执行模型执行，不得自行设计或跳过。
 - 任务登记册新增"M01 规划任务"段：5 个待生成任务（T002-T004/T006/T007）的状态、依赖和预估，解决 git 看板无法读取规划中任务的问题。
 - 08-testing-and-acceptance-standard.md 对齐：区分任务级测试（TestSpecification.md）和游戏级验收（本文档），增加测试层级对照表。
 
 ## 2026-08-25（铁律规则整合 + 规划确认门禁）
 
-- project_rules.md 重构：从 50 行扩展为 92 行，新增 5 个章节——禁止虚构（6 条）、确认门禁（4 条）、证据与验证（4 条）、沟通规则（2 条）、执行纪律（扩充至 9 条）。从 10 条规则扩展到 25 条编号铁律。
+- project\_rules.md 重构：从 50 行扩展为 92 行，新增 5 个章节——禁止虚构（6 条）、确认门禁（4 条）、证据与验证（4 条）、沟通规则（2 条）、执行纪律（扩充至 9 条）。从 10 条规则扩展到 25 条编号铁律。
 - DecisionModel 新增门禁第 10 条：规划确认门禁——不明确的细节必须列出选项等你确认，禁止自行假设。
 - 关键变更：禁止写入 C 盘/用户主目录（磁盘规则）、禁止编造测试/编译/文件路径（禁止虚构）、技术细节翻译为产品语言（确认门禁）、会话记录维护（沟通规则）。
 
 ## 2026-08-25（生产就绪验收基准 + 决策模型门禁扩展）
 
-- definition-of-done.md 新增 §7 生产就绪验收基准：18 条量化验收条件，覆盖关卡（LV-01~05）、蓝图（BP-01~04）、C++ 代码（CP-01~05）、资产（AS-01~04）。每条含量化阈值 + 失败信号 + 证据类型。
+- definition-of-done.md 新增 §7 生产就绪验收基准：18 条量化验收条件，覆盖关卡（LV-01\~05）、蓝图（BP-01\~04）、C++ 代码（CP-01\~05）、资产（AS-01\~04）。每条含量化阈值 + 失败信号 + 证据类型。
 - DecisionModel 新增任务生成门禁第 8 条：CHECKS.md 必须引用生产就绪基准编号，禁止"关卡已创建"等模糊表述。
 - ReviewProtocol 更新：审核模型逐条对照基准核验，基准未满足的检查项标记 `requires_changes`。
 - 代码质量用户可验证性机制：编译通过 + 测试全绿 + 审核模型对照契约 = 代码质量有保障。
@@ -73,9 +102,9 @@
 ## 2026-08-24（看板口径修正：路线图呈现 + 执行中/部分完成状态支持）
 
 - **看板新增里程碑规划范围**：解析 `execution/M00–M06` 七份里程碑文档的目标与交付，数据流区块按里程碑展示"规划交付"清单及"规划 N 项"徽标；未立项里程碑默认展开并注明任务包由决策模型按需拆解，解决"规划任务在看板无体现"。
-- **执行中（in_progress）全链路支持**：`classify_task_status` 新增匹配分支、CSS 新增 `.tbadge-inprogress`、前端徽章映射与执行节点文案同步。
+- **执行中（in\_progress）全链路支持**：`classify_task_status` 新增匹配分支、CSS 新增 `.tbadge-inprogress`、前端徽章映射与执行节点文案同步。
 - **部分验证（partial）全链路支持**：修复 M00-T001"部分验证"被归为未知的问题，徽章显示"部分完成"（金色）。
-- **M01-T005 口径修正**：登记册、两级 STATUS.json、manifest/integrity 快照同步为 in_progress——TD-012 偿还项未闭环（PICO 串流、中文标注、PIE 帧率、Lightmass），偿还完成后重新提交审批。
+- **M01-T005 口径修正**：登记册、两级 STATUS.json、manifest/integrity 快照同步为 in\_progress——TD-012 偿还项未闭环（PICO 串流、中文标注、PIE 帧率、Lightmass），偿还完成后重新提交审批。
 
 ## 2026-08-24（M02-PREP-001 验收通过：CR 实施关闭 + 同批治理维护）
 
@@ -85,7 +114,7 @@
 - **登记册同步**：07-task-register M02-PREP-001 行改 approved 口径；09-verification-register 新增 V-009。
 - **索引补全**：reports/tasks/README 由 3 条补至 9 条；根 index.md Execution 基线补齐 M00-T006/M01-T001/M01-T005/M02-PREP-001 四个任务包链接。
 - **文件卫生**：删除误放脚本 CreateWeaponBlueprints.py；清理 dashboard/__pycache__/；.gitignore 增补 `Content/**/*_BuiltData.uasset`。
-- **integrity.yaml**：active_gate 快照同步（补 M01-T001 blocked、修正两处 ready→approved、updated=2026-08-24）。
+- **integrity.yaml**：active\_gate 快照同步（补 M01-T001 blocked、修正两处 ready→approved、updated=2026-08-24）。
 
 ## 2026-08-24（M02-PREP-001 收尾：动画清单澄清 + 参考图收口 + 命名 CR）
 
@@ -101,7 +130,7 @@
 - 头部独立：8 个武将头部 + 2 个士兵头部，按里程碑逐步生成。许褚裸上身方案：Heavy 体型 + 不穿躯干甲胄。
 - 甲胄模块化：4 级躯干甲胄（布衣/皮甲/札甲/筒袖铠）+ 2 种头盔 + 臂甲/胫甲，对应六部位护甲系统。
 - AI 生成工作流优化：分部件生成比完整角色效率高 4-8 倍。混元 3D 每日 20 次额度，17 次可完成全部原型。
-- 资产登记册更新：AST-002 废弃，新增 AST-014~026 共 13 个模块化资产。武器前置资产从 AST-002 改为 AST-014。
+- 资产登记册更新：AST-002 废弃，新增 AST-014\~026 共 13 个模块化资产。武器前置资产从 AST-002 改为 AST-014。
 
 ## 2026-08-22（M01 规划文档结构化 + 登记册同步）
 
@@ -130,7 +159,7 @@
 - 使用UEBridgeMCP（HTTP MCP工具，407个工具）完成武器蓝图创建。
 - 创建 `BP_WeaponBase`：继承 `GrippableSkeletalMeshActor`，添加2个 `HandSocketComponent`（Primary + Secondary）。
 - 创建 `BP_TestSword`：继承 `BP_WeaponBase`。
-- 放置 `TestSword_01` 到关卡中（位置 [0, 0, 100]）。
+- 放置 `TestSword_01` 到关卡中（位置 \[0, 0, 100]）。
 - 任务状态更新为 `awaiting_review`。
 - UEBridgeMCP配置：`Config/DefaultUEBridgeMCP.ini`（端口8080，自动启动）。
 
@@ -140,17 +169,17 @@
 - 会话 `session-20260819-001` 认领任务。
 - VRExpansionPlugin 5.4 编译状态确认（Binaries/Win64 目录存在）。
 - 生成实施指南：`execution/reports/tasks/M01-T001.md`，包含完整蓝图创建步骤、组件配置、HandSocket 握持姿势配置、测试武器创建和编辑器验证流程。
-- 资产登记册更新：新增 AST-012（BP_WeaponBase）、AST-013（BP_TestSword），状态 `awaiting_review`。
+- 资产登记册更新：新增 AST-012（BP\_WeaponBase）、AST-013（BP\_TestSword），状态 `awaiting_review`。
 - 任务登记册更新：M01-T001 状态 `awaiting_review`。
 - 待用户在 UE 编辑器中执行蓝图创建和验证后，更新状态为 `approved`。
 
 ## 2026-08-19（Git 提交与推送：4 原子 commit + origin/master 同步）
 
-- 校验程序修复：`dashboard/check-integrity.py` 21/21 通过（含 M01-T005 awaiting_review 超时、open 技术债 ≤3、状态交叉引用）。
+- 校验程序修复：`dashboard/check-integrity.py` 21/21 通过（含 M01-T005 awaiting\_review 超时、open 技术债 ≤3、状态交叉引用）。
 - 4 个原子 commit 推送到 `origin/master`（`f41fd6b..7843f73`）：
   1. `docs(governance)` M01-T005 审核批准 + TD-011 偿还 + TD-012 deferred（含债务状态定义新增）
   2. `fix(plugins)` PICO 串流还原 Config + UEBridgeMCP 子模块更新 + VRE SceneProxy override
-  3. `feat(level)` M01-T005 灰盒竞技场 v2 增量 (L_Prototype_1v1_v2)
+  3. `feat(level)` M01-T005 灰盒竞技场 v2 增量 (L\_Prototype\_1v1\_v2)
   4. `chore(status)` M01-T001 由其他执行模型认领 (session-20260819-001)
 - LFS：35 个对象（51 MB）已上传。
 - M01-T005 完成：状态 `approved`，VR Preview 补验通过（XR Session FOCUSED + PICO Runtime + 截图）。
@@ -165,14 +194,14 @@
 - 任务状态：T001-T006 + DOC-001 全部 approved（T001 ACL V-007 待管理员，不阻塞）。
 - 风险审查：无 M00 阻塞开放风险。技术债 TD-005/006/010/011 均 open 但不阻塞。
 - 正式进入 M01 核心战斗技术切片。
-- M01 当前状态：M01-T001（武器抓取与 VRE 集成）ready、M01-T005（灰盒竞技场）awaiting_review。
+- M01 当前状态：M01-T001（武器抓取与 VRE 集成）ready、M01-T005（灰盒竞技场）awaiting\_review。
 
 ## 2026-08-19（M00-T006 审核批准：approved）
 
-- 审核模型复核通过，用户批准。M00-T006 状态：awaiting_review → approved。
+- 审核模型复核通过，用户批准。M00-T006 状态：awaiting\_review → approved。
 - 核验项：12/12 自动化测试（8 DataAsset + 2 GameFlow + 2 接口）、8 日志分类运行时验证、Win64 + Android（含 APK）双平台构建门禁、性能基线（stat + LogVRSanguoPerf）、V-006 验证登记同步。
 - 抽查测试代码质量：VRGameFlowSpec 用例对齐 systems/01 迁移矩阵（合法链路/非法拒绝/幂等/生命周期），断言含中文诊断。
-- 偏差均接受：无人值守测试方式（UnrealEditor-Cmd -unattended）、Execute_ 静态包装调用、工具链修复（bUseUnity=false、VRE 5.6-Locked）均用户批准并记录。
+- 偏差均接受：无人值守测试方式（UnrealEditor-Cmd -unattended）、Execute\_ 静态包装调用、工具链修复（bUseUnity=false、VRE 5.6-Locked）均用户批准并记录。
 - 遗留：测试场景规划表终版 M01 接管。
 - **M00 里程碑任务全部 approved**（T001-T006 + DOC-001；T001 ACL 应用 V-007 待用户管理员执行，不阻塞）。
 - STATUS.json（根+任务）、07-task-register、M00/README.md 同步。
@@ -186,7 +215,7 @@
   - VR Preview 窗口标题确认：`OpenXR PICO XR Runtime (1.1.46)`
   - 截图确认：灰盒竞技场场景在 VR Preview 视口正确渲染（网格地面、围墙、掩体、高台、标注、光照阴影）
   - PICO 驱动姿态正常：`pose recovery mode` 处理 HMD 姿态数据
-  - PIE 世界：46 Actor，GameMode=VRGameMode_C
+  - PIE 世界：46 Actor，GameMode=VRGameMode\_C
 - **未完成**：PICO Connect 10.6.6 串流未自动切换到 VR 模式（停留在桌面串流），头显内未显示 VR 场景。登记 TD-012。
 - Config 还原：`bStartInVR=True` 已移除（临时验证用途，验证后还原）。
 - 任务报告更新：追加 VR Preview 验证段落、偏差清单更新。
@@ -201,7 +230,7 @@
 
 ## 2026-08-16（M00-T006 执行完成：自动化测试 12/12 通过）
 
-- Step 1-6 全部完成，状态 awaiting_review：
+- Step 1-6 全部完成，状态 awaiting\_review：
   - 新增 6 个自动化测试文件（`Source/.../Tests/`）：VRDataAssetSpec（8 DA 校验）、VRInterfaceSpec（2 接口）、VRGameFlowSpec（2 状态机）
   - `Automation RunTests VRSanguo` 12/12 通过（8 DA + 2 GameFlow + 2 接口），V-006 更新为已验证
   - 8 个日志分类运行时验证（Flow 48/Combat 3/其余各 1）
@@ -215,24 +244,24 @@
 
 ## 2026-08-16（M02-PREP-001 执行进度：马槊定稿 + 工具链迁移 E 盘）
 
-- 马槊（AST-011）：用户混元 3D 生成两版，首版（上传骑砍 OBJ 重制）枪头变形弃用；二版（图生 3D）用户确认形制 OK。AI 定标缩放至全长 300cm（混元单位=cm 校准，环首刀 101.89 单位=100cm 验证），1,535 面/UV 保留，OBJ 存临时区 FBX_Low。
+- 马槊（AST-011）：用户混元 3D 生成两版，首版（上传骑砍 OBJ 重制）枪头变形弃用；二版（图生 3D）用户确认形制 OK。AI 定标缩放至全长 300cm（混元单位=cm 校准，环首刀 101.89 单位=100cm 验证），1,535 面/UV 保留，OBJ 存临时区 FBX\_Low。
 - 工具链迁移：用户要求软件与临时文件不得占用 C/D 盘。临时文件迁至 `E:\AWork\Temp\VRSanguoRef`（483MB）；Python 资产处理环境迁移至 `E:\AWork\Tools\venv_asset`（pymeshlab/trimesh/matplotlib 等）；C 盘误装包已卸载；OpenBRF Redux 装至 `E:\AWork\Tools\OpenBRF`。
 - 模型预览方案：3ds Max 不可用（GUI 与批处理均无法启动），采用 matplotlib 无头渲染三视角 PNG 供用户确认形制。
 - 待办：6 件武器 + 马槊 OBJ 导入 UE 验证（M02 正式任务）；骑砍 OBJ/brf 弃用（面数 140 过低）。
 
 ## 2026-08-15（M02-PREP-001 执行进度：六武器低模减面完成）
 
-- 6 件武器 FBX 高模（~50 万面/件）全自动减面完成，输出低模 OBJ（环首刀 3K/刀鞘 800/戟 4K/矛 3K/弓 3K/盾 2K），UV 全部保留。
+- 6 件武器 FBX 高模（\~50 万面/件）全自动减面完成，输出低模 OBJ（环首刀 3K/刀鞘 800/戟 4K/矛 3K/弓 3K/盾 2K），UV 全部保留。
 - 工具链：3ds Max 批处理被许可证阻塞不可用；fast-simplification 不保留 UV；最终采用 pymeshlab（MeshLab 引擎）quadric edge collapse 减面成功，贴图 4096² 压缩至 ≤1024（100-180KB/张）。
 - 从 FBX 提取内嵌 PBR 贴图（4 张 4096² + 辅助图），压缩版存 `textures_1024/`。
-- 产出位置：`D:\AWork\Temp\VRSanguoRef\FBX_Low\`（项目外临时区），资产登记册 AST-003~007/010 备注同步。
+- 产出位置：`D:\AWork\Temp\VRSanguoRef\FBX_Low\`（项目外临时区），资产登记册 AST-003\~007/010 备注同步。
 - 待办：6 件 OBJ 导入 UE 验证（材质贴图关联）+ 高模 FBX 备份（PC 端 LOD 源）。
 
 ## 2026-08-15（M02-PREP-001 执行进度：参考图落盘 + 模型检查）
 
 - 参考图整理：用户收集 33 张，AI 质检重命名（`REF_Category_Name_NN.ext`）复制至 `Content/VRSanguo/Art/References/`（Sword 7/Shield 4/Polearm 4/Spear 7/Bow 2/Armor 8/Unit 1）。
-- FBX 模型检查：用户已生成 6 件武器 FBX（环首刀/刀鞘/卜字戟/矛/角弓/长方盾，暂存临时区），解析 Vertices 确认均为 ~83K tris 高模、58-76MB，须减面至规格（2-4K/鞘 800）后导入 UE。
-- 资产登记册：新增 AST-010（刀鞘）；AST-003~007 备注 FBX 生成状态；AST-008 参考图更新为 in_progress（33 张落盘，Scene/General 待补）。
+- FBX 模型检查：用户已生成 6 件武器 FBX（环首刀/刀鞘/卜字戟/矛/角弓/长方盾，暂存临时区），解析 Vertices 确认均为 \~83K tris 高模、58-76MB，须减面至规格（2-4K/鞘 800）后导入 UE。
+- 资产登记册：新增 AST-010（刀鞘）；AST-003\~007 备注 FBX 生成状态；AST-008 参考图更新为 in\_progress（33 张落盘，Scene/General 待补）。
 - 弃用：骑砍 .brf 模型与来源不明 DDS 贴图，仅临时区留存。
 - 待办：6 模型减面+贴图压缩+导入 UE（M02 正式任务）；Bow 参考图补 1-3 张。
 
@@ -245,9 +274,9 @@
 ## 2026-08-15（M00-T005 审核批准：approved）
 
 - M00-T005 审核批准（用户审批）。CHECKS 修正后按新标准逐项核对全部通过。
-- 交付：22 个 C++ 文件编译通过、7 接口/8 DA/状态机/能力组件/TestDummy + L_SkeletonTest 关卡。
+- 交付：22 个 C++ 文件编译通过、7 接口/8 DA/状态机/能力组件/TestDummy + L\_SkeletonTest 关卡。
 - M01 接管项：流程状态机运行时验证（Combat→Damage→Reset 链路）、VRPawn 挂载 VRCharacterCapabilityComponent。
-- 状态：in_progress → approved。T006 前置依赖已解除。
+- 状态：in\_progress → approved。T006 前置依赖已解除。
 
 ## 2026-08-15（治理修复：决策模型 CHECKS-ALLOWLIST 交叉验证门禁 + 任务详规矛盾修复）
 
@@ -255,19 +284,21 @@
 - 修复（5 个文件，用户直接批准）：
 
 **任务详规修正（3 个）：**
+
 - `execution/active/M00-T005/CHECKS.md`：流程状态机验证从"运行时通过"改为"代码审查通过"；VRPawn 挂载 + 空场景运行时验证标记为 M01 接管项。新增"M01 接管项"段。
 - `execution/active/M00-T006/CHECKS.md`：测试场景规划表从"完整"改为"初版完整（写入任务报告）"，终版标记 M01 接管。新增"M01 接管项"段。
 - `execution/active/M02-PREP-001/CHECKS.md`：4 份规格文档明确标注"写入任务报告"。新增"里程碑归属说明"段，标注骨架/武器/动画规格的终版回溯时机（M03）。
 - `execution/M00/T005-SystemSkeleton.md`：完成定义 checkbox 同步修正，验收清单新增"归属"列区分 T005/M01。
 
 **治理门禁（1 个）：**
+
 - `governance/DecisionModel.md`：新增"任务生成门禁"段，4 项强制交叉验证：CHECKS-ALLOWLIST 交叉验证、里程碑归属标注、ALLOWLIST 路径完整性、禁止路径冲突检测。在任务设为 ready 前必须逐项核对。
 
 ## 2026-08-15（治理修复：ALLOWLIST 缺口禁止跳过检查项）
 
 - 问题：M00-T005 执行模型以"VRPawn 在白名单外"为由跳过 CHECKS.md 硬性检查项（VRPawn 挂载 Capability 组件），将缺口甩给 M01。
 - 修复（用户直接批准）：
-  - `governance/ExecutionModel.md` §强制停止：新增"CHECKS.md 检查项因 ALLOWLIST 缺口无法完成"停止条件。要求停止并报告 ALLOWLIST 缺口，不得跳过检查项或标记 awaiting_review。
+  - `governance/ExecutionModel.md` §强制停止：新增"CHECKS.md 检查项因 ALLOWLIST 缺口无法完成"停止条件。要求停止并报告 ALLOWLIST 缺口，不得跳过检查项或标记 awaiting\_review。
 
 ## 2026-08-14（治理修复：推送前自动门禁）
 
@@ -280,27 +311,27 @@
 
 ## 2026-08-13（M00-T005 系统骨架执行完成）
 
-- Step 1-6 全部完成，状态 awaiting_review：
+- Step 1-6 全部完成，状态 awaiting\_review：
   - Core/：VRTypes（12 枚举 + 9 结构体）、VRLogChannels（8 日志分类）、VRGameplayTags（11 个 Native Tag）
   - Interfaces/：7 项接口（IInteractable/IWeaponSource/IDamageable/IDefenseProvider/IMovementMode/IBattleParticipant/ICharacterCapability）
   - Data/：8 个 DA 基类（Weapon/Armor/MovementProfile/MatchRuleSet/Unit/Commander/Arena/Avatar，SchemaVersion+PostLoad+ValidateData）
   - Flow/：VRGameFlowComponent 状态机；Combat/：VRCharacterCapabilityComponent + VRTestDummy
-  - L_SkeletonTest.umap 关卡（VRTestDummy_0 + Floor_Graybox，12223B 落盘验证）
+  - L\_SkeletonTest.umap 关卡（VRTestDummy\_0 + Floor\_Graybox，12223B 落盘验证）
   - 编译通过（13 动作 Succeeded），编辑器加载 DLL + 类注册验证通过
 - 工程修复（用户批准）：`.uproject` 补 Modules 字段（此前缺失导致编辑器不加载游戏模块）；Build.cs 加 GameplayTags + AIModule 依赖
-- 实施偏差记录：EMovementMode→EVRMovementMode（引擎同名冲突）；IInteractable 手部参数用 AActor*（AVRHand M01 收紧）
+- 实施偏差记录：EMovementMode→EVRMovementMode（引擎同名冲突）；IInteractable 手部参数用 AActor\*（AVRHand M01 收紧）
 - 遗留：PIE 运行验证（可转 T006 VRGameFlowSpec 自动化覆盖）；VRPawn 挂载 Capability 组件（M01）
 - 报告：`execution/reports/tasks/M00-T005.md`
 
 ## 2026-08-13（M01-T005 执行完成：灰盒竞技场关卡）
 
-- AI 执行（session-20260813-001）完成 `M01-T005: 灰盒竞技场关卡`，状态 in_progress -> awaiting_review。
+- AI 执行（session-20260813-001）完成 `M01-T005: 灰盒竞技场关卡`，状态 in\_progress -> awaiting\_review。
 - 交付物：`Content/VRSanguo/Dev/L_Prototype_1v1.umap`（26 Actor）——20x20m 地面、4m 围墙、掩体 A/B（1.2m 半身高）、高台 C（1m + 26.6° 斜坡）、PlayerStart/AI TargetPoint 对称出生、武器生成位 x2、NavMeshBoundsVolume 20x20x4、RecastNavMesh（Static 已构建）、DirectionalLight/SkyLight/ExponentialHeightFog、9 个 TextRender 尺寸标注。
-- World Settings GameMode 使用模板 `VRGameMode`（M00-T005 的 BP_VRGameMode 未就绪，按任务约定回退）。
+- World Settings GameMode 使用模板 `VRGameMode`（M00-T005 的 BP\_VRGameMode 未就绪，按任务约定回退）。
 - 自动化验证：关卡加载、几何尺寸/对称/材质断言、出生区无障碍、NavMesh 构建日志（`BuildPaths` 触发 `UNavigationSystemV1::Build`）全部 PASS。
 - 偏差记录：标注用英文（缺中文字体资产）；Lightmass 烘焙未执行（无头编辑器 DDC/Zen 写入受限，需 GUI 会话）；PIE fps >= 90 待编辑器/真机验证；MapCheck Nanite/VSM 警告待变更申请。
 - 登记册同步：07-task-register、10-asset-register（新增 AST-009 MAP）；报告 `execution/reports/tasks/M01-T005.md`。
-- 并发说明：执行期间根 STATUS.json 被并行会话更新（M02-PREP-001 用户认领 in_progress、各任务 note 精简），认领写入被覆盖；已重新读取最新内容合并，保留并行条目并将 M01-T005 更新为 awaiting_review。
+- 并发说明：执行期间根 STATUS.json 被并行会话更新（M02-PREP-001 用户认领 in\_progress、各任务 note 精简），认领写入被覆盖；已重新读取最新内容合并，保留并行条目并将 M01-T005 更新为 awaiting\_review。
 
 ## 2026-08-13（M02-PREP-002 撤销：回归 M02-PREP-001 统一执行）
 
@@ -325,7 +356,7 @@
   - `governance/ExecutionModel.md`：新增"提交审核前自检（硬性门禁）"段落，含 5 项自检清单（交付物完整性、CHECKS 全项通过、禁止路径未修改、验证证据可定位、无遗留待办伪装）和自检失败处理规则。位于状态更新时机表之后、前置门禁之前。
   - `governance/definition-of-done.md` §6：新增"禁止提前提交审核"条款，明确未完成交付物不得以"待办/遗留/后续补充/已规划/待用户执行"等任何形式包装为已交付，也不得通过挪入报告"风险/待办"段落绕过完整性检查。
 
-## 2026-08-13（M02-PREP-001 审核：requires_changes）
+## 2026-08-13（M02-PREP-001 审核：requires\_changes）
 
 - 审核模型复核 M02-PREP-001，结论 `requires_changes`。
 - 通过项：平台选型（5 平台完整对比）、骨架规格（MannequinXR 兼容）、武器规格（5 类定稿）、动画清单（37 个）、ALLOWLIST 合规、无第二 Skill、无治理锁定文件修改、无新增技术债、无总纲偏离。
@@ -341,7 +372,7 @@
 - 五武器形制定稿：环首刀、钩镶/长方盾、戟、矛/槊、角弓/反曲弓；长度以美术指南为准；模型命名按形制（`Shield_Han`/`Polearm_Ji`），命名标准待变更申请同步。
 - 六武将名单：吕布、典韦、关羽、张飞、赵云、马超（"一吕二典三关四张五赵六马"）。
 - 动画清单约 37 个（含瞄准姿态、阵线推进、收放/换手；弓箭不做连射；保留盾牌推挤）。
-- 报告写入 `execution/reports/tasks/M02-PREP-001.md`；状态 `awaiting_review`；资产登记册新增 AST-002~008（draft）。
+- 报告写入 `execution/reports/tasks/M02-PREP-001.md`；状态 `awaiting_review`；资产登记册新增 AST-002\~008（draft）。
 - 待办：参考图片收集（用户执行，AI 统一重命名）；命名标准变更申请；混元 3D 输出验证。
 
 ## 2026-08-13（认领门禁治理加固：7 文件 + 4 任务包同步）
@@ -407,7 +438,7 @@
 
 ## 2026-08-13（M00-T004 审核批准：approved）
 
-- 审核模型复核通过，用户批准。M00-T004 状态：awaiting_review → approved。
+- 审核模型复核通过，用户批准。M00-T004 状态：awaiting\_review → approved。
 - 核心成果：PICO Neo3 真机场景可见、输入可用、手柄模型显示、VRPawn 稳定生成。
 - 遗留：Neo3 卡顿（TD-011）、swapchain 补丁（TD-005）、UEBridgeMCP 工具链（TD-010），不阻塞 M00。
 - STATUS.json（根+任务）、07-task-register 同步。
@@ -416,7 +447,7 @@
 
 - 审核模型提出 4 项修正，全部处理：
   1. V-008 状态更新为"已验证（2026-08-13）"，证据链含输入绑定、手柄挂载、碰撞修复（`09-verification-register.md`）。
-  2. PicoValidationMatrix 回填真机列：VR-001~VR-005 通过（2026-08-13），VR-006/007/008 保持待验证（未专项测试不包装）（`vr/PicoValidationMatrix.md`）。
+  2. PicoValidationMatrix 回填真机列：VR-001\~VR-005 通过（2026-08-13），VR-006/007/008 保持待验证（未专项测试不包装）（`vr/PicoValidationMatrix.md`）。
   3. 补齐任务报告 `execution/reports/tasks/M00-T004.md`（TASK.md Phase 7 要求）。
   4. TD-001 标记 resolved（UE5.8→UE5.6 降级已于 2026-08-11 完成）（`11-tech-debt-register.md`）。
 
@@ -428,14 +459,14 @@
   - 真机验证（2026-08-13，新 APK 9:46）：手柄单独显示、无手部重叠、操作可用；日志无 SpawnActor 失败。
 - 编辑器自动化工具链（TD-010）：安装 UEBridgeMCP（UE5.6 原生兼容，HTTP 8080，407 工具）；UnrealMCP 因 5.6 编译失败移除（备份在临时目录）。GPL-3.0 许可证上架前需评估。
 - 遗留（TD-011）：PICO Neo3 真机运行时卡顿，待 T006 性能门禁定位优化。
-- 任务状态：M00-T004 → awaiting_review（根 STATUS.json、07-task-register、TD-007 resolved 同步）。
+- 任务状态：M00-T004 → awaiting\_review（根 STATUS.json、07-task-register、TD-007 resolved 同步）。
 
 ## 2026-08-12（M00-T004：输入映射按 PICO 官方文档绑定完成）
 
 - 编辑器内配置（用户执行，AI 核验）：
-  - 5 个 IMC 全部按 PICO 官方文档（developer.picoxr.com Input mappings）绑定 PICO Neo3 键：IMC_Default（Move/Turn/Grab_L/R/Menu_Toggle）、IMC_Hands（Grasp/IndexCurl/Point/ThumbUp 共 10 键）、IMC_Menu（Interact Trigger + Cursor Thumbstick 2D）、IMC_Weapon_Left/Right（Shoot Trigger Axis）。
+  - 5 个 IMC 全部按 PICO 官方文档（developer.picoxr.com Input mappings）绑定 PICO Neo3 键：IMC\_Default（Move/Turn/Grab\_L/R/Menu\_Toggle）、IMC\_Hands（Grasp/IndexCurl/Point/ThumbUp 共 10 键）、IMC\_Menu（Interact Trigger + Cursor Thumbstick 2D）、IMC\_Weapon\_Left/Right（Shoot Trigger Axis）。
   - 插件按键命名确认：`PICONeo3_*`（显示名 "PICO Neo3 Controller" 分类），非官方文档中的 "PICO Touch" 命名。
-  - 二进制核验：5 个 IMC 资产均已包含对应 `PICONeo3_*` 键（IMC_Default 6 键、IMC_Hands 10 键、IMC_Menu 4 键、Weapon×2 各 1 键）。
+  - 二进制核验：5 个 IMC 资产均已包含对应 `PICONeo3_*` 键（IMC\_Default 6 键、IMC\_Hands 10 键、IMC\_Menu 4 键、Weapon×2 各 1 键）。
 - 任务状态同步：STATUS.json（updatedAt 2026-08-12，note 更新）、07-task-register.md、11-tech-debt-register.md（TD-007 部分偿还标注）。
 - 遗留（下次会话继续）：VRPawn 挂载 Neo3 手柄模型（需在 Motion Controller 下新增 StaticMesh 组件挂 `SM_PICONeo3_L/R`，隐藏原 SkeletalMesh 手部）、OpenXR Input PlayerMappableInputConfig 配置、真机复测输入。
 
@@ -461,10 +492,10 @@
 - `knowledge/PicoNeo3BuildGuide.md`：构建环境切 UE5.6、新增 8 项已知构建坑、插件迁移说明、真机结论与待办。
 - `knowledge/DeviceConfigurationMatrix.md`：更新 UE5.6 配置基线；UE5.8 兼容配置降为历史参考。
 - `vr/PicoValidationMatrix.md`：回填 Android 构建通过、真机部分通过。
-- `registers/11-tech-debt-register.md`：新增 TD-005~TD-009。
-- `registers/02-risk-register.md`：新增 RSK-018~RSK-020。
+- `registers/11-tech-debt-register.md`：新增 TD-005\~TD-009。
+- `registers/02-risk-register.md`：新增 RSK-018\~RSK-020。
 
-**遗留（待用户编辑器操作）：** IMC 绑定 PICO Touch 按键、OpenXR Input PlayerMappableInputConfig、VRPawn 挂载 Neo3 手柄模型（SM_PICONeo3_L/R）。
+**遗留（待用户编辑器操作）：** IMC 绑定 PICO Touch 按键、OpenXR Input PlayerMappableInputConfig、VRPawn 挂载 Neo3 手柄模型（SM\_PICONeo3\_L/R）。
 
 ## 2026-08-11（架构审核修复）
 
@@ -593,7 +624,7 @@
 ## 2026-08-11（多任务并发治理）
 
 - 用户批准：治理模型从单任务改为多任务并发，每个执行模型认领一个任务。
-- `policy.md` §6：从"单任务与状态"改为"多任务与状态"，移除"任一时刻最多一个 in_progress"约束，新增任务认领、文件冲突检测与共享文件协调规则。
+- `policy.md` §6：从"单任务与状态"改为"多任务与状态"，移除"任一时刻最多一个 in\_progress"约束，新增任务认领、文件冲突检测与共享文件协调规则。
 - `ExecutionModel.md`：新增"任务认领"章节，前置门禁增加冲突检测，强制停止条件增加文件冲突。
 - `SKILL.md`：active 门禁路径从单任务改为多任务（`active/{taskId}/` 子目录结构），新增"并发安全"小节。
 - `active/` 目录重构：T004 文件移入 `active/M00-T004/`，新建 `active/M00-T005/` 任务包。
@@ -657,7 +688,7 @@
 - 最小治理修复：确认 active 五件套完整；删除请求中的两个空任务壳因删除接口路径异常未执行，保留待后续人工清理；修正唯一 Skill 的 active 门禁，不再要求 `active/<taskId>.md`；清理 execution 索引中的旧 active 任务链接；将旧 manifest 路径改为 `execution/M00`、`execution/reports` 和 `execution/requests`；任务继续保持 `M00-T004 / blocked`。
 - 冻结 M00-T004：将 active 状态、任务登记、manifest 与 integrity 统一为 `M00-T004 / blocked`。冻结期间禁止执行模型进行 SDK 安装、APK 构建或 PICO 真机操作；先完成治理入口只读清点。
 - 按用户确认移除根级 `rules.md` 兼容入口依赖，统一当前入口指向 `rules/project_rules.md`；更新 index、README、manifest、rules README、DirectoryConvention、T001 任务和唯一 Skill。
-- 清理 execution/active/ 下 10 个非标旧任务文件（M00-T001~T006 自定义子弹格式 + M00/ 子目录五文件），与 execution/M00/T00X-*.md 正式详规形成三重任务定义。文件已清空，需用户手动删除空文件和 M00/ 空目录。
+- 清理 execution/active/ 下 10 个非标旧任务文件（M00-T001\~T006 自定义子弹格式 + M00/ 子目录五文件），与 execution/M00/T00X-\*.md 正式详规形成三重任务定义。文件已清空，需用户手动删除空文件和 M00/ 空目录。
 - 全面重写 M00-T004 任务包：7 个 Phase，每步含"为什么/做什么/怎么做/谁做/怎么算做完"。按 UE5.8 官方文档锁定 NDK r27c + build-tools 35.0.1 + JDK 21。重写全部 active 五件套。STATUS 重置为 `ready`。
 - 执行 M00-T004 VR/OpenXR/PICO 基线（Step 1-3），状态曾置为 `in_progress`：Step 1-3 通过（VR 模板资产、插件与平台声明、OpenXR 运行时 `xrCreateInstance succeeded`）；`PicoValidationMatrix.md` 更新文件/编辑器列，修复其指向 `VerificationRegister.md` 的旧引用为 `09-verification-register.md`；V-004 更新为已验证（编辑器）。
 - 发现并记录偏差：UE5.8 官方要求 NDK r27c（`27.2.12479018`，见引擎 `Android_SDK.json`）与 SDK 推荐 35，任务 Step 0 原写 NDK r25b 为 UE5.4 旧要求；机器无独立 JDK（仅 Android Studio JDK 11），APK 构建前需安装 Temurin JDK 17；`EnvironmentSetup.md` 已补录 Android 环境检查结论。
@@ -671,7 +702,7 @@
 - 决策模型生成 M00-T004 活动任务包：含用户操作清单（sdkmanager 补齐 android-34 + NDK r25b、APK 构建、PICO 安装命令）和 AI 执行范围（编辑器 VR 模板核对 + Android 环境检查 + 验证登记）。STATUS 置为 `ready`。用户建议在执行前并行运行 Step 0 命令。
 - 执行 M00-T003 UE5.8 工程与工具链基线：工具链检查（UE5.8 引擎路径、VS2026/MSVC、Windows SDK、UBT/RunUAT）、`.uproject` 六插件与 Android 平台核对、MCP `list_toolsets` 与编辑器日志验证均完成；用户本机 `Rebuild.bat` 清理编译 `Result: Succeeded`（33.35s），UBT 实际选用 MSVC 14.50.35717 + Windows SDK 10.0.22621.0；编辑器启动验证通过，任务置为 `awaiting_review`。
 - 更新 `EnvironmentSetup.md`（工具链实际选择与编译结果）、`TechnicalDecisions.md`（MCP 连接器验证）、`09-verification-register.md`（V-003 已验证）；遗留项：编辑器重启后 MCP 桥接返回空工具集待用户确认，vswhere 识别 VS2026 待注册信息落盘。
-- 用户验收通过，M00-T003 置为 `approved` 并归档：MCP 桥接重启后已恢复（list_toolsets 40 工具集）；vswhere 手工注册实例键不被识别（VS2026 非安装器注册的固有表现，不影响构建，正解为安装器修复，超出任务范围）已如实记录于 `EnvironmentSetup.md`。
+- 用户验收通过，M00-T003 置为 `approved` 并归档：MCP 桥接重启后已恢复（list\_toolsets 40 工具集）；vswhere 手工注册实例键不被识别（VS2026 非安装器注册的固有表现，不影响构建，正解为安装器修复，超出任务范围）已如实记录于 `EnvironmentSetup.md`。
 
 ## 2026-08-09（M00-DOC-001）
 
@@ -710,3 +741,4 @@
 - `Build` 未包含项目构建脚本或平台资源，因此不保留空目录；UE 生成目录不纳入整理结果。
 - 用户已手动删除旧目录；当前有效 AI 资料统一位于 `.trae/`，后续不再使用 `TraeAI/` 或 `Docs/`。
 - 计划基于 UE5.8 官方 VR 模板重建项目；M00 前置步骤与模板核对清单已写入 `.trae/execution/M00-Foundation.md`。
+
