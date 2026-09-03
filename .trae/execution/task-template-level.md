@@ -71,7 +71,7 @@ Content/VRSanguo/Arena/...
 - Content/VRSanguo/Characters/（不修改角色资产）
 - Content/VRSanguo/Weapons/（不修改武器资产）
 - .trae/governance/（锁定文件）
-- .trae/rules/（锁定文件）
+- 根级 `AGENTS.md`（锁定文件）
 - .trae/skills/（锁定文件）
 
 ## 6. 验证方法

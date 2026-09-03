@@ -1,3 +1,11 @@
+<!--
+AGENTS.md · VRSanguoYanWuchang 项目 AI 行为规则
+
+性质：项目唯一 AI 行为规则正文（迁移自原 `.trae/rules/project_rules.md`，迁移日期 2026-09-03，CR-20260903-002）。
+适用：所有 AI 模型（决策 / 执行 / 审核 / 外部 AI 工具 / 多代理团队成员），无论来自 Trae 或任何外部 AI 工具。
+治理：见 `.trae/governance/policy.md` §2 权威链、§3 单一事实源、§4 文件控制等级。
+-->
+
 # VRSanguoYanWuchang 项目规则
 
 ## 必读
@@ -91,7 +99,7 @@
 
 ## UE 重启后必做
 
-27. **ue-bridge 调用先探活，失败才刷新 MCP，MCP 正常时禁止刷新。** 首次调用 ue-bridge 前先探活（如 `get-project-info`，正常返回即视为通）：通了直接使用，禁止再走刷新流程；仅当探活失败且 UE 正在运行时，按 `governance/UEBridgeRefresh.md` 先确认 UE 完全启动（编辑器渲染完成且关卡已加载），再自主连续完成刷新，全程不逐步请示用户；UE 未运行则等待或告知用户，禁止空刷。
+27. **编辑器自动化桥（UE_MCP_Bridge，db-lyon/ue-mcp）使用纪律。** 桥插件随编辑器启动自动加载（端口 9877）；MCP 客户端（node stdio，`D:\App\trae\ue-mcp\1.0.87\node_modules\ue-mcp\dist\index.js` + .uproject 参数）由各会话按需启动。调用任何桥工具前先探活（轻量只读调用，正常返回即通）；探活失败时先确认编辑器已完全启动（渲染完成且关卡已加载），再重启本会话的桥 MCP 客户端；仍失联则报告并等待，禁止反复空试。旧 UEBridgeMCP（8080）已退役，GUI 刷新流程作废（`governance/UEBridgeRefresh.md` 仅存审计）。
 
 ## 权限规则
 

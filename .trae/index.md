@@ -19,7 +19,7 @@
 ## 补充治理规范
 
 - [测试规范](governance/TestSpecification.md)（测试用例设计、执行、证据标准）
-- [UE 重启后 MCP 刷新流程](governance/UEBridgeRefresh.md)（先探活后刷新：ue-bridge 失联且 UE 运行中才走 GUI 自动刷新，含 UE 完全启动前置门禁）
+- [UE 重启后 MCP 刷新流程](governance/UEBridgeRefresh.md)（**已取代**：旧 ue-bridge 于 2026-08-31 退役；新桥 UE_MCP_Bridge 随编辑器自启，使用纪律见根级 `AGENTS.md` 规则 27；本文保留供审计）
 
 ## 四份操作模型
 
@@ -30,10 +30,10 @@
 
 ## 规则与唯一 Skill
 
-- [权威项目规则](rules/project_rules.md)
+- [权威项目规则（根级 `AGENTS.md`）](../AGENTS.md)
 - [three-kingdoms-vr-arena](skills/three-kingdoms-vr-arena/SKILL.md)
 
-`rules/project_rules.md` 是唯一项目规则入口。`.trae/skills/` 下不得创建第二个带 YAML frontmatter 的 `SKILL.md`。
+根级 `AGENTS.md` 是唯一项目规则入口。`.trae/skills/` 下不得创建第二个带 YAML frontmatter 的 `SKILL.md`。
 
 ## 产品与工程入口
 

@@ -9,7 +9,7 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 ## 规则入口与权威关系
 
-- `.trae/rules/project_rules.md` 是项目唯一规则正文，不存在根级兼容入口。
+- 根级 `AGENTS.md` 是项目唯一规则正文（业界约定位置），无其他根级兼容入口。
 - 用户最新明确批准内容仍按 `.trae/governance/policy.md` 的权威链处理。
 
 ## 四份治理契约
@@ -38,7 +38,7 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 1. `.trae/README.md` 与 `.trae/index.md`
 2. 四份治理契约
-3. `.trae/rules/project_rules.md`
+3. 根级 `AGENTS.md`
 4. 与用户意图对应的操作模型
 5. `.trae/knowledge/GameMasterPlan.md`、相关 `knowledge/Design/` 权威产品详规
 6. `.trae/knowledge/EngineReference.md`（引擎技术参考，VR/OpenXR/Enhanced Input/IK/性能优化）
@@ -99,7 +99,7 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 - 规划、实现和验证分开陈述，未验证项明确标记。
 - 四份治理契约和四份操作模型均可读且角色不混淆。
-- `rules/project_rules.md` 唯一规则入口可读且无根级重复规则文件。
+- 根级 `AGENTS.md` 唯一规则入口可读且无根级重复规则文件。
 - active 五件套、任务详情和里程碑包按完整路径核验。
 - 索引、manifest、integrity、登记册与变更记录和实际文件一致。
 - `.trae/skills/` 下仅本文件具有有效 YAML frontmatter。

@@ -11,7 +11,7 @@
 1. 用户最新明确批准且尚未撤销的决定。
 2. `.trae/governance/policy.md`。
 3. `.trae/governance/definition-of-done.md`、`.trae/governance/responsibility-matrix.md` 与已批准变更请求。
-4. `.trae/rules/project_rules.md` 与唯一项目 Skill。
+4. 根级 `AGENTS.md` 与唯一项目 Skill。
 5. `.trae/knowledge/` 当前有效事实源。
 6. `.trae/execution/` 当前任务与里程碑。
 7. 真实代码、配置、资产、测试结果和设备证据。

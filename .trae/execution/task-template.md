@@ -54,7 +54,7 @@ Source/VRSanguo/...
 - Plugins/（不安装或修改插件）
 - Content/（代码任务不产出 Content 资产，除非任务明确要求）
 - .trae/governance/（锁定文件）
-- .trae/rules/（锁定文件）
+- 根级 `AGENTS.md`（锁定文件）
 - .trae/skills/（锁定文件）
 
 ## 6. 验证方法

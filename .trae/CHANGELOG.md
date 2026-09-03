@@ -1,5 +1,67 @@
 # ChangeLog
 
+## 2026-09-03（治理规则入口迁移：`.trae/rules/project_rules.md` → 根级 `AGENTS.md`）
+
+- 背景：用户决定采用「方案 A 整体迁移」——把项目唯一规则正文的物理位置从 `.trae/rules/project_rules.md` 迁到项目根级 `AGENTS.md`，对齐 GitHub Copilot / Cursor / Aider / Claude Code 等外部 AI 工具识别的业界标准约定位置。CR 编号 `CR-20260903-002`。
+- 变更：
+  - **新建**根级 `AGENTS.md`（包含原 `project_rules.md` 全部正文 + 引导段说明迁移来源、适用模型范围、治理权威链指引）。
+  - **删除** `.trae/rules/project_rules.md`（PC 用户 Modify 权限下删除，2026-08-26 ACL Apply 生效后 PC 用户仍有 Modify）。
+  - **修改** 7 个治理类文件 + 3 个 task-template.md，共 11 处引用同步（最小差异替换）：
+    - `governance/policy.md` §2 权威链第 4 条
+    - `governance/DecisionModel.md` 必读清单第 3 位
+    - `governance/ExecutionModel.md` 铁律启动验证第 1 条
+    - `governance/UEBridgeRefresh.md` 引用
+    - `skills/three-kingdoms-vr-arena/SKILL.md` 3 处（路由关系 / 必读顺序 / 交付门禁）
+    - `index.md` 3 处（导航链接 / 锁定声明 / UEBridgeRefresh 引用）
+    - `manifest.yaml` `rules.authoritative` 字段
+    - 3 个 `task-template*.md` 锁定路径描述
+  - **不动**历史记录类引用（CHANGELOG 现有条目 / 已 approved 任务的报告与 INPUTS.md / 今天写的 M00-T001 ACL 报告）——按 policy.md §3「历史材料只供审计」原则保留事实原貌。
+- 锁定文件修改记录（policy.md §4.1）：
+  - **批准依据**：用户 2026-09-03 在会话内明确选择「方案 A 整体迁移」+ CR-20260903-002 草案登记。
+  - **影响**：治理类 7 个文件均为锁定文件，多文件叠加修改但属同一原子变更；规则正文内容零变化（仅位置/文件名变化）；单一事实源原则未违反（仅一份规则正文，从 `.trae/rules/` 迁移到根级）。
+  - **回滚**：`git revert` 本次提交 + 重新生成 `AGENTS.md` → `.trae/rules/project_rules.md` + 全部引用回滚。
+  - **验证**：`check-integrity.py` 21/21 全过；治理类与任务模板文件逐份回读引用同步；git 提交后远程 CI 门禁 success。
+- 不变范围：治理契约 4 份（policy / definition-of-done / responsibility-matrix / change-request-template）、产品总纲、唯一 Skill frontmatter、登记册体系、active 任务体系、工程文件（Source/ / Config/ / Content/ / Plugins/）。
+- 后续：外部 AI 工具首次进入项目时是否真正自动加载 `AGENTS.md` 需实测（不在本 CR 范围）；已 approved 任务 INPUTS.md 中旧路径引用是历史事实原貌保留，不修。
+
+## 2026-09-02（决策：BP_VRCharacter 修复路线——先 A 后 B，用户提出联机方向后改判）
+
+- executor 真机/PIE 发现 BP_VRCharacter 黑屏坠空（Z=-140000），A/B 实证定位根因：VRE 复制型 VR 角色结构（ReplicatedVRCamera+VRRoot+VRCharacterMovement）的位姿初始化在 PIE→串流链路未建立，与关卡/串流/引擎无关（官方 VRPawn 同环境正常）。
+- manager 初裁路线 B（官方 VRPawn 重建）；**用户以「未来竞技场格斗要联机」产品方向提出异议，改判**：路线 A 先行（时间盒 2 小时/3 排查角度：VRE 社区已知 VRRoot 坠落解法清单、组件级 diff、最小复现隔离），不通则降级 B 并在 09 风险登记册登记「联机角色地基迁移债」。理由：复制型结构是联机多人的现成地基，弃用 = diff 工作推迟至联机立项；A/B 实验只证明 Pawn 可用未证明 VRE 结构不可用，VRRoot 坠落属社区高频已知问题。M01-T001 验收标准不变（真机 TC-01~06）；移动承载结构留待 M02。（决策信 msg-20260902-234354-executor-001 / 初裁 msg-20260902-234814 / 改判 msg-20260902-235501）
+
+## 2026-09-02（版本政策：ue-mcp 钉死 1.0.87）
+
+- 新桥提示 1.0.87→1.3.0 可升级，manager 裁决**不升级**：v1.3.0 即迁移首轮编译失败版本（UE5.6 下 61 错误，5.7+ API 未门控，v1.3.1-beta.2 静态探针亦不合格）；v1.0.87 为六版本横向探测唯一合格选型；`ue-mcp update` 会覆盖本地 5.6 门控补丁并重部署插件。政策：UE5.6 期间锁定 1.0.87；升级仅限引擎版本变更或缺失必需功能，须经决策模型批准并重走静态探针+编译门禁（M02-PREP-002 流程）。
+
+## 2026-08-31（知识库同步：旧 ue-bridge 引用清理 + 新桥持久化）
+
+- 旧桥退役的知识库同步：`governance/UEBridgeRefresh.md` 加取代标注（保留审计）；`rules/project_rules.md` 规则 27 改写为「编辑器自动化桥（UE_MCP_Bridge）使用纪律」（原 ue-bridge 刷新流程作废）；`index.md` 链接描述同步。
+- 新桥 Node 包固化：v1.0.87（MIT，TC-02 实证版本）从临时区 `probe-1.0.87` 固化至 `D:\App\trae\ue-mcp\1.0.87\`（含依赖解析上下文）；node 经 8.3 短路径 `TRAESO~1` 调用（避空格），启动测试通过。Trae UI 注册配置已交付用户（command=node 短路径，args=固化入口+uproject）。
+- 引用普查（68 处/19 文件）：历史审计类（CHANGELOG/任务报告/会话记录/任务包）保留不动；治理类三处已同步。
+
+## 2026-08-31（M02-PREP-002 迁移完成：db-lyon/ue-mcp v1.0.87 上线，UEBridgeMCP 退役，TD-010 偿还）
+
+- 重试成功（manager 授权续命 msg-20260831-100234-manager-001，原认领会话 session-20260831-001 续执）：v1.3.0 首轮 61 错误 blocked 后，按 TASK.md 重试计划执行 2a——**静态探针先行**（grep 13 个失败符号跨 6 个历史 npm 版本 + GitHub releases 核实）：v1.3.1-beta.2 虽在 release note 宣称为 5.4-5.6 加门控，但实测仅门控 5.8-only API，5.7 引入的 API（`Misc/StringOutputDevice.h`、`EGetObjectsFlags`、`GetNaniteSettings`、MetaSound Connect*、Landscape 访问器）在 5.6 仍无门控（跳过编译不蛮试）；v1.2.4/v1.1.44 同病（18 命中）；**v1.0.87/v1.0.0/v0.7.19 仅 2 命中且已有 `#if UE_MCP_HAS_POSESEARCH_DATABASE_ASSET_API` 门控**（5.6 实存 `FPoseSearchDatabaseAnimationAssetBase`），选定 v1.0.87。
+- 编译：v1.0.87 全量 Rebuild 仅 1 错误（`AssetHandlers_Import.cpp:2282` `FStringTable::SetSourceString` 3 参调用，第 3 参为 5.7 新增）——按停止条件允许的"1 轮修复"加 1 行版本门控补丁（5.7+ 用 3 参，否则 2 参），增量 Build **`Result: Succeeded`**（`[1/4] Compile AssetHandlers_Import.cpp` → `[3/4] Link UnrealEditor-UE_MCP_Bridge.dll`，DLL 4313088B）。
+- TC-02 通过：经 MCP 驱动（Node stdio JSON-RPC → `ue-mcp` v1.0.87 server → 编辑器桥 ws://127.0.0.1:9877）在测试副本 `/Game/VRSanguo/Dev/Temp_BPForMcpTest` 上执行 create → add_node（K2Node_CustomEvent "McpTestEvent" + K2Node_CallFunction "PrintString"）→ connect_pins（then→execute）→ compile → read_graph_summary——**读回 execEdges 与写入完全一致**，save 后按 CHECKS 删除测试副本（磁盘无残留）。截图证据（蓝图编辑器窗口）+ JSON 读回固化于 `Saved/Evidence/M02-PREP-002/`。
+- TC-03 通过：UEBridgeMCP 退役（`Plugins/UEBridgeMCP` 改名 `UEBridgeMCP.disabled` 保留审计 + `.uproject` 移除条目），编辑器优雅退出后重启：**零缺失模块错误**，Startup complete 9.15s；2 条 `LogAutomationTest: Error: Condition failed` 经比对退役前 backup 日志确认为既有现象。冒烟：LevelEditorSubsystem.load_level 加载 `L_SkeletonTest` 成功（M02P2_SMOKE_LES=True，CURRENT_LEVEL=L_SkeletonTest）。
+- 治理：TD-010 → **resolved**（GPL-3.0 传染风险随退役消除；维护注：桥插件含本地 1 行补丁，`ue-mcp deploy/update` 会覆盖，需重打或上游提交）；07 登记册、根+任务包 STATUS.json（awaiting_review）、integrity/manifest 同步；任务报告更新。**M01-T001 蓝图接线的工具阻塞已解除**（新桥读回能力即为其后置根因的解药），待该任务会话推进。
+- 工具面映射备忘：ue-bridge 的 edit-blueprint-graph/query-blueprint-graph/get-project-info → 新桥 `blueprint` 工具（add_node/connect_pins/compile/read_graph_summary）与 `project` 工具；桥端口 9877（ue-bridge 为 8080）；MCP server 启动方式 `node <npm包>/dist/index.js <uproject>`。
+
+## 2026-08-31（M02-PREP-002 blocked：db-lyon/ue-mcp 桥插件 UE5.6 编译失败）
+
+- 执行（session-20260831-001，vrsanguo-relay 中继派工）：认领门禁过（claimedBy=session-20260831-001，根+任务包 STATUS.json 即同步）；部署执行 `node <pkg>/dist/deploy-cli.js VRSanguoYanWuchang.uproject` 成功——`Plugins/UE_MCP_Bridge/` 源码落位、`.uproject` 启用 PythonScriptPlugin 与 UE_MCP_Bridge。
+- UBT 全量 Rebuild（`UE_5.6\Engine\Build\BatchFiles\Build.bat VRSanguoYanWuchangEditor Win64 Development -Rebuild`）：**`Result: Failed (OtherCompilationError)`**，61 处错误全部集中在 `Plugins/UE_MCP_Bridge/Source/`，跨 15+ Handler 文件。典型：缺失头文件 `Misc/StringOutputDevice.h`（ChooserHandlers.cpp）、`Importers/GenericAssetImporter.h`（FabHandlers.cpp）；API 不兼容 `USceneComponent::GetBounds`、`UStaticMesh::GetNaniteSettings/SetNaniteSettings`、`UMetaSoundSourceBuilder::ConnectGraphInputToNode`、`ULandscapeLayerInfoObject::GetPhysicalMaterial/SetHardness`、`FSkeletalMeshBuildSettings::bOptimizeForInstalling`、`EGetObjectsFlags`、`FValidateAssetsResults::{NumExternalObjects,ValidatorMessages}`、`UMaterialEditingLibrary::GetMaterialExpressionOutputNames`、`FPoseSearchDatabaseAnimationAsset`。判断：db-lyon/ue-mcp npm v1.3.0 对 UE5.6 系统性不兼容（非"单轮修复"可解），命中任务停止条件，blocked 不蛮试。证据 `c:\Users\PC\.trae-cn\work\6a94d8e4ee03e94d82c081e0\m02-build.log`。
+- 回退（保工程健康）：`.uproject` 从备份还原（仅启用 UEBridgeMCP，无 UE_MCP_Bridge/PythonScriptPlugin 残留）；移除失效的 `Plugins/UE_MCP_Bridge/` 目录。编辑器未启动，工程处于迁移前的已知状态。
+- 治理同步：根 `execution/active/STATUS.json` 与任务包 STATUS.json 置 `blocked`（claimedBy=session-20260831-001）；TD-010、07 任务登记册已更新；本 CHANGELOG；任务报告 `.trae/execution/reports/tasks/M02-PREP-002.md`；会话记录 `execution/sessions/session-20260831-001.md`。
+- 遗留（需 decision 模型裁决）：① 试 ChiR24/Unreal_mcp（Top2，研究已核验 MIT、5.0-5.8、蓝图图+execute_python）；② 指定 db-lyon/ue-mcp 兼容 UE5.6 的旧版本/src 分支；③ 对 db-lyon 桥插件做 UE5.6 移植（工作量大，需批准）。UEBridgeMCP 保持启用，GPL 债务（TD-010）仍 open。
+
+## 2026-08-31（M02-PREP-002 立项：编辑器自动化工具链迁移 db-lyon/ue-mcp）
+
+- 背景：UEBridgeMCP（GPL-3.0，TD-010）蓝图图写入触发 `FMcpToolRegistry::ExecuteTool()` 编辑器崩溃（execute_python 与 edit-blueprint-graph 均复现），M01-T001 蓝图接线被迫降级用户手动。经信箱派工调研（RESEARCH-UEMCP，Worker 全自动完成并回执），结论：官方能力无蓝图节点级编辑；推荐 db-lyon/ue-mcp（MIT、UE5.4-5.8、蓝图写+读回、783+ 动作、安全护栏）为 Top1。
+- 用户批准方案 A（立即迁移）。决策模型生成任务包 `execution/active/M02-PREP-002/`（五件套，status=ready）：部署桥插件→UBT 编译→测试副本蓝图写读验证→退役 UEBridgeMCP→TD-010 更新；白名单含 Plugins/** 与 .uproject，与 M01-T001 白名单零重叠。
+- 派发：经 vrsanguo-relay 中继派工执行（用户零传话）。回执与治理同步由执行会话按白名单完成。
+
 ## 2026-08-30（AgentHub 跨会话信箱 P0 落地：全局 Hub + 全局 Skill + 本项目检查点接入）
 
 - 背景：用户要在 TraeWork 内实现类似 Claude Code Agent Teams / Codex Thread 的多会话沟通（场景：管理者-执行者分离、并行协调、阻塞唤醒、自动接力）。调研确认现成开源（AgentMesh / tap / master-of-puppets / agent-mailbox-mcp / agentbus 等）均不解决 TraeWork 图形会话的唤醒问题，采用混合方案 C：纯文件信箱为底座 + 全局 Skill 挂载 + TraeWork 定时任务 trigger 做唤醒（P1）。

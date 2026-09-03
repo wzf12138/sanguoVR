@@ -22,7 +22,7 @@ operation_models:
   - ".trae/governance/ReviewProtocol.md"
   - ".trae/governance/SessionCommands.md"
 rules:
-  authoritative: ".trae/rules/project_rules.md"
+  authoritative: "AGENTS.md"
   absolute_paths_only: true
   prohibit_engine_root_writes: true
 active_gate:
@@ -46,6 +46,9 @@ active_gate:
     - task_id: M01-T001
       status: in_progress
       package_dir: ".trae/execution/active/M01-T001/"
+    - task_id: M02-PREP-002
+      status: awaiting_review
+      package_dir: ".trae/execution/active/M02-PREP-002/"
   milestone: M01
   concurrency: multi
 collections:

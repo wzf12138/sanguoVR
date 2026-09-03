@@ -19,7 +19,7 @@
 
 1. `.trae/README.md` 与 `.trae/index.md`
 2. `.trae/governance/policy.md`
-3. `.trae/rules/project_rules.md`
+3. 根级 `AGENTS.md`
 4. `.trae/manifest.yaml`
 5. `.trae/knowledge/GameMasterPlan.md`
 6. 当前里程碑、风险、决策、任务、验证和技术债登记
