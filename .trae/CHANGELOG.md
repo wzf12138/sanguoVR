@@ -1,5 +1,18 @@
 # ChangeLog
 
+## 2026-09-03（审核缺陷修复：镜像同步 + UEBridgeMCP 处置据实修正）
+
+- 审核模型发现 3 处一致性缺陷，全部修复：① integrity.yaml / manifest.yaml 中 M02-PREP-002 状态 awaiting_review→approved、updated→2026-09-03（与 STATUS.json 对齐）；② 「UEBridgeMCP.disabled 保留审计」记录与磁盘不符（未入库目录已丢失）——经用户裁决改为**彻底删除、不保留回退**：TD-010 登记册、M02-PREP-002 TASK.md/报告三处据实修正，回退路径改为「重新克隆上游源码+重打编译修复」；③ gitlink 已随 296ebed 移除，.gitmodules 缺口确认不存在。
+- 环境核实：pyyaml 本地系统 python（6.0.3）与 Trae 内置 python（6.0.3）均已可用，两个 CI workflow（ci.yml/deploy.yml）本就含 `pip install pyyaml`，check-integrity 21/21 通过——「CI 门禁被阻塞」传闻与实测不符。
+
+## 2026-09-03（M01-T001：BP_VRCharacter 站立坠落修复 + Manny XR 手部网格）
+
+- 修复 `BP_VRCharacter` 在 PIE 中的无限坠落（Z 降至 -186615、velocity=-4000、grounded=false）。A/B 对照 + `ComputeFloorDist`（`VRBaseCharacterMovementComponent.cpp`）定位根因：`PlayerStart` 位于 Z=0 使角色生成时胶囊半埋（CapsuleHalfHeight=96，胶囊中心在地面、底部在 -96），VRE 仅沿重力方向向下扫地板，永远找不到已低于地面的地表 → 永久 `MOVE_Falling`。重力经实测非根因（globalGravityZ 0 与 -980 均能站立）。
+- 改动：`L_SkeletonTest` 的 `PlayerStart` 从 (0,-90,0) 抬到 (0,-90,100)。PIE 实测角色稳定站立（grounded=true、velocity=0、Z=98.15、71s 稳定），已保存关卡。
+- `BP_VRCharacter` 新增两个 SkeletalMeshComponent 使手柄可见（GripMotionControllerComponent 只做抓握逻辑不渲染手）：`HandMeshLeft`（父=Left Grip Motion Controller，`SKM_MannyXR_left`+`ABP_MannequinsXR`）、`HandMeshRight`（父=Right Grip Motion Controller，`SKM_MannyXR_right`+`ABP_MannequinsXR`），参考官方 `B_MannequinsXR`。编译通过、validate（errorCount=0, valid=true）、保存成功；桌面 PIE 运行态复核挂载正确（网格/材质 MI_Manny_02/骨架 SK_MannequinsXR、bVisible=true）。编辑器重启后复核蓝图已完整落盘。
+- 验证层级：以上均为**桌面 PIE** 结构验证（桌面无 XR 跟踪，截图看不到手）；VR 预览 / PICO 真机待验。
+- 关联：M01-T001（`BP_VRCharacter.uasset`、`L_SkeletonTest.umap`）。Content 资产批量只读，写入时临时解除只读、完成已恢复。
+
 ## 2026-09-03（治理规则入口迁移：`.trae/rules/project_rules.md` → 根级 `AGENTS.md`）
 
 - 背景：用户决定采用「方案 A 整体迁移」——把项目唯一规则正文的物理位置从 `.trae/rules/project_rules.md` 迁到项目根级 `AGENTS.md`，对齐 GitHub Copilot / Cursor / Aider / Claude Code 等外部 AI 工具识别的业界标准约定位置。CR 编号 `CR-20260903-002`。

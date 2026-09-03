@@ -47,7 +47,7 @@ verification:
           status: in_progress
           package_dir: ".trae/execution/active/M01-T001/"
         - task_id: M02-PREP-002
-          status: awaiting_review
+          status: approved
           package_dir: ".trae/execution/active/M02-PREP-002/"
     task_templates:
       expected: 3

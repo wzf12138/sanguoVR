@@ -22,7 +22,7 @@
 3. **部署**：`npx ue-mcp init`（或按 repo README 手动部署 C++ 桥插件），确认 `.uplugin` 与源码落位 `Plugins/`。
 4. **编译**：命令行 UBT 全量 Rebuild（编辑器关闭状态），留存真实日志。
 5. **验证（测试副本）**：新建测试蓝图 `L_temp` 外的 `/Game/VRSanguo/Dev/Temp_BPForMcpTest`（或临时目录），执行 add_node → connect_pins → compile → query 读回，核对读回内容与写入一致。
-6. **退役旧插件**：`.uproject` 移除 UEBridgeMCP 或目录改名 `.disabled`；重启编辑器确认无缺失模块错误。
+6. **退役旧插件**：`.uproject` 移除 UEBridgeMCP 或目录改名 `.disabled`；重启编辑器确认无缺失模块错误。**（2026-09-03 审核修订：实际执行后 .disabled 目录未入库并丢失，经用户裁决改为彻底删除、不保留本地回退副本，回退改为重新克隆上游+重打补丁）**
 7. **冒烟**：打开 `L_SkeletonTest`（只读打开即可）确认工程健康。
 8. **收尾**：更新 TD-010（迁移决策+结果）、07 登记册、CHANGELOG、任务报告；回执 manager。
 
@@ -52,4 +52,4 @@
 
 ## 回退
 
-- 退役 UEBridgeMCP 前保留其目录（改名 .disabled 而非删除）；迁移失败可一键还原 `.uproject` 并改回目录名恢复旧链路。
+- ~~退役 UEBridgeMCP 前保留其目录（改名 .disabled 而非删除）；迁移失败可一键还原 `.uproject` 并改回目录名恢复旧链路。~~ **（2026-09-03 作废：用户裁决彻底删除，不保留本地副本；回退=重新克隆上游源码 + 重打编译修复）**
