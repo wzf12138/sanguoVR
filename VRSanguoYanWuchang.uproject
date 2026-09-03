@@ -15,6 +15,10 @@
 	],
 	"Plugins": [
 		{
+			"Name": "PythonScriptPlugin",
+			"Enabled": true
+		},
+		{
 			"Name": "OpenXR",
 			"Enabled": true,
 			"SupportedTargetPlatforms": [
@@ -55,10 +59,6 @@
 			]
 		},
 		{
-			"Name": "UEBridgeMCP",
-			"Enabled": true
-		},
-		{
 			"Name": "OpenXRExpansionPlugin",
 			"Enabled": false,
 			"SupportedTargetPlatforms": [
@@ -71,6 +71,10 @@
 		},
 		{
 			"Name": "Water",
+			"Enabled": true
+		},
+		{
+			"Name": "UE_MCP_Bridge",
 			"Enabled": true
 		}
 	],

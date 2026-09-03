@@ -3,6 +3,8 @@
 # 蓝图（新增）
 Content/VRSanguo/VR/BP_WeaponBase.uasset
 Content/VRSanguo/VR/BP_TestSword.uasset
+# 蓝图（M01-T001 路线C 交付物：BP_VRCharacter 事件图接 EI→TryGrip/ReleaseGrip）——manager 派工 msg-20260831-102000-mgr-004 + 任务登记册已授权
+Content/VRSanguo/VR/BP_VRCharacter.uasset
 # 关卡（修改现有）
 Content/VRSanguo/Dev/L_SkeletonTest.umap
 # VRE 插件（只读参考，不修改源码）

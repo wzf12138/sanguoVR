@@ -1,0 +1,9 @@
+{
+  "taskId": "M02-PREP-002",
+  "milestone": "M02",
+  "status": "approved",
+  "claimedBy": "session-20260831-001",
+  "startedAt": "2026-08-31",
+  "updatedAt": "2026-08-31",
+  "note": "迁移完成：v1.0.87（MIT）+ 1 行 5.6 门控补丁编译通过；TC-01/02/03 全过；UEBridgeMCP 退役；TD-010 偿还。证据 Saved/Evidence/M02-PREP-002/。2026-08-31 用户验收批准（manager 证据抽查通过）。"
+}

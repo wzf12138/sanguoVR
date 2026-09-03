@@ -1,0 +1,17 @@
+# M02-PREP-002 白名单
+# 所有路径相对于项目根目录 VRSanguoYanWuchang/
+Plugins/**
+VRSanguoYanWuchang.uproject
+Intermediate/**
+Binaries/**
+DerivedDataCache/**
+Config/DefaultEngine.ini
+.trae/execution/reports/tasks/M02-PREP-002.md
+.trae/execution/active/M02-PREP-002/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/registers/11-tech-debt-register.md
+.trae/registers/07-task-register.md
+.trae/CHANGELOG.md
+.trae/integrity.yaml
+.trae/manifest.yaml
+# 白名单外：治理锁定文件、Skill、总纲、Design 详规、M01-T001 白名单资产（Content/VRSanguo/VR/** 等）

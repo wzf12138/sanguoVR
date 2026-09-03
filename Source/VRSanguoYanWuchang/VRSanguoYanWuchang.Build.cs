@@ -16,6 +16,9 @@ public class VRSanguoYanWuchang : ModuleRules
 		// VR / OpenXR
 		PublicDependencyModuleNames.AddRange(new string[] { "HeadMountedDisplay", "XRBase" });
 
+		// VRE（VRExpansionPlugin / GripMotionControllerComponent、IVRGripInterface）
+		PublicDependencyModuleNames.Add("VRExpansionPlugin");
+
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		

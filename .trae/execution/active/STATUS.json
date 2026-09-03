@@ -51,8 +51,17 @@
       "status": "in_progress",
       "claimedBy": "session-20260830-001",
       "startedAt": "2026-08-19",
-      "updatedAt": "2026-08-30",
-      "note": "执行中（2026-08-30 认领续期为 session-20260830-001）。已修复 Interchange 自动导入崩溃（DefaultEngine.ini 禁用 Interchange.FeatureFlags.Import.FBX 回退同步导入器）、导入汉环首刀真剑网格替换巨型方块、追加 VRE 握持 socket VRGripP__0/VRGripS__0 并生成原生 GrippableStaticMeshActor 真剑 + 台座。握持点已修正至剑柄中心，yaw=-90 重摆使剑柄朝玩家，握柄落点 (0,-60,100)。新增白色呼吸脉动握持点高亮（M_GripPulse）。2026-08-30 自建 VRE 角色+GameMode 并设为项目默认（BP_VRCharacter 父类 AVRCharacter；BP_VRGameMode 父类 AGameModeBase，DefaultPawnClass=BP_VRCharacter、PlayerControllerClass=VRPlayerController；DefaultEngine.ini GlobalDefaultGameMode 指向 BP_VRGameMode）。编辑器重启后已复核配置完好（蓝图可加载、CDO 读回正确），并用 attach_actor 把两颗标记球附着到剑握持 socket（4 号→VRGripP__0 世界 (0,-60.5,100.5)、5 号→VRGripS__0 世界 (0,-73,106.5)，与 socket 完全一致），光点位移已修复并保存。待办：用户 PICO 真机验证 TC-01~TC-06 抓取与握持特效（桌面 PIE ≠ 真机）。"
+      "updatedAt": "2026-09-01",
+      "note": "执行中（2026-08-30 认领续期为 session-20260830-001）。已修复 Interchange 自动导入崩溃（DefaultEngine.ini 禁用 Interchange.FeatureFlags.Import.FBX 回退同步导入器）、导入汉环首刀真剑网格替换巨型方块、追加 VRE 握持 socket VRGripP__0/VRGripS__0 并生成原生 GrippableStaticMeshActor 真剑 + 台座。握持点已修正至剑柄中心，yaw=-90 重摆使剑柄朝玩家，握柄落点 (0,-60,100)。新增白色呼吸脉动握持点高亮（M_GripPulse）。2026-08-30 自建 VRE 角色+GameMode 并设为项目默认（BP_VRCharacter 父类 AVRCharacter；BP_VRGameMode 父类 AGameModeBase，DefaultPawnClass=BP_VRCharacter、PlayerControllerClass=VRPlayerController；DefaultEngine.ini GlobalDefaultGameMode 指向 BP_VRGameMode）。编辑器重启后已复核配置完好（蓝图可加载、CDO 读回正确），并用 attach_actor 把两颗标记球附着到剑握持 socket（4 号→VRGripP__0 世界 (0,-60.5,100.5)、5 号→VRGripS__0 世界 (0,-73,106.5)，与 socket 完全一致），光点位移已修复并保存。2026-08-31 按 manager 路线 C 裁决完成 C++ 抓握函数库 VRSanguoGripLibrary（TryGrip/ReleaseGrip，检测→GripObject→DropObject，左右手通用），Build.cs 加 VRExpansionPlugin 依赖，全量 Rebuild 编译通过（Result: Succeeded，DLL 时间戳 2026-08-30 23:25:48）；TD-013 已登记并注明该封装为 IGrabbable 接口桥雏形。待办（后置）：① BP_VRCharacter 蓝图接线已完成后置——ue-bridge Python 执行器处理蓝图对象时崩溃（McpToolRegistry::ExecuteTool，TD-010）、且 Content 资产批量只读导致 add_node 自动保存崩溃；② 桌面 PIE 抓/放实测（依赖①，已启动 PIE，因桌面无 VR 跟踪仅验证 pawn 生成+IMC 应用+validate）；③ 用户 PICO 真机验证 TC-01~TC-06（桌面 PIE ≠ 真机）。**2026-09-01 光点复发修复**：用户反馈光点再次位移，经新桥（db-lyon/ue-mcp v0.6.4，端口 9877）诊断根因为剑网格环首刀握持 socket（VRGripP__0/VRGripS__0）再次丢失（socketCount=0），导致光点附着失效退回剑根。已 add_socket 补写 socket（P=(9,0,46)、S=(18,0,51)）+ attach_actor SnapToTarget 重新附着光点（4→P、5→S）+ 保存落盘（磁盘重载复核 socket 仍为 2）。发现 Content 资产被批量设只读导致保存失败，临时解除环首刀.uasset 与 L_SkeletonTest.umap 只读→保存→恢复只读。**2026-09-01 蓝图接线完成（manager 派工 msg-20260831-102000-mgr-004）**：按接线清单在 BP_VRCharacter EventGraph 完成左右手各 6 节点抓握接线（4 EI 事件 + 4 Get 变量 + 2×TryGrip + 2×ReleaseGrip = 12 节点 + 8 条连线 4exec+4data），左右手 socket VRGripP__0/VRGripS__0 落盘正确，validate 通过（errorCount=0, valid=true）。PIE 实测：PIE 启动成功、pawn=BP_VRCharacter 生成、IMC_Default 应用（4 IA_Grab_* 就绪）、截图保存；桌面无 VR 跟踪故物理抓握需用户 PICO 真机验证。**工具链阻塞修复**：① UBT Rebuild CLR 异常根因=git core.quotepath 转义中文文件名致 GitSourceFileWorkingSet 崩溃，git config core.quotepath false 后 Rebuild 成功；② add_node 图写入崩溃根因=BP_VRCharacter.uasset 只读致自动保存失败，解除只读后接线正常，完成已恢复只读。"
+    },
+    {
+      "taskId": "M02-PREP-002",
+      "milestone": "M02",
+      "status": "approved",
+      "claimedBy": "session-20260831-001",
+      "startedAt": "2026-08-31",
+      "updatedAt": "2026-08-31",
+      "note": "迁移完成（manager 授权续命后重试成功）：db-lyon/ue-mcp v1.0.87（MIT）桥插件部署+UBT 编译通过（1 行 5.6 版本门控补丁修复 SetSourceString 3参→2参，全量 Rebuild + 增量 Build Result: Succeeded）；TC-02 蓝图测试副本写读验证通过（create→add_node×2→connect_pins→compile→read_graph_summary 读回与写入一致，验证后已删除测试副本）；TC-03 通过（UEBridgeMCP 退役：目录改名 .disabled + .uproject 移除，重启无缺失模块错误）；冒烟通过（L_SkeletonTest 加载成功）。TD-010 已偿还（GPL-3.0 插件退役）。证据：Saved/Evidence/M02-PREP-002/（5 份）+ Saved/Logs。待用户审核。"
     }
   ]
 }
