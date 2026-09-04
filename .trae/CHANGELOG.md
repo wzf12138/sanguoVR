@@ -5,7 +5,7 @@
 - **AGENTS.md 编号 bug 修复**：原 15 号重复（测试用例/认领门禁撞号），重排后认领门禁=16，原 16-27 顺延为 17-28；文件头加编号说明（历史文档旧编号按成文时版本理解）。活文档引用同步：`UEBridgeRefresh.md`、`index.md`、`M02-PREP-002.md` 报告中的「规则 27/project_rules 路径」全部改为「AGENTS.md 规则 28」。
 - **README.md 引擎版本勘误**：UE5.8 → UE 5.6。
 - **EnvironmentSetup.md 补当前实况**：本机 Python 解释器路径（Trae 内置 3.10.11，PATH 可用，含 pyyaml）+ UE5.8 章节历史性质标注。**"本机无 Python" 的外部判断不成立**（实测 PATH python 可用、治理脚本 21/21 通过）。
-- **DefaultEngine.ini 清理顺延**：确认编辑器进程运行中（PID 24080），按"先关编辑器再清理"原则延后；待办：3 组重复键（keep-last 策略去重）+ `VRSanguoYanWuchang1` 重定向笔误修正（→`/Script/VRSanguoYanWuchang`）。**CLAUDE.md 指针**：经用户确认项目不使用 Claude Code，不创建。
+- **DefaultEngine.ini 清理完成（2026-09-04，编辑器关闭后执行）**：去重 vr.InstancedStereo（删 True，保留生效值 0）、r.Shadow.Virtual.Enable（删 1，保留 0）、删除死键 r.Mobile.UseHWsRGBEncoding=False（该 cvar 在 RendererSettings 节不生效，生效值为 SystemSettings 节 =1）——全部 keep-last/keep-live，运行时行为零变化；`VRSanguoYanWuchang1` 重定向笔误修正（→`/Script/VRSanguoYanWuchang`，模板类重定向恢复可达）。**CLAUDE.md 指针**：经用户确认项目不使用 Claude Code 且从未创建，无物可删。
 
 ## 2026-09-03（审核缺陷修复：镜像同步 + UEBridgeMCP 处置据实修正）
 
