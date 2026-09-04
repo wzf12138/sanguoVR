@@ -1,6 +1,6 @@
 # UE Bridge MCP 刷新流程（ue-bridge 失联时按序执行）
 
-> **⚠️ 已取代（2026-08-31，M02-PREP-002）**：本文所述 ue-bridge（UEBridgeMCP，端口 8080）已退役，由 db-lyon/ue-mcp 桥（插件 UE\_MCP\_Bridge，端口 9877）取代（TD-010 偿还）。新桥随编辑器启动自动加载，MCP 客户端按会话经 node stdio 启动，**无需 GUI 刷新流程**；新桥失联处理纪律见根级 `AGENTS.md` 规则 27。本文保留仅作审计。
+> **⚠️ 已取代（2026-08-31，M02-PREP-002）**：本文所述 ue-bridge（UEBridgeMCP，端口 8080）已退役，由 db-lyon/ue-mcp 桥（插件 UE\_MCP\_Bridge，端口 9877）取代（TD-010 偿还）。新桥随编辑器启动自动加载，MCP 客户端按会话经 node stdio 启动，**无需 GUI 刷新流程**；新桥失联处理纪律见根级 `AGENTS.md` 规则 28。本文保留仅作审计。
 
 > 本文是本主题唯一权威正文，其他文档只链接、不复制步骤。
 > 适用对象：所有需要调用 ue-bridge MCP 工具的 AI 模型（执行、决策、审核）。

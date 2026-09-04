@@ -19,7 +19,7 @@
 ## 补充治理规范
 
 - [测试规范](governance/TestSpecification.md)（测试用例设计、执行、证据标准）
-- [UE 重启后 MCP 刷新流程](governance/UEBridgeRefresh.md)（**已取代**：旧 ue-bridge 于 2026-08-31 退役；新桥 UE_MCP_Bridge 随编辑器自启，使用纪律见根级 `AGENTS.md` 规则 27；本文保留供审计）
+- [UE 重启后 MCP 刷新流程](governance/UEBridgeRefresh.md)（**已取代**：旧 ue-bridge 于 2026-08-31 退役；新桥 UE_MCP_Bridge 随编辑器自启，使用纪律见根级 `AGENTS.md` 规则 28；本文保留供审计）
 
 ## 四份操作模型
 

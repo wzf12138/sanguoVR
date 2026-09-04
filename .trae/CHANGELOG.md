@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 2026-09-04（外部审核五项发现处置 + 规则编号重排）
+
+- **AGENTS.md 编号 bug 修复**：原 15 号重复（测试用例/认领门禁撞号），重排后认领门禁=16，原 16-27 顺延为 17-28；文件头加编号说明（历史文档旧编号按成文时版本理解）。活文档引用同步：`UEBridgeRefresh.md`、`index.md`、`M02-PREP-002.md` 报告中的「规则 27/project_rules 路径」全部改为「AGENTS.md 规则 28」。
+- **README.md 引擎版本勘误**：UE5.8 → UE 5.6。
+- **EnvironmentSetup.md 补当前实况**：本机 Python 解释器路径（Trae 内置 3.10.11，PATH 可用，含 pyyaml）+ UE5.8 章节历史性质标注。**"本机无 Python" 的外部判断不成立**（实测 PATH python 可用、治理脚本 21/21 通过）。
+- **DefaultEngine.ini 清理顺延**：确认编辑器进程运行中（PID 24080），按"先关编辑器再清理"原则延后；待办：3 组重复键（keep-last 策略去重）+ `VRSanguoYanWuchang1` 重定向笔误修正（→`/Script/VRSanguoYanWuchang`）。**CLAUDE.md 指针**：经用户确认项目不使用 Claude Code，不创建。
+
 ## 2026-09-03（审核缺陷修复：镜像同步 + UEBridgeMCP 处置据实修正）
 
 - 审核模型发现 3 处一致性缺陷，全部修复：① integrity.yaml / manifest.yaml 中 M02-PREP-002 状态 awaiting_review→approved、updated→2026-09-03（与 STATUS.json 对齐）；② 「UEBridgeMCP.disabled 保留审计」记录与磁盘不符（未入库目录已丢失）——经用户裁决改为**彻底删除、不保留回退**：TD-010 登记册、M02-PREP-002 TASK.md/报告三处据实修正，回退路径改为「重新克隆上游源码+重打编译修复」；③ gitlink 已随 296ebed 移除，.gitmodules 缺口确认不存在。

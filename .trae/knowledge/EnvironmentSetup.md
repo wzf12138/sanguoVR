@@ -2,6 +2,8 @@
 
 ## 当前状态
 
+- 2026-09-04：**本机 Python 解释器实况**——PATH 中 `python`/`python3` 均指向 Trae 内置解释器 `C:\Users\PC\AppData\Roaming\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\python.exe`（3.10.11，已含 pyyaml 6.0.3），治理脚本（`dashboard/check-integrity.py`、`generate-static.py`）直接用 `python` 运行即可；无独立 `py` 启动器、无 `D:\Python`。如未来安装独立解释器，按磁盘规则放 `C:`。
+- 2026-09-04：**引擎版本勘误**——项目现用 UE 5.6（5.6.1），README 已同步修正。本文下方 2026-08-09 前后的 "UE5.8" 章节为 M00 期历史记录（当时的探索结论，含"PICO Neo3 与 UE5.8 不兼容"），按原貌保留供审计，不反映当前工具链。
 - UE5.8 已安装，且安装中包含官方 VR 模板。
 - Visual Studio 2019 已由用户手动卸载；原安装目录只剩少量无效残留。
 - Visual Studio Community 2026 Insiders 已安装，不再执行安装 VS2022 的旧计划。

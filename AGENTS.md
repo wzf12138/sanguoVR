@@ -4,6 +4,8 @@ AGENTS.md · VRSanguoYanWuchang 项目 AI 行为规则
 性质：项目唯一 AI 行为规则正文（迁移自原 `.trae/rules/project_rules.md`，迁移日期 2026-09-03，CR-20260903-002）。
 适用：所有 AI 模型（决策 / 执行 / 审核 / 外部 AI 工具 / 多代理团队成员），无论来自 Trae 或任何外部 AI 工具。
 治理：见 `.trae/governance/policy.md` §2 权威链、§3 单一事实源、§4 文件控制等级。
+
+> 编号说明（2026-09-04）：原 15 号重复（"测试用例"与"认领门禁"撞号），重排后认领门禁为 16，原 16-27 顺延为 17-28。历史文档中的旧编号按其成文时的版本理解，不回溯改写。
 -->
 
 # VRSanguoYanWuchang 项目规则
@@ -79,27 +81,27 @@ AGENTS.md · VRSanguoYanWuchang 项目 AI 行为规则
 
 > 以下规则适用于执行模型。
 
-15. **认领门禁（最高优先级）**：执行模型或用户在任何文件修改之前，必须先将根 `.trae/execution/active/STATUS.json` 中对应任务状态更新为 `in_progress` 并填写 `claimedBy`（格式 `session-{YYYYMMDD}-{序号}`）。未认领不得开始实施。用户执行任务同样适用。认领流程详见 `governance/ExecutionModel.md`。
-16. 不询问已在批准方案中明确的事项；直接实施并验证。
-17. 修改已有文件前必须先读取，采用最小差异。
-18. 不建立平行知识库、重复 Skill 或重复规则正文。一个主题只有一个权威正文，其他位置只链接。
-19. 创建或修改 `.trae/` 内文件前，必须确认路径属于（a）active 白名单内、（b）当前任务报告/登记册/会话记录路径、或（c）用户本次明确批准的变更；三者皆不是则不得创建。
-20. 任务必须关联 `MNN-TNNN`；决策、风险和证据同步登记册。
-21. 未通过编译/编辑器/真机验证的项标记"已实现未验证"或"待验证"。
-22. 禁止提交密钥、本机路径凭据、UE 生成目录和大型非 LFS 二进制。
-23. 不修改治理锁定文件（`policy.md`、`definition-of-done.md`、`GameMasterPlan.md` 等）。需要修改时走变更申请。
+16. **认领门禁（最高优先级）**：执行模型或用户在任何文件修改之前，必须先将根 `.trae/execution/active/STATUS.json` 中对应任务状态更新为 `in_progress` 并填写 `claimedBy`（格式 `session-{YYYYMMDD}-{序号}`）。未认领不得开始实施。用户执行任务同样适用。认领流程详见 `governance/ExecutionModel.md`。
+17. 不询问已在批准方案中明确的事项；直接实施并验证。
+18. 修改已有文件前必须先读取，采用最小差异。
+19. 不建立平行知识库、重复 Skill 或重复规则正文。一个主题只有一个权威正文，其他位置只链接。
+20. 创建或修改 `.trae/` 内文件前，必须确认路径属于（a）active 白名单内、（b）当前任务报告/登记册/会话记录路径、或（c）用户本次明确批准的变更；三者皆不是则不得创建。
+21. 任务必须关联 `MNN-TNNN`；决策、风险和证据同步登记册。
+22. 未通过编译/编辑器/真机验证的项标记"已实现未验证"或"待验证"。
+23. 禁止提交密钥、本机路径凭据、UE 生成目录和大型非 LFS 二进制。
+24. 不修改治理锁定文件（`policy.md`、`definition-of-done.md`、`GameMasterPlan.md` 等）。需要修改时走变更申请。
 
 ## 沟通规则
 
 > 以下规则适用于执行模型。详见 `governance/ExecutionModel.md` 沟通检查点。
 
-24. **执行模型必须主动沟通，不得静默执行全程。** 开始前确认（CK-01）、进度过半汇报（CK-02）、遇到决策征询（CK-03）、阻塞时告知（CK-04）、完成前确认（CK-05）。
-25. **每次会话必须维护会话记录。** 记录位置：`.trae/execution/sessions/{sessionId}.md`。内容：执行进度、沟通记录、关键决策、阻塞待办、恢复上下文。会话中断后，下次执行模型可通过读取会话记录恢复上下文。认领任务与创建会话记录必须同一轮完成；会话记录缺失 = 认领未完成，治理一致性校验（check-integrity.py）将判定失败。
-26. **跨会话信箱纪律（AgentHub）。** 多会话协作时，跨会话消息一律走全局信箱 `D:\App\trae\AgentHub\`（协议：`AgentHub\PROTOCOL.md`，全局 Skill：agent-hub）。检查点：会话开始后、认领任务前、修改共享文件后（向 `channels/registry-changes` 发广播）、阻塞或遇到需拍板的决策问题时（`type: question` 投 `inboxes/manager/` 或 `inboxes/decision/`，然后 `hub_await` 值班等回复，来信自醒，不得空等用户传话）。信箱只是传输：认领、决策、验收等治理后果仍按本规则落 STATUS.json 与登记册。
+25. **执行模型必须主动沟通，不得静默执行全程。** 开始前确认（CK-01）、进度过半汇报（CK-02）、遇到决策征询（CK-03）、阻塞时告知（CK-04）、完成前确认（CK-05）。
+26. **每次会话必须维护会话记录。** 记录位置：`.trae/execution/sessions/{sessionId}.md`。内容：执行进度、沟通记录、关键决策、阻塞待办、恢复上下文。会话中断后，下次执行模型可通过读取会话记录恢复上下文。认领任务与创建会话记录必须同一轮完成；会话记录缺失 = 认领未完成，治理一致性校验（check-integrity.py）将判定失败。
+27. **跨会话信箱纪律（AgentHub）。** 多会话协作时，跨会话消息一律走全局信箱 `D:\App\trae\AgentHub\`（协议：`AgentHub\PROTOCOL.md`，全局 Skill：agent-hub）。检查点：会话开始后、认领任务前、修改共享文件后（向 `channels/registry-changes` 发广播）、阻塞或遇到需拍板的决策问题时（`type: question` 投 `inboxes/manager/` 或 `inboxes/decision/`，然后 `hub_await` 值班等回复，来信自醒，不得空等用户传话）。信箱只是传输：认领、决策、验收等治理后果仍按本规则落 STATUS.json 与登记册。
 
 ## UE 重启后必做
 
-27. **编辑器自动化桥（UE_MCP_Bridge，db-lyon/ue-mcp）使用纪律。** 桥插件随编辑器启动自动加载（端口 9877）；MCP 客户端（node stdio，`D:\App\trae\ue-mcp\1.0.87\node_modules\ue-mcp\dist\index.js` + .uproject 参数）由各会话按需启动。调用任何桥工具前先探活（轻量只读调用，正常返回即通）；探活失败时先确认编辑器已完全启动（渲染完成且关卡已加载），再重启本会话的桥 MCP 客户端；仍失联则报告并等待，禁止反复空试。旧 UEBridgeMCP（8080）已退役，GUI 刷新流程作废（`governance/UEBridgeRefresh.md` 仅存审计）。
+28. **编辑器自动化桥（UE_MCP_Bridge，db-lyon/ue-mcp）使用纪律。** 桥插件随编辑器启动自动加载（端口 9877）；MCP 客户端（node stdio，`D:\App\trae\ue-mcp\1.0.87\node_modules\ue-mcp\dist\index.js` + .uproject 参数）由各会话按需启动。调用任何桥工具前先探活（轻量只读调用，正常返回即通）；探活失败时先确认编辑器已完全启动（渲染完成且关卡已加载），再重启本会话的桥 MCP 客户端；仍失联则报告并等待，禁止反复空试。旧 UEBridgeMCP（8080）已退役，GUI 刷新流程作废（`governance/UEBridgeRefresh.md` 仅存审计）。
 
 ## 权限规则
 
