@@ -110,7 +110,14 @@
 2. **不可达或可达但 git 连接被重置/超时（TLS 层被掐）**：先试**单次借用本地活代理**推送（2026-09-03 实证有效，直连失败但 7897 代理存活时一次通过）：`git -c http.proxy=http://127.0.0.1:<活端口> push origin master`——仅本次命令生效，禁止写入持久 git 配置。随后检查常见本机代理端口（7890 / 7897 / 10809 / 1080 / 8118）是否监听，再查 Windows 系统代理开关（注册表 `ProxyEnable`）。全部关闭时如实报告"网络未恢复"，停止反复空推，等用户确认网络后再试。
 3. **可达但 git 仍失败**：把「探测 → 成功才执行 `git push origin master`」写成临时 PowerShell 脚本循环执行：最多 30 次、每次探测超时 5 秒、间隔 60 秒，成功立即退出。脚本放系统临时目录，用完删除，绝不进项目。
 4. **脚本陷阱**：以 `-File` 方式运行时，双引号字符串内的 `$变量` 可能不展开——脚本内的路径、次数、间隔一律硬编码字面量，复杂逻辑写 `.ps1` 文件而非 `-Command` 行内执行。
-5. **成功后核验**：确认远程两个 Actions（治理校验 CI 门禁、看板部署）均为 success、远程 `status.json` 与本地一致，然后删除临时脚本。
+5. **成功后核验 Actions（强制，2026-09-04 固化）**：推送完成 ≠ 任务完成。本仓库公开，匿名 API 可查（60 次/时限，勿高频轮询）：
+
+   ```powershell
+   $r = Invoke-RestMethod 'https://api.github.com/repos/wzf12138/sanguoVR/actions/runs?per_page=6'
+   $r.workflow_runs | Select-Object -First 4 | Format-Table name, head_sha, status, conclusion -AutoSize
+   ```
+
+   以本次推送的 head_sha（`git rev-parse --short=7 HEAD`）匹配的两个 workflow（治理校验 CI 门禁、看板部署）均 `status=completed` 且 `conclusion=success` 为准；未完成则间隔 15 秒轮询，上限 3 分钟。**全绿才报"推送完成"**；任一 `failure` → 本地复现 `python dashboard/check-integrity.py` → 修复 → 提交重推 → 重新核验（CI 历史红记录不追改，新提交绿即闭环）。API 不可达（限流/断网）时如实报告"未能核验 Actions"，请用户在 GitHub Actions 页面确认。最后删除临时脚本。
 
 ## 安全默认
 

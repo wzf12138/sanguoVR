@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 2026-09-04（CI 固化：门禁扩容 21→25 项 + 推送后 Actions 核验强制化）
+
+- **check-integrity.py 新增 4 项检查（21→25）**：①规则编号节内严格递增（实证 15 号撞号此前无法被察觉）；②CHANGELOG 顶部条目不滞后于 HEAD 提交日期；③仓库 >100MB 大文件扫描（排除 gitignored 构建产物目录，首跑即抓到 Saved\StagedBuilds\Android.obb 101MB——已确认不入库，目录加入排除）；④密钥令牌模式扫描（sk-/AKIA/ghp_/xox/私钥块，保守模式防误报）。25/25 本地全绿。
+- **SessionCommands §推送 固化"成功后核验 Actions"为强制步骤**：本仓库公开、匿名 REST 可查 Actions 状态（已实证），推送后按 head_sha 轮询两 workflow 至 completed，全绿才报完成；failure → 本地复现修复重推。轮询上限 3 分钟、间隔 15 秒，防限流。
+- 过程留痕：本条目实施中 manager 再次发生同文件并行编辑竞态（check-integrity.py 函数体被调用注册覆盖，第三次同根因失误），已按串行纪律修复并复验。
+
 ## 2026-09-04（外部审核五项发现处置 + 规则编号重排）
 
 - **AGENTS.md 编号 bug 修复**：原 15 号重复（测试用例/认领门禁撞号），重排后认领门禁=16，原 16-27 顺延为 17-28；文件头加编号说明（历史文档旧编号按成文时版本理解）。活文档引用同步：`UEBridgeRefresh.md`、`index.md`、`M02-PREP-002.md` 报告中的「规则 27/project_rules 路径」全部改为「AGENTS.md 规则 28」。

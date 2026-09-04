@@ -484,6 +484,97 @@ def check_awaiting_review_timeout():
     check("流程超时", "awaiting_review 不超过 24h", passed, detail)
 
 
+def check_rules_numbering():
+    """14. 规则编号连续性：AGENTS.md 各节内规则编号严格递增（2026-09-04 起，实证曾发生执行纪律节内 15 号撞号未被察觉）。
+    约定：必读/禁止虚构两节各自独立起号，确认门禁起 7-28 跨节连续——本检查只查节内重复与回退，不判跨节衔接。"""
+    text = read_text(PROJECT_ROOT / "AGENTS.md")
+    sections = re.split(r"^## .+$", text, flags=re.MULTILINE)[1:]
+    problems = []
+    total = 0
+    for sec in sections:
+        nums = [int(m.group(1)) for m in re.finditer(r"^(\d+)\. ", sec, re.MULTILINE)]
+        if not nums:
+            continue
+        total += len(nums)
+        for a, b in zip(nums, nums[1:]):
+            if b <= a:
+                problems.append(f"{a}→{b} 回退/重复")
+    passed = not problems
+    detail = f"共 {total} 条编号条目" + (("；" + "；".join(problems[:5])) if problems else "，各节内严格递增")
+    check("规则文本", "各节内编号严格递增", passed, detail)
+
+
+def check_changelog_freshness():
+    """15. CHANGELOG 时效性：顶部条目日期不早于 HEAD 提交日期"""
+    import subprocess
+    try:
+        head = subprocess.run(["git", "log", "-1", "--format=%cs"], cwd=str(PROJECT_ROOT),
+                              capture_output=True, text=True, timeout=15).stdout.strip()
+    except Exception:
+        head = ""
+    text = read_text(TRAE_ROOT / "CHANGELOG.md")
+    m = re.search(r"^## (\d{4}-\d{2}-\d{2})", text, re.MULTILINE)
+    top = m.group(1) if m else ""
+    if not head or not top:
+        check("变更记录", "CHANGELOG 顶部条目", False, f"解析失败（HEAD={head or '无'}, 顶部={top or '无'}）")
+        return
+    passed = top >= head
+    detail = f"顶部条目 {top}，HEAD 提交 {head}"
+    check("变更记录", "CHANGELOG 不滞后于提交", passed, detail)
+
+
+def check_large_files():
+    """16. 大文件检查：仓库可提交范围内无 >100MB 文件（规则 23 的自动化）"""
+    exclude_dirs = {".git", ".vs", "Intermediate", "Binaries", "DerivedDataCache",
+                    "node_modules", ".gradle", "__pycache__", "ArchivedBuilds", "StagedBuilds"}
+    big = []
+    for p in PROJECT_ROOT.rglob("*"):
+        if not p.is_file():
+            continue
+        if set(p.parts) & exclude_dirs:
+            continue
+        try:
+            size = p.stat().st_size
+        except OSError:
+            continue
+        if size > 100 * 1024 * 1024:
+            big.append(f"{p.relative_to(PROJECT_ROOT)} ({size // (1024*1024)}MB)")
+    passed = not big
+    detail = "未发现 >100MB 文件" if passed else "；".join(big[:5])
+    check("仓库卫生", "无 >100MB 大文件", passed, detail)
+
+
+def check_secret_patterns():
+    """17. 密钥泄漏扫描：常见令牌模式（规则 23 的自动化，保守模式防误报）"""
+    patterns = [
+        ("OpenAI/Anthropic sk-", re.compile(r"sk-[A-Za-z0-9]{20,}")),
+        ("AWS AKIA", re.compile(r"AKIA[0-9A-Z]{16}")),
+        ("GitHub token", re.compile(r"ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{22,}")),
+        ("Slack token", re.compile(r"xox[baprs]-[A-Za-z0-9-]{10,}")),
+        ("私钥块", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
+    ]
+    exts = {".md", ".py", ".ini", ".yaml", ".yml", ".json", ".cs", ".txt",
+            ".cmd", ".ps1", ".bat", ".uproject", ".uplugin", ".html", ".js"}
+    skip_dirs = {".git", ".vs", "Intermediate", "Binaries", "DerivedDataCache", "node_modules", "__pycache__"}
+    hits = []
+    for p in PROJECT_ROOT.rglob("*"):
+        if not p.is_file() or p.suffix.lower() not in exts:
+            continue
+        if set(p.parts) & skip_dirs:
+            continue
+        try:
+            text = p.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for name, pat in patterns:
+            if pat.search(text):
+                hits.append(f"{p.name}:{name}")
+                break
+    passed = not hits
+    detail = "未发现令牌模式" if passed else "疑似泄漏：" + "；".join(hits[:5])
+    check("仓库卫生", "无密钥令牌泄漏", passed, detail)
+
+
 # ═══════════════════════════════════════════════════════
 # 主流程
 # ═══════════════════════════════════════════════════════
@@ -520,6 +611,14 @@ def run_all_checks():
     check_tech_debt_status()
     # 13. 待审核超时
     check_awaiting_review_timeout()
+    # 14. 规则编号连续性
+    check_rules_numbering()
+    # 15. CHANGELOG 时效性
+    check_changelog_freshness()
+    # 16. 大文件
+    check_large_files()
+    # 17. 密钥泄漏扫描
+    check_secret_patterns()
 
     return results
 
