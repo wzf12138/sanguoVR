@@ -6,6 +6,7 @@
 - **README.md 引擎版本勘误**：UE5.8 → UE 5.6。
 - **EnvironmentSetup.md 补当前实况**：本机 Python 解释器路径（Trae 内置 3.10.11，PATH 可用，含 pyyaml）+ UE5.8 章节历史性质标注。**"本机无 Python" 的外部判断不成立**（实测 PATH python 可用、治理脚本 21/21 通过）。
 - **DefaultEngine.ini 清理完成（2026-09-04，编辑器关闭后执行）**：去重 vr.InstancedStereo（删 True，保留生效值 0）、r.Shadow.Virtual.Enable（删 1，保留 0）、删除死键 r.Mobile.UseHWsRGBEncoding=False（该 cvar 在 RendererSettings 节不生效，生效值为 SystemSettings 节 =1）——全部 keep-last/keep-live，运行时行为零变化；`VRSanguoYanWuchang1` 重定向笔误修正（→`/Script/VRSanguoYanWuchang`，模板类重定向恢复可达）。**CLAUDE.md 指针**：经用户确认项目不使用 Claude Code 且从未创建，无物可删。
+- **（2026-09-04 补）ini 清理竞态漏网补删**：首轮三处同文件并行编辑竞态（manager 操作失误，与 09-04 AGENTS.md 翻车同根因），Shadow.Virtual.Enable=1 与 UseHWsRGBEncoding=False 两行漏删；审核模型回归发现并指认（ce8840c 补删 + 三键计数复验全绿）。教训二次确认：**同一文件的多处编辑必须串行执行**；审核模型"新鲜眼睛回归"价值实证。
 
 ## 2026-09-03（审核缺陷修复：镜像同步 + UEBridgeMCP 处置据实修正）
 
