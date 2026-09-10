@@ -3,9 +3,9 @@
   "taskId": "M00-T004",
   "milestone": "M00",
   "status": "approved",
-  "claimedBy": "session-20260811-execution",
+  "claimedBy": null,
   "startedAt": "2026-08-09",
   "updatedAt": "2026-08-13",
   "approvedAt": "2026-08-13",
-  "info": "UE5.6 迁移完成并真机验收通过。审核通过（2026-08-13）。遗留 Neo3 卡顿（TD-011）、swapchain 补丁（TD-005）、UEBridgeMCP 工具链（TD-010）。"
+  "info": "UE5.6 迁移完成并真机验收通过。审核通过（2026-08-13）。遗留 Neo3 卡顿（TD-011）、swapchain 补丁（TD-005）、UEBridgeMCP 工具链（TD-010）。【2026-09-11 副本对齐根 STATUS.json】根于 approved 后将 claimedBy 置空；本副本原值 session-20260811-execution 系原始认领人，留痕于此以免归属丢失。"
 }

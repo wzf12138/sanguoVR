@@ -106,6 +106,19 @@
 
 **门禁验收（本轮最终版）**：`dashboard/check-integrity.py` **30 项 / 通过 27 / 警告 3 / 失败 0 / `EXIT=0`**。三项警告均**不阻断**且各有归属：① `integrity.yaml` 缺 `scope` 字段（新检查项要求，本 CR 未新增该字段）；② 6 条**历史**白名单路径引用（M00-T005/M00-T006 引用已退役的 UEBridgeMCP 插件路径，属已 `approved` 的历史任务，**不追改**）；③ 3 条任务包副本字段漂移（`claimedBy`/`updatedAt`，副本同步滞后，**仅提示**）。
 
+### 3.7 陈旧状态回写对齐（触及受控「执行基线」）
+
+根 `.trae/execution/active/STATUS.json` 是任务状态**唯一权威**；各任务目录下的 `STATUS.json` 是**本地便利副本**（副本自身 `_note` 即声明「冲突时以根 STATUS.json 为准」）。门禁「根 ↔ 任务包 STATUS.json 镜像」实测出 3 处副本滞后，本次**一律按「副本 ← 根」单向对齐**：
+
+| 任务 | 字段 | 根（权威） | 副本（修前） | 处理 |
+|---|---|---|---|---|
+| `M00-T004` | `claimedBy` | `null` | `session-20260811-execution` | 副本置 `null`；**原始认领人未被丢弃** —— 已**原文留痕**至该副本 `info`（根于 approved 后置空 `claimedBy` 属正常约定，非数据错误） |
+| `M01-T001` | `updatedAt` | `2026-09-10` | `2026-09-06` | 副本对齐为 `2026-09-10` |
+| `M01-T005` | `updatedAt` | `2026-09-10` | `2026-09-08` | 副本对齐为 `2026-09-10` |
+
+**不回溯改写**：只对齐字段值，不动任何 `info` 既有正文；`M00-T004` 的历史归属采取**追加留痕**而非删除。三个文件均已 `json.load` 回读校验合法。
+**效果**：门禁警告 **3 → 2 → 1**（见 §7），两套环境 `EXIT=0`。**本改动触及受控的「执行基线」（任务状态），故记入本 CR 待追认。**
+
 ## 4. 执行边界
 
 - **允许写入**：`standards/02`、`standards/05`、`standards/06`、`standards/09`、`standards/10`、`systems/02-interaction-and-weapon-system.md`、`vr/03`、`vr/05`、`registers/04`、`registers/07`、`registers/11`、`execution/M01-CombatSlice.md`、`governance/SessionCommands.md`、`skills/three-kingdoms-vr-arena/SKILL.md`、`index.md`、`integrity.yaml`、`CHANGELOG.md`、本文件。
