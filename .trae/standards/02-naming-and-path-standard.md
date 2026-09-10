@@ -11,9 +11,20 @@
 | Data Table | `DT_` | `DT_TutorialSteps` |
 | Behavior Tree | `BT_` | `BT_ArenaFighter` |
 | Blackboard | `BB_` | `BB_ArenaFighter` |
-| Animation Montage | `AM_` | `AM_Sword_Attack_A` |
-| Sound Cue | `SC_` | `SC_Block_Perfect` |
-| Material Instance | `MI_` | `MI_Armor_Leather` |
+| 动画序列 | `A_` | `A_Sword_Attack_A` |
+| 动画蒙太奇 | `AM_` | `AM_Sword_Attack_A` |
+| 静态网格 | `SM_` | `SM_ArenaFence` |
+| 骨骼网格 | `SK_` | `SK_Weapon_Sword_Han` |
+| 材质 | `M_` | `M_Iron` |
+| 材质实例 | `MI_` | `MI_Armor_Leather` |
+| 纹理 | `T_` | `T_Iron_BC` |
+| 音效（Sound Wave） | `S_` | `S_SwordBlock` |
+| 音效（Sound Cue） | `SC_` | `SC_Block_Perfect` |
+| Niagara 系统 | `NS_` | `NS_WeaponHit` |
+| 关卡（地图） | `L_` | `L_PrototypeArena` |
+
+> **本表是该主题的唯一权威正文**（2026-09-11 合并）。`knowledge/AssetConvention.md` 原另有一张 14 行前缀表，与本表**互不为子集**（本表独有 `DT_`/`BT_`/`BB_`/`SC_`，该表独有 `SM_`/`M_`/`T_`/`S_`/`NS_`/`L_`），已按根级 `AGENTS.md` 规则 19「一个主题只有一个权威正文，其他位置只链接」单向合并至此，该处改为链接。
+> 注意 `S_`（Sound Wave，波形资产）与 `SC_`（Sound Cue，合成资产）是**两个不同前缀**，原两表都写作「音效」，易混——**不得只用 `S_` 覆盖两者**。
 
 ## C++ 命名
 
@@ -55,7 +66,7 @@
 | 系统指引 | 核心 C++ 类 | 文件名 |
 |---|---|---|
 | 01 游戏流程 | `AVRGameSession`, `UVRGameFlowComponent` | `VRGameSession.h/.cpp` |
-| 02 交互武器 | `AVRWeaponBase`, `UVRInteractionComponent`, `IVRWeapon`, `IGrabbable` | `VRWeaponBase.h/.cpp`, `VRInteractionComponent.h/.cpp` |
+| 02 交互武器 | `AVRWeaponBase`, `UVRInteractionComponent`, `IWeaponSource`, `IInteractable` | `VRWeaponBase.h/.cpp`, `VRInteractionComponent.h/.cpp`, `VRWeaponSource.h`, `VRInteractable.h` |
 | 03 战斗结算 | `UVRCombatResolver`, `UVRCharacterStateComponent` | `VRCombatResolver.h/.cpp` |
 | 04 移动 | `UVRMovementComponent`, `UVRFullBodyIKComponent` | `VRMovementComponent.h/.cpp` |
 | 05 AI 战斗 | `UVRAICombatComponent`, `AVRAIController` | `VRAICombatComponent.h/.cpp` |

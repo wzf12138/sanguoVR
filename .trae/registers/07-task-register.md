@@ -15,12 +15,12 @@
 | M01-T002 | 伤害结算与命中保护 | 待生成 | 依赖：M01-T001 approved；预估：3h；交付：伤害组件、命中判定、防误伤保护、VRPawn 生命接口 |
 | M01-T003 | 挥砍检测与格挡 | 待生成 | 依赖：M01-T002；预估：3h；交付：挥砍检测算法、格挡组件、轨迹采样与统一生命联动 |
 | M01-T004 | 基础 AI 战斗 | 待生成 | 依赖：M01-T002；预估：4h；交付：AI 控制器、感知、行为树、攻击/格挡决策、TestDummy 升级 |
-| M01-T005 | 灰盒竞技场关卡 | 执行中（2026-08-24 口径修正：TD-012 偿还未闭环——PICO 串流 VR 模式未自动切换、中文标注（待字体资产）、PIE 帧率（待串流解决）、Lightmass 烘焙（需 GUI）；2026-08-19 核心交付曾通过 VR Preview 补验，偿还完成后重新提交审批） | 1v1 测试场景 `Content/VRSanguo/Dev/L_Prototype_1v1.umap`、NavMesh、灰盒布局、VR Preview 验证 |
+| M01-T005 | 灰盒竞技场关卡 | 执行中（2026-09-11 口径修正：旧记「TD-012 偿还未闭环——PICO 串流 VR 模式未自动切换」**已失效**，TD-012 于 2026-09-10 结案、用户裁定「PICO 串流在 m01t001 已经解决了」；当前未闭环项为中文标注（待字体资产）、PIE/真机帧率采集（阻塞已解除但尚未执行）、Lightmass 烘焙（需 GUI）。关卡已由 `L_Prototype_1v1` 迭代至 `L_Prototype_1v1_v5`，单一事实源=`.trae/tools/scene/rebuild_v5.py`） | 测试场景 `Content/VRSanguo/Dev/L_Prototype_1v1_v5.umap`、NavMesh、灰盒布局、VR Preview 验证 |
 | M01-T006 | 1v1 测试流程 | 待生成 | 依赖：M01-T003, M01-T004；预估：2h；交付：1v1 自动测试流程、回放与判定、报告模板 |
-| M01-T007 | Direct Preview 验证（TD-012） | 待生成 | 依赖：M01-T005；预估：1h；交付：Direct Preview 配置文档、TD-012 偿还结果记录、回归脚本 |
+| M01-T007 | Direct Preview 验证（TD-012） | 待生成（2026-09-11：**去留待用户裁定**。状态词用「待生成」是遵本表下方说明——T002/T003/T004/T007 同属「已规划、任务包待生成」一组）——TD-012 已结案，本任务的**唯一前提已消失**：它要验证的「① Direct Preview 设备部署」正是被证伪的三条替代路径之一，真因在 PICO Connect 自带 SteamVR 驱动的 pico_neo3 绑定侧、非串流模式。保留/改造/撤销由用户决定，**任何会话不得自行认领或删除**。若裁定保留，应重定义为「PICO Neo3 真机帧率采集」（TD-011 的复验仍缺真机帧率） | 原：依赖 M01-T005；预估 1h；交付 Direct Preview 配置文档、TD-012 偿还结果记录、回归脚本 |
 | M02-PREP-001 | M02 资产生成准备与平台选型 | approved（2026-08-24：验收通过，两附带条件闭环——CR-20260824-001 命名对齐实施关闭 + AST-009 关卡路径对齐 v2；证据 V-009） | 平台选型、骨架/武器/动画规格、美术参考 |
 | M02-PREP-002 | 编辑器自动化工具链迁移 db-lyon/ue-mcp | approved（2026-08-31 用户验收：v1.3.0 首轮编译失败 blocked → manager 授权续命重试 → 横向探测历史版本选定 **v1.0.87**（MIT）+ 1 行 UE5.6 门控补丁，UBT 编译通过；TC-01/02/03 全过（蓝图测试副本写读一致、UEBridgeMCP 退役后无缺失模块、L_SkeletonTest 冒烟正常）；TD-010 偿还（GPL 风险消除）；manager 证据抽查通过；证据 `Saved/Evidence/M02-PREP-002/`） | 新桥插件部署+编译、蓝图写读验证（测试副本，验证后已删除）、UEBridgeMCP 退役（.disabled 保留）、TD-010 更新 |
 
 任务进入 `approved` 前由用户或授权审批人验收；状态变化同步 `.trae/CHANGELOG.md` 与本表。
 
-> M01 规划任务说明：T002/T003/T004/T006/T007 已在 `execution/M01-CombatSlice.md` 中规划，待 T001 approved 后逐批生成任务包；当前以「待生成」状态进入登记册，看板按 planned 显示，T001 blocked 不阻塞其规划展示。
+> M01 规划任务说明：T002/T003/T004/T006/T007 已在 `execution/M01-CombatSlice.md` 中规划，待 T001 approved 后逐批生成任务包；当前以「待生成」状态进入登记册，看板按 planned 显示。**2026-09-11 更正**：规划任务的展示不因任何单任务的状态而被阻塞；原记「T001 blocked 不阻塞其规划展示」的依据（T001 当时 blocked）已失效——T001 现为 in_progress。

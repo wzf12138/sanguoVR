@@ -1,7 +1,7 @@
 # M01-T005 白名单
 # 所有路径相对于项目根目录 VRSanguoYanWuchang/
-# 关卡文件（新增）
-Content/VRSanguo/Dev/L_Prototype_1v1.umap
+# 关卡文件（新增；路径随关卡换代更新——v1/v2 已按用户决定删除、v3 从未入库、v4 已被 v5 取代，当前单一事实源 = .trae/tools/scene/rebuild_v5.py）
+Content/VRSanguo/Dev/L_Prototype_1v1_v5.umap
 # 编译产物
 Intermediate/**
 Binaries/**

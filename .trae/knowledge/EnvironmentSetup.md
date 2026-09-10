@@ -3,6 +3,13 @@
 ## 当前状态
 
 - 2026-09-04：**本机 Python 解释器实况**——PATH 中 `python`/`python3` 均指向 Trae 内置解释器 `C:\Users\PC\AppData\Roaming\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\python.exe`（3.10.11，已含 pyyaml 6.0.3），治理脚本（`dashboard/check-integrity.py`、`generate-static.py`）直接用 `python` 运行即可；无独立 `py` 启动器、无 `D:\Python`。如未来安装独立解释器，按磁盘规则放 `C:`。
+- 2026-09-11：**上一条的「直接用 `python` 运行即可」在本机不成立，据实更正。** 两个独立会话实测 `Get-Command python` / `py` / `python3` **均无结果**（Python **不在 PATH 上**）；当时可用的绝对路径为 `D:\App\trae\Traedata\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\python.exe`（3.10.11，含 pyyaml 6.0.3）。运行治理脚本的正确形式：
+
+  ```powershell
+  $env:PYTHONIOENCODING='utf-8'; & 'D:\App\trae\Traedata\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\python.exe' -B -X utf8 dashboard/check-integrity.py
+  ```
+
+  缺 `PYTHONIOENCODING` 时，输出含 `⚔` 等字符会抛 `UnicodeEncodeError: 'gbk' codec can't encode '\u2694'`。**上一条记的 `C:\Users\PC\AppData\Roaming\...` 路径本次未做存在性核验**（不作断言），故不得据本更正确认其不存在；但**无论它是否存在，都不得把 C 盘路径当作可写入的临时目录**（AGENTS.md 磁盘规则）。
 - 2026-09-04：**引擎版本勘误**——项目现用 UE 5.6（5.6.1），README 已同步修正。本文下方 2026-08-09 前后的 "UE5.8" 章节为 M00 期历史记录（当时的探索结论，含"PICO Neo3 与 UE5.8 不兼容"），按原貌保留供审计，不反映当前工具链。
 - UE5.8 已安装，且安装中包含官方 VR 模板。
 - Visual Studio 2019 已由用户手动卸载；原安装目录只剩少量无效残留。

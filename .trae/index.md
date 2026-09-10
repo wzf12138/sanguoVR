@@ -32,6 +32,7 @@
 
 - [权威项目规则（根级 `AGENTS.md`）](../AGENTS.md)
 - [three-kingdoms-vr-arena](skills/three-kingdoms-vr-arena/SKILL.md)
+- [项目工具脚本索引](tools/README.md)（会被重复使用、产出物属于项目、且是某产物单一事实源的脚本；一次性排障脚本不得进项目）
 
 根级 `AGENTS.md` 是唯一项目规则入口。`.trae/skills/` 下不得创建第二个带 YAML frontmatter 的 `SKILL.md`。
 
@@ -64,6 +65,7 @@ Systems 只描述工程实现边界，产品规则以 `knowledge/Design/` 对应
 - [M01-T001 任务包](execution/active/M01-T001/)
 - [M01-T005 任务包](execution/active/M01-T005/)
 - [M02-PREP-001 任务包](execution/active/M02-PREP-001/)
+- [M02-PREP-002 任务包](execution/active/M02-PREP-002/)
 - [M00 正式任务详规](execution/M00/)
 - [M01 核心战斗技术切片](execution/M01-CombatSlice.md)
 - [会话记录目录](execution/sessions/)（执行模型上下文保留）

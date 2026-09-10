@@ -10,21 +10,8 @@
 
 ## 命名建议
 
-| 类型 | 前缀 | 示例 |
-|---|---|---|
-| 蓝图 Actor | `BP_` | `BP_TrainingSword` |
-| 组件 | `BPC_` | `BPC_WeaponInteraction` |
-| 静态网格 | `SM_` | `SM_ArenaFence` |
-| 骨骼网格 | `SK_` | `SK_Militia` |
-| 材质 | `M_` | `M_Iron` |
-| 材质实例 | `MI_` | `MI_Iron_Dark` |
-| 纹理 | `T_` | `T_Iron_BC` |
-| 动画 | `A_` | `A_SwordAttack01` |
-| 动画蒙太奇 | `AM_` | `AM_SwordCombo` |
-| Data Asset | `DA_` | `DA_Weapon_Sword` |
-| Widget | `WBP_` | `WBP_BattleResult` |
-| Niagara | `NS_` | `NS_WeaponHit` |
-| 音效 | `S_` | `S_SwordBlock` |
-| 地图 | `L_` | `L_PrototypeArena` |
+**资产前缀表的唯一权威正文是 `../standards/02-naming-and-path-standard.md`（§Unreal 资产前缀）。** 本文件**不再复制该表**——按根级 `AGENTS.md` 规则 19「不建立平行知识库、重复 Skill 或重复规则正文。一个主题只有一个权威正文，其他位置只链接」。
 
-具体规范可以随首批资源导入调整，但调整必须更新本文档。
+2026-09-11 合并说明：本处原有一张 14 行前缀表，与上述标准表**互不为子集**（该标准独有 `DT_` 数据表、`BT_` 行为树、`BB_` 黑板、`SC_` Sound Cue；本表独有 `SM_` 静态网格、`M_` 材质、`T_` 纹理、`S_` Sound Wave、`NS_` Niagara、`L_` 关卡）。已**单向合并**进标准（合并后 18 行），本处保留原前缀清单以备追溯：`BP_`、`BPC_`、`SM_`、`SK_`、`M_`、`MI_`、`T_`、`A_`、`AM_`、`DA_`、`WBP_`、`NS_`、`S_`、`L_`。
+
+**调整前缀的规则（2026-09-11 收紧）**：原写「具体规范可以随首批资源导入调整，但调整必须更新本文档」——**该授权已失效**，因为权威正文已移到 `../standards/02-naming-and-path-standard.md`。今后新增或变更前缀，一律改**标准**那处；若属已批准范围外的变更，按 `../governance/policy.md` §4、§5 走变更申请。

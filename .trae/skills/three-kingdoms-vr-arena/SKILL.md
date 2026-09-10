@@ -64,13 +64,13 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 短指令以 `SessionCommands.md` 为准。意图不明确时进入只读模式。
 
-推送因网络阻塞反复失败（443 超时 / Connection was reset）时不要空推：按 `SessionCommands.md` §推送·网络恢复流程 先做 TCP 短超时探测，可达才重试，不可达如实报告并等待用户确认。
+推送因网络阻塞反复失败（443 超时 / Connection was reset）时**不要空推，也不得在直连失败后就判定"不可达"**——本项目已实测：直连 `github.com:443` 会超时（`git ls-remote` 120s 无返回），而**经本机代理同一时刻可达**（`git -c http.proxy=… ls-remote` exit=0，`Invoke-WebRequest -Proxy … -Method Head` 返回 HTTP 200）。按 `SessionCommands.md` §推送·网络恢复流程 执行：先以 TCP 短超时探测候选代理端口（`7890` / `7897` / `10809` / `1080` / `8118`），命中后以 **`git -c http.proxy=http://127.0.0.1:<活端口> push origin master`** 单次内联方式推送（**严禁 `git config http.proxy` 持久化写入仓库配置**）；仅当全部候选端口均不可达时，才如实报告"推送不可达"并等待用户确认。
 
 ## active 完整门禁路径
 
 执行模式必须逐份读取并同时满足：
 
-0. **认领（必须在任何文件修改之前）**：从根 STATUS.json 选择 `status` 为 `ready` 的任务，检查五件套完整、无白名单冲突后，立即将根 STATUS.json 中对应条目 `status` 更新为 `in_progress`、`claimedBy` 填写会话标识。用户执行任务由 AI 监督模型代为更新。未完成认领不得修改任何文件。
+0. **认领（必须在任何文件修改之前）**：从根 STATUS.json 选择 `status` 为 `ready` 的任务；**若当前不存在 `ready` 任务，不得自行把其他任务改成 `ready`、也不得直接认领他人 `in_progress` 的任务**——应停止并报告「当前无待认领任务」，由决策侧出任务包或用户裁定。认领时检查五件套完整、无白名单冲突后，立即将根 STATUS.json 中对应条目 `status` 更新为 `in_progress`、`claimedBy` 填写会话标识。用户执行任务由 AI 监督模型代为更新。未完成认领不得修改任何文件。
 1. `.trae/execution/active/STATUS.json`（根 STATUS.json，任务状态唯一权威）：`activeTasks` 数组中至少存在一个 `status` 为 `ready` 或 `in_progress` 的任务。
 2. 认领目标任务后，`.trae/execution/active/{taskId}/ALLOWLIST.txt`：至少一行非空、非注释的明确相对路径（路径相对于项目根目录 `VRSanguoYanWuchang/`）。
 3. `.trae/execution/active/{taskId}/TASK.md`：目标、范围、步骤、停止条件、回退和报告路径完整。
@@ -88,7 +88,10 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 - 治理、规则、知识、执行、登记和归档资料只写入项目 `.trae/` 对应目录。
 - systems 是工程实现指引；产品规则以 `knowledge/Design/` 对应权威详规为准，不在 systems 复制规则。
 - UE 工程内容分别写入 `Source/`、`Config/`、`Content/`、`Plugins/`。
-- 临时脚本、下载、缓存、日志和调试输出不得污染项目。
+- 项目工具脚本仅写入 `.trae/tools/`（会被重复使用、产出物属于项目、且是某产物单一事实源的脚本；索引见 `.trae/tools/README.md`）。
+- 临时脚本、下载、缓存、日志和调试输出**不得进入项目**：一次性排障或迁移用脚本写项目外临时目录（本项目为 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\`），用完即删。
+- 会话记录仅写入 `.trae/execution/sessions/`。
+- NTFS 管理脚本仅留在项目外 `D:/AWork/TraeAdmin/VRSanguoYanWuchang/`，不搬入项目。
 - 一个主题只保留一个可编辑权威正文；其他位置只链接。
 
 ## 执行与停止
@@ -103,3 +106,5 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 - active 五件套、任务详情和里程碑包按完整路径核验。
 - 索引、manifest、integrity、登记册与变更记录和实际文件一致。
 - `.trae/skills/` 下仅本文件具有有效 YAML frontmatter。
+- 治理一致性校验 `dashboard/check-integrity.py` 可运行且 `exit=0`（Python 绝对路径与命令见 `SessionCommands.md` §校验）。
+- **「已推送」必须分两层陈述，不得用一层替代另一层**：备份层 = 对象是否真的到达 origin（`git ls-remote` 实测同 SHA + LFS 对象上传 + `lfs fsck`）；验收层 = CI 是否绿（工作流任务级**与**步骤级均 success）。两层各用独立证据支撑；只绿一层时必须写明缺哪一层。

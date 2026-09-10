@@ -5,7 +5,7 @@ forbidden_root: "D:/AWork/Unreal/Project/.trae"
 verification:
   method: "absolute_path_read_and_local_link_check"
   status: passed
-  updated: "2026-09-10"
+  updated: "2026-09-11"
   checks:
     lowercase_indexes:
       expected: 5
@@ -70,7 +70,7 @@ verification:
       passed: 1
       note: "knowledge/Patterns/README.md 模式库骨架"
     local_markdown_links:
-      checked: 161
+      checked: 163
       broken: 0
       note: "2026-09-10 全量复查结清顺延项：check-integrity.py 实测 161 链接 / 0 断链。历史：2026-08-14 检查 115 链接 0 断链；2026-08-24 补全报告索引与根索引 active 任务包链接后顺延。"
     files_read_back: 22

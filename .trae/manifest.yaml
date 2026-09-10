@@ -3,7 +3,7 @@ project: VRSanguoYanWuchang
 root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang"
 trae_root: "D:/AWork/Unreal/Project/VRSanguoYanWuchang/.trae"
 source_of_truth: ".trae/index.md"
-updated: "2026-09-10"
+updated: "2026-09-11"
 indexes:
   standards: ".trae/standards/index.md"
   vr: ".trae/vr/index.md"

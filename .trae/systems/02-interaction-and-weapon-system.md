@@ -17,9 +17,9 @@
 
 以下为 M00 规划阶段的接口契约框架，具体签名在 M00-T005 C++ 骨架中实现并以此为准。
 
-**武器接口**：
-- 接口 `IVRWeapon`：提供 `GetWeaponType()`, `GetTrajectorySource()`, `GetGrabPoints()`
-- 接口 `IGrabbable`：提供 `TryGrab(EHand Hand)`, `Release(EHand Hand)`, `SwitchHand(EHand Target)`
+**武器接口**（2026-09-11 更正：下方原记规划名 `IVRWeapon` / `IGrabbable` 在 C++ 骨架落地时更名为 `IWeaponSource` / `IInteractable`，且方法集与规划稿不同。**以实际实现为准**，规划名不得再被引用——见 `../standards/05-event-and-interface-standard.md`）：
+- 接口 `IWeaponSource`（`Source/VRSanguoYanWuchang/Public/Interfaces/VRWeaponSource.h`）：提供 `GetWeaponData()`, `IsTwoHanded()`, `GetTrajectory()`
+- 接口 `IInteractable`（`Source/VRSanguoYanWuchang/Public/Interfaces/VRInteractable.h`）：提供 `CanGrab(AVRHand*)`, `OnGrabbed(AVRHand*)`, `OnReleased(AVRHand*)`, `OnHoverStart(AVRHand*)`, `OnHoverEnd(AVRHand*)`
 
 **核心服务**：
 - `GrabWeapon(AActor* Weapon, EHand Hand)` → `bool`

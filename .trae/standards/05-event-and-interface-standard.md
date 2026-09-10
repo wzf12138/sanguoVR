@@ -8,6 +8,7 @@
 - `IDefenseProvider`：格挡面、盾牌状态与防御消耗
 - `IMovementMode`：瞬移、平滑移动及后续坐骑移动
 - `IBattleParticipant`：出生、战斗状态、胜负与重置
+- `ICharacterCapability`：统一角色能力入口（玩家与 AI 共用），请求能力动作、判定是否允许、读取能力状态
 
 ### C++ 接口声明
 
@@ -83,6 +84,18 @@ public:
     UFUNCTION(BlueprintNativeEvent, Category = "Battle") void OnBattleStart();
     UFUNCTION(BlueprintNativeEvent, Category = "Battle") void OnBattleEnd(EBattleOutcome Outcome);
     UFUNCTION(BlueprintNativeEvent, Category = "Battle") void ResetForNextRound();
+};
+
+// 角色能力统一入口（玩家与 AI 共用，DEC-011 + systems/05 契约）
+UINTERFACE(BlueprintType)
+class UCharacterCapability : public UInterface { GENERATED_BODY() };
+class ICharacterCapability
+{
+    GENERATED_BODY()
+public:
+    UFUNCTION(BlueprintNativeEvent, Category = "Capability") bool RequestAction(const FCapabilityRequest& Request);
+    UFUNCTION(BlueprintNativeEvent, Category = "Capability") bool IsActionAllowed() const;
+    UFUNCTION(BlueprintNativeEvent, Category = "Capability") ECapabilityState GetCapabilityState() const;
 };
 ```
 
