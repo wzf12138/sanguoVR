@@ -828,7 +828,18 @@ def check_large_files():
 
 
 def check_secret_patterns():
-    """17. 密钥泄漏扫描：常见令牌模式（规则 23 的自动化，保守模式防误报）"""
+    """17. 密钥泄漏扫描：常见令牌模式（规则 23 的自动化，保守模式防误报）
+
+    ⚠ **覆盖范围有限，本项「通过」不得被读作「无凭据泄漏」**：
+    下方 patterns 只匹配**带固定前缀的厂商令牌**与**私钥块**共 5 类；
+    **不覆盖**裸高熵十六进制串、配置项级 `Key=value` 凭据、连接串口令、
+    base64 编码凭据等形态。已知存在一处不在此 5 类内的真实凭据，
+    处置见 `execution/CR-20260911-002-android-file-server-token.md`。
+
+    **检测加固的时序约束**：加固（扩展模式 + 键名锚定）必须在上述 CR 经用户裁定
+    **之后**落地 —— 否则新检查必然命中该活凭据，只能靠豁免放行，
+    那等于以工程手段**替用户决定接受泄漏**。故本期只做**范围披露**，不扩模式。
+    """
     patterns = [
         ("OpenAI/Anthropic sk-", re.compile(r"sk-[A-Za-z0-9]{20,}")),
         ("AWS AKIA", re.compile(r"AKIA[0-9A-Z]{16}")),
@@ -854,7 +865,9 @@ def check_secret_patterns():
                 hits.append(f"{p.name}:{name}")
                 break
     passed = not hits
-    detail = "未发现令牌模式" if passed else "疑似泄漏：" + "；".join(hits[:5])
+    detail = ("未发现令牌模式（本项仅覆盖 5 类：sk- / AKIA / ghp_ / xox* / 私钥块；"
+              "不含裸十六进制串与配置项级凭据 ⇒ 本项通过 ≠「无凭据泄漏」）"
+              if passed else "疑似泄漏：" + "；".join(hits[:5]))
     check("仓库卫生", "无密钥令牌泄漏", passed, detail, check_id="secret_patterns")
 
 
