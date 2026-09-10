@@ -23,9 +23,10 @@ AGENTS.md · VRSanguoYanWuchang 项目 AI 行为规则
 
 - UE 工程：`Config/`、`Content/`、`Plugins/`、`Source/`。
 - 治理与 AI 资料：仅 `.trae/`。
-- 临时脚本、下载和调试输出：不得进入项目。
+- 项目工具脚本：仅 `.trae/tools/`（会被重复使用、产出物属于项目、且是某产物单一事实源的脚本；索引见 `.trae/tools/README.md`）。
+- 临时脚本、下载和调试输出：不得进入项目（一次性排障或迁移用，写项目外临时目录，用完即删）。
 - 会话记录：仅 `.trae/execution/sessions/`。
-- NTFS 管理脚本：仅项目外 `D:/AWork/TraeAdmin/VRSanguoYanWuchang/`。
+- NTFS 管理脚本：仅项目外 `D:/AWork/TraeAdmin/VRSanguoYanWuchang/`（不搬入项目，见 `.trae/tools/README.md`）。
 
 ## 磁盘与下载规则
 

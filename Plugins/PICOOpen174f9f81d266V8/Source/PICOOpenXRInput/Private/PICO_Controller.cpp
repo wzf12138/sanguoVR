@@ -5,6 +5,7 @@
 #include "PICO_InputModule.h"
 #include "IOpenXRHMDModule.h"
 #include <openxr_pico/private/ext_haptic_parametric.h>
+#include <openxr_pico/private/ext_battery_state_display.h>
 #include "Haptics/HapticFeedbackEffect_Base.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Haptics/HapticFeedbackEffect_SoundWave.h"
@@ -279,12 +280,15 @@ void FControllerPICO::Unregister()
 
 bool FControllerPICO::GetRequiredExtensions(TArray<const ANSICHAR*>& OutExtensions)
 {
-	OutExtensions.Add(XR_BD_CONTROLLER_INTERACTION_EXTENSION_NAME);
+	// XR_BD_controller_interaction moved to optional: PICO-specific enhancement.
+	// Required semantics broke xrCreateInstance on non-PICO runtimes (e.g. SteamVR)
+	// with XR_ERROR_VALIDATION_FAILURE, disabling the whole XR system in editor.
 	return true;
 }
 
 bool FControllerPICO::GetOptionalExtensions(TArray<const ANSICHAR*>& OutExtensions)
 {
+	OutExtensions.Add(XR_BD_CONTROLLER_INTERACTION_EXTENSION_NAME);
 	OutExtensions.Add(XR_BD_ULTRA_CONTROLLER_INTERACTION_EXTENSION_NAME);
 	OutExtensions.Add(XR_EXT_HAPTIC_PARAMETRIC_EXTENSION_NAME);
 	return true;
@@ -329,6 +333,16 @@ void FControllerPICO::PostCreateInstance(XrInstance InInstance)
 	else
 	{
 		UE_LOG(LogPICOOpenXRInput, Log, TEXT("XR_EXT_haptic_parametric extension is not enabled"));
+	}
+
+	bBatteryStateDisplayExtensionEnabled = IOpenXRHMDModule::Get().IsExtensionEnabled(XR_EXT_INTERACTION_PROFILE_BATTERY_STATE_DISPLAY_EXTENSION_NAME);
+	if (bBatteryStateDisplayExtensionEnabled)
+	{
+		UE_LOG(LogPICOOpenXRInput, Log, TEXT("XR_EXT_interaction_profile_battery_state_display extension enabled"));
+	}
+	else
+	{
+		UE_LOG(LogPICOOpenXRInput, Log, TEXT("XR_EXT_interaction_profile_battery_state_display extension is not enabled - will skip battery action binding"));
 	}
 }
 
@@ -516,7 +530,7 @@ bool FControllerPICO::GetSuggestedBindings(XrPath InInteractionProfile, TArray<X
 		return false;
 	}
 
-	if (ControllerBatteryAction != XR_NULL_HANDLE && Profiles.Find(InInteractionProfile) != INDEX_NONE)
+	if (bBatteryStateDisplayExtensionEnabled && ControllerBatteryAction != XR_NULL_HANDLE && Profiles.Find(InInteractionProfile) != INDEX_NONE)
 	{
 		XrPath BatteryLeft;
 		XrResult Result;

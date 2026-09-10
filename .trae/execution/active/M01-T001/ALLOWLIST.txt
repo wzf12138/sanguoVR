@@ -7,6 +7,21 @@ Content/VRSanguo/VR/BP_TestSword.uasset
 Content/VRSanguo/VR/BP_VRCharacter.uasset
 # 关卡（修改现有）
 Content/VRSanguo/Dev/L_SkeletonTest.umap
+# 范围扩展（CR-20260905-001，用户批准 2026-09-05）：PICO 插件 battery 门控修复 + 关手部交互 EXT
+# 仅限 PICOOpenXRInput 模块源码；其他 PICO 模块（HMD 等）禁改
+# Config/DefaultEngine.ini 仅允许 bEnableHandInteractionEXT 一行（L191 True→False），其余行禁改
+Plugins/PICOOpen174f9f81d266V8/Source/PICOOpenXRInput/**
+Config/DefaultEngine.ini
+.trae/execution/CR-20260905-001-pico-battery-gating.md
+# 范围扩展（CR-20260908-001，用户以管理员运行 Unlock-TraeAssets.ps1 即视为批准，2026-09-08）：
+# IMC_Weapon_Left/Right 仅允许 IA_Grab→Grip 键映射补齐，且须先书面说明必要性 + decision 批准后触碰；Input 目录其余资产禁改
+Content/VRTemplate/Input/IMC_Weapon_Left.uasset
+Content/VRTemplate/Input/IMC_Weapon_Right.uasset
+.trae/execution/CR-20260908-001-steamvr-retro-unlock.md
+# 范围扩展（CR-20260909-001，2026-09-08 指挥台快速通道裁定）：抓取接口契约修复
+Source/VRSanguoYanWuchang/**/VRSanguoGripLibrary.h
+Source/VRSanguoYanWuchang/**/VRSanguoGripLibrary.cpp
+.trae/execution/CR-20260909-001-grip-contract-fix.md
 # VRE 插件（只读参考，不修改源码）
 Plugins/VRExpansionPlugin/**
 # 编译产物

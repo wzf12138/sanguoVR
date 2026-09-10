@@ -1,5 +1,90 @@
 # ChangeLog
 
+## 2026-09-10（CR-20260910-001：项目工具脚本授权落点 `.trae/tools/` + 重建脚本入库）
+
+- 问题（实证）：`AGENTS.md` §文件边界只有「临时脚本、下载和调试输出：不得进入项目」一条，**没有任何授权落点容纳"会被长期复用、且是某产物单一事实源"的项目工具脚本**。后果是 `rebuild_v3/v4/v5.py`、`flip_topdown.ps1` 只能留在项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\`——**该目录不入 Git、无第二副本，这四个脚本从未进入任何备份**，而它们是 `L_Prototype_1v1_v5.umap` 与 `Docs/Scene/` 四件套的单一事实源。
+- 变更（用户 2026-09-10 批准，选项原文「搬进项目，纳入备份」）：① `AGENTS.md` §文件边界新增「项目工具脚本：仅 `.trae/tools/`」；② 原「临时脚本…不得进入项目」收窄为「一次性排障或迁移用，写项目外临时目录，用完即删」（**禁止意图不变**）；③ 四个脚本入库 `.trae/tools/scene/`，索引 `.trae/tools/README.md`。
+- 搬运校验（逐文件 SHA256，4/4 一致）：`rebuild_v3.py` 15,027 B `23187469D0872087`；`rebuild_v4.py` 18,018 B `59D7A6FB45BC3A85`；`rebuild_v5.py` 50,614 B `D3F562935DC9A841`；`flip_topdown.ps1` 935 B `FC68C2D0C0887EA4`。**已核：四个脚本均不依赖自身所在目录**（无 `__file__`、无相对路径解析），搬移不改行为；`rebuild_v5.py` 的 `TMP_DIR`/`DOCS_DIR` 是写死常量，指向项目外 tmp 与 `Docs\Scene`，属有意为之（临时产物不入项目），本次不改脚本内容。
+- **原件在推送成功前不删除**：入库副本进入远程仓库之前，`D:\AWork\TraeAdmin\` 原件保留为唯一回退。回收另需用户逐项批准。
+- 本次**不重跑任何脚本**（重建冻结令同时生效）。NTFS 管理脚本（`Set-TraeGovernanceAcl.ps1`、`Unlock-*.ps1`）按规则留在项目外，不搬入。
+- 写入合规：规则 20(c)「用户本次明确批准的变更」；规则 24 由 `execution/CR-20260910-001-project-tooling-home.md` 承载（含影响分析、执行边界、风险与回滚、验证计划、审批记录）。
+- 关联：M01-T005。文件：`AGENTS.md`、`.trae/tools/README.md`、`.trae/tools/scene/{rebuild_v3.py,rebuild_v4.py,rebuild_v5.py,flip_topdown.ps1}`、`.trae/execution/CR-20260910-001-project-tooling-home.md`。
+
+## 2026-09-10（M01-T005 状态值口径统一：根 STATUS.json 非法值 completed 改回 in_progress）
+
+- 依据：用户 2026-09-10 明确裁定「**只把那个词改回『进行中』**」——只改状态词，**不裁定该任务是否做完**；note 正文一字未动。
+- 事实：根 `.trae/execution/active/STATUS.json` 中 M01-T005 的 `status` 为 `completed`，**不在 `policy.md` §6 允许状态集**（`draft|ready|in_progress|blocked|awaiting_review|approved|archived`），是同一任务六份副本中的唯一异值。
+- 处置：改为 `in_progress`。改后与 `active/M01-T005/STATUS.json`、`manifest.yaml`、`integrity.yaml` 三处一致；`registers/07-task-register.md`（执行中）与本次一致，未动；`execution/M01-CombatSlice.md` 任务表中的 `approved` 属更早快照，本次不改、另行登记。
+- 效果：`dashboard/check-integrity.py` 原两项失败（`active 门禁 → M01-T005: 非法状态 'completed'`、`交叉引用 → STATUS.json='completed' vs 登记册='执行中…'`）解除；复跑 **25 项 / 通过 25 / 失败 0 / EXIT=0**。
+- 写入合规：规则 20(c)「用户本次明确批准的变更」。改前 26,787 字节 / SHA256 `B0B17091F2F26354D68685A45CDA09DD8DE5F00D775519A90B56A8CE3A89D180`；改后 **26,789 字节 / SHA256 `3DD34BED498240C59CD6232D1DB380F9B881757F93A2301F61C8EFDFD6926B03` / mtime 2026-09-10 23:38:35**；无 BOM；`ConvertFrom-Json` 回读通过（7 个 active 任务齐全）。
+- 关联：M01-T005、TD-012。文件：`.trae/execution/active/STATUS.json`。
+
+## 2026-09-10（竞技场玩法逐项重新确认：靶场只做打靶、演武厅点将+观战立项）
+
+- 承接上一条更正：两条被撤销依据地位的"机制锚点"已由 decision 按规则 7/8/9/10 **逐项重新提请用户确认**，用户当场裁定（本批为"逐项一问"而非打包提问）：
+  - **靶场 → 用户选"先只做打靶，彩头往后放"**：靶场立项为**打靶练习区**（自练/热身、命中可判定）；**比射胜负、红锦袍彩头、分队比射均未立项、不得写入任何任务包**；锦袍杆与红锦袍**保留为装饰件**，不作玩法挂点。
+  - **演武厅 → 用户选"点将+观战都做"**：厅内分队/选人区（服务 2v2/4v4）+ 两翼**将佐观武席**观战区，随 M02/M03 展开。**"观众可否发信号"为暂缓项**，待用户明确确认，确认前不得实现。
+- 权威落点：新建 `execution/arena-gameplay-decisions.md`（含缘起、两条裁定、暂缓项、与布局未定版的关系、脚本文本待修清单）。
+- 待应用（**下次重建时一并生效，文档为脚本产物、手改无效**）：单源脚本 `rebuild_v5.py` 中靶场段注释、L284 行内注释、`Text_TARGETS` 星牌文字、`MODULES` 登记表 `archery/jinpao/hall` 三条的 `func`/`prio` 仍为旧口径（"夺袍彩头锚点""M03 机制"），须按 `arena-gameplay-decisions.md` 第四节改写。未应用前，脚本注释与 `Docs/Scene/` 中的机制表述**不代表用户裁定**。
+- 关联：M01-T005、M02、CR-20260909-001。文件：`.trae/execution/arena-gameplay-decisions.md`、`.trae/execution/reports/tasks/M01-T005.md`、`.trae/execution/sessions/session-20260908-002.md`。
+
+## 2026-09-10（更正：竞技场两条"机制锚点"未经用户确认，撤销其依据地位）
+
+- 用户指出：M01-T005 记录中的两条玩法锚点（靶场→夺袍彩头、演武厅→点将/观战）**从未与其确认**。
+- 查证结论（成立）：session-20260908-002 当日 `ask_user_question` 实际提问仅四项**形体/尺度**项（场地 120×120m、将台 24×14×5m、正面中央台阶+服务坡道、主门两侧柱廊一对）；两条机制锚点**不在提问范围内**，是执行模型对已选建筑用途的自行引申，却被写入"用户拍板"并登记为"锚点（M02/M03 接）"——属规则 10（玩法机制未明确须列选项待用户确认）违例，且以"用户拍板"字样表述，进一步违反规则 1（不编造）。
+- 处置（decision 执行）：在 `.trae/execution/reports/tasks/M01-T005.md` 与 `.trae/execution/sessions/session-20260908-002.md` 的原句下加更正注（原话保留、不改历史）：锚点**状态=未经确认，不得作为已定设计依据**；裁定前 M02/M03 任务设计不得以之为已定输入。删除/改写/保留待用户裁定。
+- 关联：M01-T005、CR-20260909-001。文件：`.trae/execution/reports/tasks/M01-T005.md`、`.trae/execution/sessions/session-20260908-002.md`。
+
+## 2026-09-10（治理修复：根 STATUS.json 不可解析事故闭环 + 两条机制红线入库）
+
+- 事故：根 `.trae/execution/active/STATUS.json` 自 18:15 起不可解析（22,331 字节），`dashboard/check-integrity.py` 读取它的 6 处校验（L248/L273/L306/L353/L461/L599）全部失败。
+- 根因（实证）：M01-T005 的 note 被"2000 字符上限"的**截断型写入器**改写——原文 `（用户反馈"朝向杂乱/不是扁旗"）` 被压成 `（用户反馈朝向杂乱/不是扁旗"）`，第一个内层开引号被吃掉、行尾多出的引号提前闭合 JSON 字符串，其后 9,534 字符沦为裸文本。同源第二处：M01-T001 的 note 有 5 个非法反斜杠转义（Windows 路径 `D:\AGame\Steam\...` 未转义）。
+- 修复（decision 指挥台执行）：可读前缀原样保留；断掉的尾部按信箱已归档回执原文（msg-20260910-164121 / msg-20260910-173231）补回，未重写历史正文、未编造。产出 25,113 字节，JSON 可解析，7 个 active 任务齐全。破损原件备份于项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\tmp\STATUS.json.broken-20260910`。
+- 写入合规：M01-T001 与 M01-T005 的 ALLOWLIST.txt 均列有 `.trae/execution/active/STATUS.json`（规则 20 满足）。冻结令已由 decision 于 18:53 向 `channels/registry-changes` 广播解除。
+- 红线入库（两条，全模型适用）：① **禁止"读取截断 → 回写"的写入路径**——大字段文件必须整文件一次写入 + 写完 `JSON.parse` 回读校验，失败即回滚报告；② **Live Coding 补丁不跨进程存活**——只有 UBT 完整编译进 `Binaries/` 的改动才算持久化，仅 live_coding 的改动标记未持久化、不得计入已完成。落点：CR-20260909-001 D/D-1 与 E 节 + `knowledge/TechnicalDecisions.md` 新节。
+- 关联：M01-T001、M01-T005、CR-20260909-001。文件：`.trae/execution/active/STATUS.json`、`.trae/execution/CR-20260909-001-grip-contract-fix.md`、`.trae/knowledge/TechnicalDecisions.md`。
+
+## 2026-09-05（CR-20260905-001：PICO 插件 battery 门控修复 + 关闭手部交互 EXT——M01-T001 范围扩展实施）
+
+- 根因（三方验真）：PICO 插件无条件创建 battery action 并为每个 PICO profile 追加 `/user/hand/*/input/battery/value`（`PICO_Controller.cpp` 原 L342-352/L519-533）；PC 串流运行时 PicoStreamingXR v1.1.46 缺 `XR_EXT_interaction_profile_battery_state_display`（日志 L818）；OpenXR `xrSuggestInteractionProfileBindings` 原子性 → 整个 pico_neo3 profile 建议绑定被拒（`XR_ERROR_PATH_UNSUPPORTED`，原日志 L1636）→ 仅绑 PICO Neo3 键的 IA_Grab/Move/Turn 全链路无绑定。真机 standalone 端该扩展可用故无恙——"真机走过通、串流不行"两端行为差异闭环解释。
+- 改动（用户批准方案 1+3，范围扩展 CR-20260905-001，白名单已扩）：`PICO_Controller.h` 新增 `bBatteryStateDisplayExtensionEnabled`；`PICO_Controller.cpp` `PostCreateInstance` 读扩展可用性并打日志 + `OnCreateSession` 按门控创建 battery action（不可用则跳过；`GetSuggestedBindings` 借 XR_NULL_HANDLE 自动跳过）；`Config/DefaultEngine.ini:191` `bEnableHandInteractionEXT` True→False。模板 IMC 资产零改动。
+- 验证（已验）：UBT `Result: Succeeded`（DLL 重链接）；重启后日志 `XR_ERROR_PATH_UNSUPPORTED` 0 条 + 门控日志 L833/L1106；`bEnableHandInteractionEXT=False` 读回；指挥台四项抽查全过。
+- 待验证（规则 13 标注）：③④ 串流 PIE Grip 键抓取实测（`[TryGrip诊断]`+截图，待用户戴头显）；真机 standalone 复测（与 M01-T001 TC-01~06 真机验证合并批次）。
+- 关联：CR-20260905-001、M01-T001。文件：`Plugins/PICOOpen174f9f81d266V8/Source/PICOOpenXRInput/Private/PICO_Controller.h`、`.../PICO_Controller.cpp`、`Config/DefaultEngine.ini`。
+
+## 2026-09-04（M01-T001：TryGrip 加诊断日志——定位真机按键无效）
+
+- 用户反馈"里面按键操作不了剑"。将 `VRSanguoGripLibrary::TryGrip` 原 `Verbose` 日志全部提升为 `Log`（分类 `LogVRSanguoWeapon`，真机默认可见），新增 `[TryGrip诊断]` 探针：每次按键输出起点/前向/终点/半径/前距/socket；扫掠命中数与命中 actor 是否可抓取（未实现接口或 DenyGripping 跳过）、可抓者距离；最终选定最近可抓取物；`GripObject` 成功/失败。
+- 配套确认：剑网格 `环首刀` 握持 socket 完好（`VRGripP__0` @(9,0,46)、`VRGripS__0` @(18,0,51)，socketCount=2）。
+- 编译验证：关闭编辑器后命令行 UBT `Result: Succeeded`（exit 0，`VRSanguoGripLibrary.cpp` 剔除 unity file 独立编译确认改动生效），重开编辑器后 `list_function_libraries` 确认 `VRSanguoGripLibrary.TryGrip` 反射注册。
+- 关联：M01-T001。`Source/VRSanguoYanWuchang/Private/Combat/VRSanguoGripLibrary.cpp`。
+
+## 2026-09-04（M01-T001：按键无效定论——检测链路全链路核查未改动）
+
+- 针对待办"核对剑网格碰撞是否命中 `TryGrip` 的 `ECC_Visibility` 球体扫掠"，做面向检测/抓握链路的逐环节核查，**结论：配置链路无断点，碰撞非根因**。
+- 核查通过项：① 剑 `AGrippableStaticMeshActor` 实现 `IVRGripInterface`（`GrippableStaticMeshActor.h:47`），`DenyGripping` 默认 false；② 剑碰撞 `BlockAll`（QueryAndPhysics），Visibility=Block 可被 `ECC_Visibility` 命中；③ 蓝图 `TryGrip` 参数 `SphereRadius=12`/`ForwardDistance=30`/socket=VRGripP__0/VRGripS__0 已填；④ `IMC_Default` 运行态已应用（5 上下文），`IA_Grab_*_Pressed`（Axis1D+InputTriggerPressed）/`Released`（InputTriggerReleased）配对正确；⑤ `AVRBaseCharacter` 无 `SetupPlayerInputComponent`，VRE 不接管输入，无冲突；⑥ `GripMotionControllerComponent.cpp:7421` 内部即以 `LeftGrip/RightGrip` 为 GripSource，与 MotionSource 改一致，PICO OpenXR 官方确认支持 [$TRAE_REF](https://developer.picoxr.com/document/unreal-openxr/hand-interaction/)。
+- 关键发现：**本项目为 PICO OpenXR 而非 SDK**（`DefaultEngine.ini` 含 `[/Script/PICOOpenXRRuntimeSettings]`），故键名 `PICONeo3_*_Grip_Axis`（OpenXR 体系）正确，与 SDK 版文档的 `PICO Touch (L/R) Grip Axis` 属不同体系。
+- 定论：桌面 PIE 无 XR 跟踪（手柄相对位置 `(0,0,0)`、前向固定 `(0,1,0)`），**"按键无效"无法在桌面复现，属真机特有问题**；碰撞/接口/输入/蓝图配置均已排除。真机若仍按键无效，下一步按 PIE 运行态调 `TryGrip`（传真实手柄）看日志分支，区分"输入未触发"与"检测未命中/吸附失败"。
+- 关联：M01-T001。只读核查（源码 + PIE + PICO 文档交叉），未改动项目文件。
+
+## 2026-09-04（M01-T001：BP_VRCharacter 手部 MotionSource 参考系修正）
+
+- 用户反馈"感觉角度还是差了一点点"（手部朝向在补偿值后仍差一点）。根因：官方 `VRPawn` 手挂在 `MotionSource=LeftGrip/RightGrip`（握把系）的控制器，而 `BP_VRCharacter` 的 Grip 控制器默认取 `Left/Right`（掌心系），参考系不同导致手部朝向仍未完全对齐。
+- 改动：`Left Grip Motion Controller` 的 `MotionSource` 由 `Left` 改为 `LeftGrip`；`Right Grip Motion Controller` 的 `MotionSource` 由 `Right` 改为 `RightGrip`。
+- 验证：编译成功、`validate`（errorCount=0, valid=true）、`save_dirty` 落盘（82618→82740B）、只读已恢复；桌面 PIE 运行态复核两控制器 `MotionSource=LeftGrip/RightGrip`、两只手网格补偿值挂载正确。
+- 验证层级：桌面 PIE 结构与运行态；手部朝向与手柄一致的最终确认需用户 PICO 真机 VR 预览（TC-01~TC-06）。
+- 关联：M01-T001。`Content/VRSanguo/VR/BP_VRCharacter.uasset`。
+
+## 2026-09-04（M01-T001：BP_VRCharacter 手部对齐修复）
+
+- 用户反馈"手部模型歪了，与手柄方向不一致"。按用户要求先检索 PICO 官方《搭建 XR 场景》：确认手柄模型枢轴不一定在模型中心，添加模型后需调整其在父级 MotionController 下的相对位置，使模型处于父组件原点且朝向父组件正方向 [$TRAE_REF](https://developer-cn.picoxr.com/document/unreal/create-an-xr-scene/)。
+- 根因：`BP_VRCharacter` 的 `HandMeshLeft/HandMeshRight`（`SKM_MannyXR`）挂到左右 Grip 控制器但相对位置/旋转全为 0，本地坐标系未补偿 → 手歪。
+- 改动：按官方 `VRPawn` 同套资产的手网格相对变换写入补偿——`HandMeshLeft` `(-2.98126,-3.5,4.561753)` / `(pitch=-25,yaw=-179.999999,roll=89.999998)`；`HandMeshRight` `(-2.98126,3.5,4.561753)` / `(pitch=25,yaw=0,roll=89.999999)`。
+- 验证：编译成功、`validate`（errorCount=0, valid=true）、`save_dirty` 落盘（82166→82618B）、桌面 PIE 运行态复核两组件带补偿值挂载正确；`BP_VRCharacter.uasset` 只读已恢复。编辑器已重启（桥 start_editor）后完成。
+- 抓握连线：读 VRE 源码 `GripMotionControllerComponent.h` 确认官方核心抓握为 `GripObject`/`GripObjectByInterface`/`DropObject`（BlueprintCallable，含 socket 吸附）；自研 `VRSanguoGripLibrary` 正调用这些官方函数，非闭门造车。事件图 `Get RightMotionController/LeftMotionController` 引用 `VRBaseCharacter` 原生成员有效；`DefaultInput.ini` 设 `DefaultInputComponentClass=/Script/EnhancedInput.EnhancedInputComponent`，`IMC_Default` 已应用且 `PICONeo3_*_Grip_Axis`→`IA_Grab_*` 映射生效 → 输入链路通。"按键无效"待核对剑网格碰撞是否命中 `TryGrip` 的 `ECC_Visibility` 球体扫掠，未定论。
+- 验证层级：手部对齐为桌面 PIE 结构与运行态验证；手部朝向与手柄一致的最终确认需用户 PICO 真机 VR 预览（TC-01~TC-06）。
+- 关联：M01-T001。`Content/VRSanguo/VR/BP_VRCharacter.uasset`。
+
 ## 2026-09-04（CI 固化：门禁扩容 21→25 项 + 推送后 Actions 核验强制化）
 
 - **check-integrity.py 新增 4 项检查（21→25）**：①规则编号节内严格递增（实证 15 号撞号此前无法被察觉）；②CHANGELOG 顶部条目不滞后于 HEAD 提交日期；③仓库 >100MB 大文件扫描（排除 gitignored 构建产物目录，首跑即抓到 Saved\StagedBuilds\Android.obb 101MB——已确认不入库，目录加入排除）；④密钥令牌模式扫描（sk-/AKIA/ghp_/xox/私钥块，保守模式防误报）。25/25 本地全绿。

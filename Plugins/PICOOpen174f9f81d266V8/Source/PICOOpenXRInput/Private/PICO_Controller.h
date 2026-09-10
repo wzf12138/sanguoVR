@@ -135,6 +135,9 @@ private:
 	// XR_EXT_haptic_parametric support
 	bool bParametricHapticsExtensionEnabled = false;
 	PFN_xrHapticParametricGetPropertiesEXT xrHapticParametricGetPropertiesEXT = nullptr;
+
+	// XR_EXT_interaction_profile_battery_state_display support
+	bool bBatteryStateDisplayExtensionEnabled = false;
 	bool bLeftHandSupportsParametricHaptics = false;
 	bool bRightHandSupportsParametricHaptics = false;
 	XrHapticParametricPropertiesEXT LeftHapticProperties;

@@ -39,6 +39,14 @@
 - Combat: 接收武器轨迹和接触候选
 - Diagnostics: 报告武器生命周期事件
 
+## VRExpansionPlugin 接口调用契约（2026-09-09 入库，来源 CR-20260909-001）
+
+VRE 插件的接口方法（`IVRGripInterface` 等）多为 `UFUNCTION(BlueprintNativeEvent)` 声明：C++ 侧调用必须走生成的静态转发 `IVRGripInterface::Execute_<Name>(UObject* Target, ...)`，禁止取得接口指针后 const_cast 直调 `<Name>(...)`——直调版 thunk 内置 ensure 断言（"Do not directly call Event functions in Interfaces"），运行到即崩溃。
+
+- **判别方法**：VRE 头文件中 `BlueprintNativeEvent` 声明的方法 → 调用一律 `Execute_` 前缀。
+- **正确范例**：VRE 插件内部全部调用点；**违例案例**：`Source/VRSanguoYanWuchang/Private/Combat/VRSanguoGripLibrary.cpp` L34 直调 `DenyGripping`（2026-09-09 修复，见 CR-20260909-001）。
+- **审核对应项**：`governance/ReviewProtocol.md` 审核内容第 12 条。
+
 ## 接口与验证
 
 向战斗系统提供攻击窗口、轨迹与接触候选，向流程和诊断系统报告生命周期事件。验证覆盖双手竞争、切手、掉落恢复、重置残留、对象池上限和玩家/AI 共用接口；产品参数从权威详规读取。

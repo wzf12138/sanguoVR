@@ -91,3 +91,6 @@ architecture-assessment.html
 
 # AI tool session memory (auto-generated daily, not project content)
 .workbuddy/
+# AI tool session runtime (not project content)
+.agent-teams/
+.dsh-uploads/

@@ -333,6 +333,7 @@ bool FHMDPICO::GetOptionalExtensions(TArray<const ANSICHAR*>& OutExtensions)
 	OutExtensions.Add(XR_EXT_PERFORMANCE_SETTINGS_EXTENSION_NAME);
 	OutExtensions.Add(XR_EXT_USER_PRESENCE_EXTENSION_NAME);
 	OutExtensions.Add(XR_EXT_INTERACTION_PROFILE_BATTERY_STATE_DISPLAY_EXTENSION_NAME);
+	OutExtensions.Add(XR_EXT_UUID_EXTENSION_NAME);  // Prerequisite of XR_EXT_render_model; SteamVR validates this dependency (PICO runtime does not).
 	OutExtensions.Add(XR_EXT_RENDER_MODEL_EXTENSION_NAME);
 	OutExtensions.Add(XR_EXT_INTERACTION_RENDER_MODEL_EXTENSION_NAME);
 	OutExtensions.Add(XR_PICO_VIRTUAL_BOUNDARY_EXTENSION_NAME);
