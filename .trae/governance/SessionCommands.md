@@ -125,6 +125,18 @@
    - `.github/workflows/ci.yml:27-28` 的严格模式**没有** `continue-on-error`，因此该 job `conclusion=success` **等价于** `check-integrity.py` 在 CI 内 `exit=0`——这是「验收层真绿」的确定性判据，不是「已知红豁免」。
    - 步骤级原始日志端点需认证（实测返回 **403**）。读不到日志原文时，**不得**把结论写成「已核验 CI 日志」，只能写「任务级 + 步骤级 conclusion + 严格模式三重」，并显式登记该证据限制。
    - **「推送完成」必须分两层报告，不得用一层替代另一层**：备份层 = 对象是否真的到达 origin（`git ls-remote` 实测同 SHA、LFS 对象上传、`lfs fsck` OK）；验收层 = CI 是否绿（任务级**与**步骤级均 success）。只绿一层时必须写明缺哪一层。
+   - **（2026-09-11 新增，有事故溯源）「本地绿 ≠ CI 绿」——门禁必须在干净检出下复跑一次才算绿。**
+     事故：提交 `cb7ab79` 在本机项目根跑出 `EXIT=0`（30 项 / 通过 27 / 警告 3 / 失败 0），**同一提交**在 Actions 判 `failure`（run `34501489803`，步骤级 `治理一致性校验（严格模式）=> failure`）。根因**不是仓库缺陷**：五件套白名单检查把**通配项** `Intermediate/**`、`Binaries/**`、`Saved/**`、`DerivedDataCache/**` 也当作「必须存在的路径」去判，而这些全是 `.gitignore` 的**可再生构建产物目录，干净检出里必然不存在** → 同一份白名单在开发机是 warn、在 CI 变 fail。
+     **判据（固化）**：白名单里的**通配项是权限范围（该任务可写哪些路径），不是存在性断言**——只对**具体路径**做存在性判定。要求 CI 先做一次构建才让通配项成立，是错误语义。
+     **硬要求**：宣称门禁绿之前，除本机项目根外，**必须在项目外干净浅克隆里跑同一条命令并得 `EXIT=0`**：
+
+     ```powershell
+     $env:GIT_LFS_SKIP_SMUDGE='1'
+     git -c http.proxy=http://127.0.0.1:7897 clone --depth 1 --branch master https://github.com/wzf12138/sanguoVR.git <项目外临时目录>
+     # 在该克隆根执行：python -B -X utf8 dashboard/check-integrity.py  → 期望 EXIT=0
+     ```
+
+     注意两点：① 浅克隆里 `Content/**` 的 LFS 文件是**指针文件**（存在但非真实内容），涉及 LFS 真实内容的判定另论；② 该复现克隆属**临时产物**，放项目外临时目录，用完删除。
 
 ## 安全默认
 

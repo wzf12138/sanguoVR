@@ -106,5 +106,5 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 - active 五件套、任务详情和里程碑包按完整路径核验。
 - 索引、manifest、integrity、登记册与变更记录和实际文件一致。
 - `.trae/skills/` 下仅本文件具有有效 YAML frontmatter。
-- 治理一致性校验 `dashboard/check-integrity.py` 可运行且 `exit=0`（Python 绝对路径与命令见 `SessionCommands.md` §校验）。
+- 治理一致性校验 `dashboard/check-integrity.py` 可运行且 `exit=0`（Python 绝对路径与命令见 `SessionCommands.md` §校验）。**且「绿」必须在两套环境下都成立**：本机项目根 **+** 项目外**干净浅克隆**（`--depth 1` + `GIT_LFS_SKIP_SMUDGE=1`）。**只在开发机跑绿就宣称门禁通过 = 无效声明**——2026-09-11 事故：本机 `EXIT=0` 的提交在 CI 判红，根因是白名单**通配项**被误当存在性断言，而构建产物目录（`Intermediate/`/`Binaries/`/`Saved/`/`DerivedDataCache/`）在干净检出里必然不存在。
 - **「已推送」必须分两层陈述，不得用一层替代另一层**：备份层 = 对象是否真的到达 origin（`git ls-remote` 实测同 SHA + LFS 对象上传 + `lfs fsck`）；验收层 = CI 是否绿（工作流任务级**与**步骤级均 success）。两层各用独立证据支撑；只绿一层时必须写明缺哪一层。

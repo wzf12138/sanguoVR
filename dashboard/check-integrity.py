@@ -986,12 +986,20 @@ def check_package_status_mirror():
 def check_five_piece_structure():
     """19. 五件套结构检查：根 ↔ 目录 ↔ 包内 taskId ↔ ALLOWLIST 路径。
 
+    ALLOWLIST 的语义 = 「该任务**可以写**哪些路径」（权限范围），
+    而不是「这些路径**现在必须已存在**」。
+
     防误报设计（关键）：
     · 不对文件内容做指纹/长度比对（历史任务正文常被后续补记，漂移属正常）。
-    · 通配项（Source/**/X.cpp、Plugins/A/**）只校验通配符**之前**那段路径存在。
+    · **含通配符的条目（任何含 * 的项）一律不做存在性判定** —— 它们是权限范围。
+      其中 Intermediate/**、Binaries/**、Saved/**、DerivedDataCache/** 是 .gitignore
+      的可再生构建/运行时产物目录，只在开发机存在、干净检出（CI）里必然没有；
+      对它判存在性会让同一份白名单在开发机 warn、在 CI 变 fail（2026-09-11 实发事故）。
+      只统计条目数作为提示，不产生 fail，也不因 CI 下不存在而告警。
+      注：Saved/ 是 UE 运行时产物目录，**不属可提交范围**。
     · 与根登记无关的孤儿包才计红；根登记存在而目录缺失按任务是否终态分档。
-    · 非通配路径的「引用对象不存在」按任务状态分档：in_progress → fail；
-      终态任务不判（历史路径可被合法改名/删除，如 L_Prototype_1v1.umap 已被 v4/v5 取代）。
+    · **具体路径（不含 *）** 的「引用对象不存在」按任务状态分档：in_progress → fail；
+      终态任务 → warn（历史路径可被合法改名/删除，如 Plugins/UEBridgeMCP/** 已退役）。
     · 绝对路径 / 含 .. 逃出项目根 → 恒 fail（这两类是结构性违规，与路径是否存在于磁盘无关）。
     """
     root_tasks, err = load_root_status()
@@ -1011,6 +1019,7 @@ def check_five_piece_structure():
 
     missing_dirs, orphan_pkgs = [], []
     tid_mismatch, path_violations, path_missing_active, path_missing_terminal = [], [], [], []
+    wildcard_entries = 0      # 通配权限范围条目数（只统计，不判定）
 
     # ① 根有 taskId 但无同名目录；② 目录无根登记（孤儿包）
     for tid, t in root_map.items():
@@ -1057,11 +1066,16 @@ def check_five_piece_structure():
                 except ValueError:
                     path_violations.append(f"{dir_name}: 路径逃出项目根 '{s}'")
                 continue
-            # 通配项：只校验通配符之前那段
+            # 通配项（任何含 * 的条目）= 权限范围声明，**不做存在性判定**。
+            # 语义：ALLOWLIST 说的是「该任务可以写哪些路径」，不是「这些路径现在必须已存在」。
+            # 其中 Intermediate/**、Binaries/**、Saved/**、DerivedDataCache/** 等是 .gitignore
+            # 的可再生构建/运行时产物目录，只在开发机存在、干净检出（CI）里必然没有 ——
+            # 对通配项判存在性会让同一份白名单在开发机 warn、在 CI 变 fail（2026-09-11 实发）。
+            # 注：Saved/ 是 UE 运行时产物目录，**不属可提交范围**；它出现在白名单里只是
+            # 声明「本任务运行时可写它」，绝不表示允许提交 Saved/ 下的内容。
+            # 因此这里只计数、不判定、不产生 fail/warn，保证两套环境结论一致。
             if "*" in s:
-                prefix = s.split("*")[0].rstrip("/\\")
-                if prefix and not (PROJECT_ROOT / prefix).exists():
-                    path_violations.append(f"{dir_name}: 通配前缀不存在 '{prefix}/'（来自 '{s}'）")
+                wildcard_entries += 1
                 continue
             # 非通配项：引用对象不存在
             if not (PROJECT_ROOT / s).exists():
@@ -1073,24 +1087,31 @@ def check_five_piece_structure():
                     )
 
     fails = missing_dirs + orphan_pkgs + tid_mismatch + path_violations + path_missing_active
-    has_active_ref_gap = bool(path_missing_active)
+    scope_note = (f"通配权限范围 {wildcard_entries} 项（含 Intermediate/**、Binaries/**、Saved/** "
+                  f"等可再生目录，只声明可写范围、不判存在性）") if wildcard_entries else ""
     warn_notes = []
     if path_missing_terminal:
         warn_notes.append(f"{len(path_missing_terminal)} 条历史路径引用：{'；'.join(path_missing_terminal)}")
 
+    base_note = f"{len(root_map)} 个根登记 / {len(dir_names)} 个任务包目录：结构一致"
+
     if fails:
+        notes = ["；".join(fails)]
+        if path_missing_terminal:
+            notes.append(f"另 {len(path_missing_terminal)} 条历史提示")
+        if scope_note:
+            notes.append(scope_note)
         check("五件套", "五件套结构（根↔目录↔taskId↔ALLOWLIST）", False,
-              "；".join(fails) + (f"；另 {len(path_missing_terminal)} 条历史提示" if path_missing_terminal else ""),
-              check_id="five_piece_structure")
+              "；".join(notes), check_id="five_piece_structure")
     elif warn_notes:
+        notes = [base_note] + warn_notes + ([scope_note] if scope_note else [])
         check("五件套", "五件套结构（根↔目录↔taskId↔ALLOWLIST）", True,
-              f"{len(root_map)} 个根登记 / {len(dir_names)} 个任务包目录：结构一致；"
-              + "；".join(warn_notes),
+              "；".join(notes),
               check_id="five_piece_structure", severity="warn")
     else:
+        notes = [base_note] + ([scope_note] if scope_note else [])
         check("五件套", "五件套结构（根↔目录↔taskId↔ALLOWLIST）", True,
-              f"{len(root_map)} 个根登记 / {len(dir_names)} 个任务包目录：结构一致",
-              check_id="five_piece_structure")
+              "；".join(notes), check_id="five_piece_structure")
 
 
 def check_global_task_state_consistency():
