@@ -70,9 +70,11 @@ verification:
       passed: 1
       note: "knowledge/Patterns/README.md 模式库骨架"
     local_markdown_links:
+      scope:
+        - ".trae/**/*.md"
       checked: 163
       broken: 0
-      note: "2026-09-10 全量复查结清顺延项：check-integrity.py 实测 161 链接 / 0 断链。历史：2026-08-14 检查 115 链接 0 断链；2026-08-24 补全报告索引与根索引 active 任务包链接后顺延。"
+      note: "口径（2026-09-11 明确并固化为机器可读 scope）：本项**只统计 `.trae/**/*.md` 内的本地 Markdown 链接**（门禁脚本自述「自动扫描 `.trae/` 目录」）。全仓范围另计——含根 `AGENTS.md`、`README.md`、`Docs/` 等约 172 条，**不在本项口径内**；引用本项时不得读作「全仓 163 条链接全部无断链」。2026-09-10 全量复查结清顺延项；2026-09-11 因 `.trae/index.md` 新增 `M02-PREP-002` 与 `tools/README.md` 两条链接，由 161 升至 163。历史：2026-08-14 检查 115 链接 0 断链；2026-08-24 补全报告索引与根索引 active 任务包链接后顺延。"
     files_read_back: 22
 limitations:
   git: installed_and_pushed_2026-08-09
