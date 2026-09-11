@@ -1,5 +1,17 @@
 # ChangeLog
 
+## 2026-09-11 晚（用户裁定回填：密钥移出 / M01-T007 撤销 / 演武场口径 / Saved 清理）
+
+- **AFS 密钥移出版本控制**（`CR-20260911-002` 由「未实施」转**已实施**）：`Config/DefaultEngine.ini` 的 `SecurityToken`（32 位十六进制）按用户裁定「**不轮换，仅移出版本控制**」移至项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\keys\afs-security-token.txt`；原行改为空值 + 4 行警示注释；**回读校验「明文值残留 = False」**（实测，非推断）。**⚠ 该值仍是一把有效钥匙**：自 `98b2eb7`（2026-08-09）起存在于公开仓库**全部历史提交**中，未轮换 ⇒ 本次性质是「**停止继续泄露**」，**不是消除已发生的暴露**；`bCompileAFSProject` 仍为 `False`（AFS 未编译，当前无可利用面），**启用 AFS 前须先轮换**。
+- **`M01-T007` 撤销**：用户裁定「m01 t007可以撤销，编号后面留着给别的任务吧」。`registers/07-task-register.md` 与 `execution/M01-CombatSlice.md` 状态格改为 **`archived`**（`policy.md` §6 合法状态集内）。**TD-011 仍缺的真机帧率复验须另立新编号，不得复用 T007。**
+- **演武场尺寸口径收口**：用户裁定「**演武场现在120*120我是满意的，但尺寸还可能调整，不是最终决策**」。唯一权威表述落于 `CR-20260911-001` §9.3：**现行 120×120（用户确认满意）· 尺寸待定，非最终**。三处旧值（`M01-T005/TASK.md:28,62` 的 20m×20m、`LevelDesignSpec.md` 的 70×70、`session-20260808-001.md` 的 70×70）回写待执行会话回报清单后落地。**rebuild 冻结令继续有效。**
+- **`CR-20260911-001` §3 全部改动获用户追认**：A1–A6（产品范围）、B1–B5、C1–C8、D1–D12、E1–E4、G1–G2、§3.7、§3.8 由「待追认」转**已追认**（用户原话：「把写错的改成对的 这批都对」）；追认记录见该 CR **§9.1**。
+- **`Docs/Scene/` 5 文件入库**：用户裁定「是演武场的介绍文件，方便我查阅的，上git吧」。注：t2 审计原判其「不应入库」（`rebuild_v5.py` 单源生成物 + 含 2.85 MB 非 LFS PNG）；**以用户裁定为准**，审计意见作为历史意见保留于审核报告、不追改（见 CR-001 §9.5）。
+- **`.agent-teams/` 4 个已跟踪文件移出索引**：`git rm --cached`（只动索引，磁盘文件与历史不变）。用户批准。忽略规则见 `.gitignore`。
+- **`Saved/` 历史脏数据清理 ≈ 600 MB**：删除 `Autosaves`（46）/ `Crashes`（315）/ `Logs` / `Temp` / `ShaderDebugInfo` / `MaterialStats` / `UnrealBuildTool` / `UE_MCP_Bridge` / `SourceControl` 与 28 个 `*.tmp` 残留、`AutoScreenshot.png`。**保留** `Evidence`（47 文件 / 43.8 MB，**唯一副本**）、`Shaders`（着色器编译缓存，**非脏数据**，删了要重编译）、`Screenshots`、`Cooked`、`StagedBuilds`。另删项目外已确认无关件：`E:\AWork\Tools\OpenBRF\openbrf.zip`（11.3 MB，同目录 `openBrf.exe` 已解压可用）、`E:\AWork\Temp\VRSanguoRef\OBJ\`（空目录）、`D:\AWork\TraeAdmin\VRSanguoYanWuchang\tmp\ci-repro\`（1,301 文件 / 58.9 MB，本会话门禁两环境核验用的临时克隆）。
+- **两处仪器失误据实记录**（均在提交前自查发现、均无副作用，属「未命中必须用第二种方法复核」的同一族）：① 删除脚本把函数命名为 `Del`，而 `del` 是 PowerShell `Remove-Item` 的**内置别名**，**别名优先级高于函数** ⇒ 首轮删除整体未执行（仅 `.tmp` 段生效），若不回读现场就会误报「已删」；② 首轮删除时**未察觉编辑器已由另一会话于 08:30:16 重开**，在编辑器运行中删了 `Autosaves` / `Crashes` —— 发现后**当即停手**，`Shaders` / `Cooked` / `StagedBuilds` / `Config` / `Temp` / `Evidence` / `Screenshots` **一个未动**。
+- **治理规则未变**：门禁仍 30 项。本轮治理正文改动后须复跑门禁，并在**项目外干净浅克隆**中确认 `EXIT=0`（「本地绿 ≠ CI 绿」）。
+
 ## 2026-09-11 续（门禁加固的 CI 判红事故与修复）
 
 - **事故**：本日治理提交 `cb7ab79` 在本机项目根跑 `dashboard/check-integrity.py` 得 `EXIT=0`（30 项 / 通过 27 / 警告 3 / 失败 0），**同一提交**在 `治理校验 CI 门禁` 判 **failure**（run `34501489803`，步骤级「治理一致性校验（严格模式）」=> failure；`pip install pyyaml` 步骤为 success，**非缺依赖**）。

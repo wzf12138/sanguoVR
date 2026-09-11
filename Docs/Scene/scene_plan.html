@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><title>三国演武场 · 场景文档 v5.6</title>
+<style>
+body{font-family:'Microsoft YaHei',sans-serif;max-width:1280px;margin:24px auto;padding:0 16px;background:#faf9f6;color:#1f2937}
+h1{border-bottom:3px solid #b91c1c;padding-bottom:8px} h2{color:#7c2d12;margin-top:36px}
+table{border-collapse:collapse;width:100%;font-size:13px} td,th{border:1px solid #d1cfc7;padding:5px 8px;text-align:left}
+th{background:#efe9dc} .meta{color:#666;font-size:13px} .warn{background:#fef3c7;border:1px solid #f59e0b;padding:10px;border-radius:6px}
+figure{margin:16px 0;text-align:center} figcaption{color:#666;font-size:12px}
+</style></head><body>
+<h1>三国演武场 · 场景文档（自动生成）</h1>
+<p class="meta">生成：2026-09-11 23:24 ｜ 单源：<code>rebuild_v5.py</code> ｜ 组件：388 ｜ 关卡：<code>/Game/VRSanguo/Dev/L_Prototype_1v1_v5</code> ｜ 版本 v5.6</p>
+<div class="warn"><b>勿手改本文档。</b>场景任何改动必须改脚本重跑——本文档与 <code>scene_modules.json</code>、
+<code>scene_topdown.png</code> 一同自动重写（<code>Docs\Scene</code> 只保留这三个文件，旧版 md/svg/raw 已自动清理），手改无效。</div>
+## 设计理念（静态稿，随脚本版本维护）
+
+**场景定位**：三国题材 VR 1v1 演武竞技场（灰盒阶段）。历史原型=汉代讲武/演武制度：平乐观讲武（188 年，双坛制、
+华盖、亲执枹鼓）、刘邦拜将坛（双夯土台、设坛场具礼）、历代演武场通制（阅兵台+旗杆台+合院+牌坊）、
+《三国演义》铜雀台夺锦袍（红锦袍彩头+分队比射=本项目 PK 玩法的历史原型）。门制出自《武经总要·讲武》
+"方一千二百步，四出为和门"——v5.6 起取三出（南主门+东西辕门）：北端由演武厅收尾（北堂南向通制），
+北门背对厅堂无人能用，强设四门反成缺陷。
+
+**布局语法**：北厅南场纵轴序列——南门(牌坊)→照迎空间→120m 校场(跑马环道+功能角)→三层拜将坛→演武厅(北端，背靠北墙)。
+统帅面南（北置将台）合"面南而王"；出生点位于南轴上，开门即见全场与坛剪影（第一眼构图已验证）。
+**动线**：中轴仪式线 + 围墙内 8m 跑马环道（骑战）+ 西侧功能角（靶场）+ 南门两侧廊庑（集结）。
+**地标天际线**：三层坛(5m) → 望楼(14.5m) → 帅旗(15m)，三层高度保证任意点位方向感。
+**灰盒纪律**：全部由 rebuild_v5.py 单源生成；改场景=改脚本重跑（文档自动重生成）；禁止编辑器手改。
+
+<h2>平面图（组件实测包围盒）</h2>
+<figure>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1060" font-family="Microsoft YaHei,sans-serif">
+<rect width="1240" height="1060" fill="#f6f4ef"/>
+<text x="120" y="35" font-size="20" font-weight="bold">三国演武场 平面图（组件实测包围盒 380 个）· 2026-09-11 23:24</text>
+<text x="120" y="55" font-size="12" fill="#666">由关卡 StaticMeshActor 实测包围盒生成，与场景严格一致 · 鼠标悬停矩形可看组件名 · 北▲上</text>
+<rect x="120.000000" y="70.000000" width="900" height="900" fill="#efe9dc" stroke="#6b7280" stroke-width="3"/>
+<rect x="116.250000" y="66.250000" width="907.500000" height="907.500000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Floor_Under</title></rect>
+<rect x="118.500000" y="743.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_0_0</title></rect>
+<rect x="118.500000" y="518.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_0_1</title></rect>
+<rect x="118.500000" y="293.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_0_2</title></rect>
+<rect x="118.500000" y="68.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_0_3</title></rect>
+<rect x="343.500000" y="743.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_1_0</title></rect>
+<rect x="343.500000" y="518.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_1_1</title></rect>
+<rect x="343.500000" y="293.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_1_2</title></rect>
+<rect x="343.500000" y="68.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_1_3</title></rect>
+<rect x="568.500000" y="743.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_2_0</title></rect>
+<rect x="568.500000" y="518.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_2_1</title></rect>
+<rect x="568.500000" y="293.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_2_2</title></rect>
+<rect x="568.500000" y="68.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_2_3</title></rect>
+<rect x="793.500000" y="743.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_3_0</title></rect>
+<rect x="793.500000" y="518.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_3_1</title></rect>
+<rect x="793.500000" y="293.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_3_2</title></rect>
+<rect x="793.500000" y="68.500000" width="228.000000" height="228.000000" fill="#e9e4d6" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FloorTile_3_3</title></rect>
+<rect x="465.000000" y="92.500000" width="210.000000" height="105.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Tier1</title></rect>
+<rect x="487.500000" y="92.500000" width="165.000000" height="82.500000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Tier2</title></rect>
+<rect x="616.875000" y="911.875000" width="198.750000" height="56.250000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Roof</title></rect>
+<rect x="324.375000" y="911.875000" width="198.750000" height="56.250000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Roof</title></rect>
+<rect x="733.125000" y="98.125000" width="123.750000" height="78.750000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Roof</title></rect>
+<rect x="517.500000" y="100.000000" width="105.000000" height="52.500000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Tier3</title></rect>
+<rect x="210.000000" y="351.250000" width="22.500000" height="67.500000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Shed_Roof</title></rect>
+<rect x="618.750000" y="962.500000" width="195.000000" height="3.750000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Back</title></rect>
+<rect x="326.250000" y="962.500000" width="195.000000" height="3.750000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Back</title></rect>
+<rect x="948.749998" y="118.749998" width="22.500003" height="22.500003" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Deck</title></rect>
+<rect x="948.749998" y="898.749998" width="22.500003" height="22.500003" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Deck</title></rect>
+<rect x="168.749998" y="118.749998" width="22.500003" height="22.500003" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Deck</title></rect>
+<rect x="168.749998" y="898.749998" width="22.500003" height="22.500003" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Deck</title></rect>
+<rect x="735.000000" y="100.000000" width="120.000000" height="3.750000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Back</title></rect>
+<rect x="735.000000" y="171.250000" width="120.000000" height="3.750000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_South</title></rect>
+<rect x="521.250000" y="965.875000" width="97.500000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GateBeam_S</title></rect>
+<rect x="532.500000" y="965.875000" width="75.000000" height="3.750000" fill="#6b7280" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Arch_Paifang_Beam</title></rect>
+<rect x="851.250000" y="100.000000" width="3.750000" height="75.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_East</title></rect>
+<rect x="685.500000" y="166.750000" width="16.500000" height="16.500000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_CapA</title></rect>
+<rect x="438.000000" y="166.750000" width="16.500000" height="16.500000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_CapA</title></rect>
+<rect x="952.499999" y="122.499999" width="15.000002" height="15.000002" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Shaft</title></rect>
+<rect x="952.499999" y="902.499999" width="15.000002" height="15.000002" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Shaft</title></rect>
+<rect x="172.499999" y="122.499999" width="15.000002" height="15.000002" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Shaft</title></rect>
+<rect x="172.499999" y="902.499999" width="15.000002" height="15.000002" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Shaft</title></rect>
+<rect x="540.000000" y="212.500000" width="60.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_A_01</title></rect>
+<rect x="540.000000" y="208.750000" width="60.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_A_02</title></rect>
+<rect x="540.000000" y="205.000000" width="60.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_A_03</title></rect>
+<rect x="540.000000" y="201.250000" width="60.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_A_04</title></rect>
+<rect x="540.000000" y="197.500000" width="60.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_A_05</title></rect>
+<rect x="622.500000" y="880.000000" width="15.000000" height="15.000000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FlagStand_E_Base</title></rect>
+<rect x="502.500000" y="880.000000" width="15.000000" height="15.000000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FlagStand_W_Base</title></rect>
+<rect x="735.375000" y="103.000000" width="3.000000" height="69.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Lintel</title></rect>
+<rect x="618.750000" y="913.750000" width="3.750000" height="52.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_EndA</title></rect>
+<rect x="810.000000" y="913.750000" width="3.750000" height="52.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_EndB</title></rect>
+<rect x="326.250000" y="913.750000" width="3.750000" height="52.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_EndA</title></rect>
+<rect x="517.500000" y="913.750000" width="3.750000" height="52.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_EndB</title></rect>
+<rect x="122.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_0</title></rect>
+<rect x="167.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_1</title></rect>
+<rect x="212.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_2</title></rect>
+<rect x="257.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_3</title></rect>
+<rect x="302.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_4</title></rect>
+<rect x="347.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_5</title></rect>
+<rect x="392.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_6</title></rect>
+<rect x="437.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_7</title></rect>
+<rect x="482.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_8</title></rect>
+<rect x="617.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_11</title></rect>
+<rect x="662.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_12</title></rect>
+<rect x="707.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_13</title></rect>
+<rect x="752.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_14</title></rect>
+<rect x="797.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_15</title></rect>
+<rect x="842.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_16</title></rect>
+<rect x="887.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_17</title></rect>
+<rect x="932.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_18</title></rect>
+<rect x="977.250000" y="965.875000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_S_19</title></rect>
+<rect x="122.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_0</title></rect>
+<rect x="167.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_1</title></rect>
+<rect x="212.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_2</title></rect>
+<rect x="257.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_3</title></rect>
+<rect x="302.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_4</title></rect>
+<rect x="347.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_5</title></rect>
+<rect x="392.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_6</title></rect>
+<rect x="437.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_7</title></rect>
+<rect x="482.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_8</title></rect>
+<rect x="527.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_9</title></rect>
+<rect x="572.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_10</title></rect>
+<rect x="617.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_11</title></rect>
+<rect x="662.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_12</title></rect>
+<rect x="707.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_13</title></rect>
+<rect x="752.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_14</title></rect>
+<rect x="797.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_15</title></rect>
+<rect x="842.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_16</title></rect>
+<rect x="887.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_17</title></rect>
+<rect x="932.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_18</title></rect>
+<rect x="977.250000" y="70.375000" width="45.000000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_N_19</title></rect>
+<rect x="1015.875000" y="922.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_0</title></rect>
+<rect x="1015.875000" y="877.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_1</title></rect>
+<rect x="1015.875000" y="832.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_2</title></rect>
+<rect x="1015.875000" y="787.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_3</title></rect>
+<rect x="1015.875000" y="742.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_4</title></rect>
+<rect x="1015.875000" y="697.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_5</title></rect>
+<rect x="1015.875000" y="652.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_6</title></rect>
+<rect x="1015.875000" y="607.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_7</title></rect>
+<rect x="1015.875000" y="562.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_8</title></rect>
+<rect x="1015.875000" y="427.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_11</title></rect>
+<rect x="1015.875000" y="382.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_12</title></rect>
+<rect x="1015.875000" y="337.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_13</title></rect>
+<rect x="1015.875000" y="292.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_14</title></rect>
+<rect x="1015.875000" y="247.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_15</title></rect>
+<rect x="1015.875000" y="202.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_16</title></rect>
+<rect x="1015.875000" y="157.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_17</title></rect>
+<rect x="1015.875000" y="112.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_18</title></rect>
+<rect x="1015.875000" y="67.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_E_19</title></rect>
+<rect x="120.375000" y="922.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_0</title></rect>
+<rect x="120.375000" y="877.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_1</title></rect>
+<rect x="120.375000" y="832.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_2</title></rect>
+<rect x="120.375000" y="787.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_3</title></rect>
+<rect x="120.375000" y="742.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_4</title></rect>
+<rect x="120.375000" y="697.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_5</title></rect>
+<rect x="120.375000" y="652.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_6</title></rect>
+<rect x="120.375000" y="607.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_7</title></rect>
+<rect x="120.375000" y="562.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_8</title></rect>
+<rect x="120.375000" y="427.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_11</title></rect>
+<rect x="120.375000" y="382.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_12</title></rect>
+<rect x="120.375000" y="337.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_13</title></rect>
+<rect x="120.375000" y="292.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_14</title></rect>
+<rect x="120.375000" y="247.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_15</title></rect>
+<rect x="120.375000" y="202.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_16</title></rect>
+<rect x="120.375000" y="157.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_17</title></rect>
+<rect x="120.375000" y="112.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_18</title></rect>
+<rect x="120.375000" y="67.750000" width="3.750000" height="45.000000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_W_19</title></rect>
+<rect x="547.500000" y="190.000000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_B_01</title></rect>
+<rect x="547.500000" y="186.250000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_B_02</title></rect>
+<rect x="547.500000" y="182.500000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_B_03</title></rect>
+<rect x="547.500000" y="178.750000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_B_04</title></rect>
+<rect x="547.500000" y="175.000000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_B_05</title></rect>
+<rect x="547.500000" y="167.500000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_C_01</title></rect>
+<rect x="547.500000" y="163.750000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_C_02</title></rect>
+<rect x="547.500000" y="160.000000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_C_03</title></rect>
+<rect x="547.500000" y="156.250000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_C_04</title></rect>
+<rect x="547.500000" y="152.500000" width="45.000000" height="3.750000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_Step_C_05</title></rect>
+<rect x="624.750000" y="148.750000" width="10.500000" height="15.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_E_Base</title></rect>
+<rect x="504.750000" y="148.750000" width="10.500000" height="15.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_W_Base</title></rect>
+<rect x="1015.875000" y="501.250000" width="3.750000" height="37.500000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GateBeam_E</title></rect>
+<rect x="120.375000" y="501.250000" width="3.750000" height="37.500000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GateBeam_W</title></rect>
+<rect x="219.375000" y="266.875000" width="11.250000" height="11.250000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_JinPao_Base</title></rect>
+<rect x="646.875000" y="925.750000" width="18.750000" height="6.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Bench_0</title></rect>
+<rect x="706.875000" y="925.750000" width="18.750000" height="6.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Bench_1</title></rect>
+<rect x="766.875000" y="925.750000" width="18.750000" height="6.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Bench_2</title></rect>
+<rect x="354.375000" y="925.750000" width="18.750000" height="6.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Bench_0</title></rect>
+<rect x="414.375000" y="925.750000" width="18.750000" height="6.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Bench_1</title></rect>
+<rect x="474.375000" y="925.750000" width="18.750000" height="6.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Bench_2</title></rect>
+<rect x="688.500000" y="169.750000" width="10.500000" height="10.500000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_CapB</title></rect>
+<rect x="441.000000" y="169.750000" width="10.500000" height="10.500000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_CapB</title></rect>
+<rect x="1015.875000" y="472.750000" width="3.750000" height="28.500000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_Filler_E_3</title></rect>
+<rect x="120.375000" y="472.750000" width="3.750000" height="28.500000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_Filler_W_3</title></rect>
+<rect x="1015.875000" y="538.750000" width="3.750000" height="28.500000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_Filler_E_1</title></rect>
+<rect x="120.375000" y="538.750000" width="3.750000" height="28.500000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wall_Filler_W_1</title></rect>
+<rect x="150.000000" y="452.125000" width="105.000000" height="0.800000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Lane_0</title></rect>
+<rect x="150.000000" y="384.625000" width="105.000000" height="0.800000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Lane_1</title></rect>
+<rect x="150.000000" y="317.125000" width="105.000000" height="0.800000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Lane_2</title></rect>
+<rect x="690.000000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_A_01</title></rect>
+<rect x="686.250000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_A_02</title></rect>
+<rect x="682.500000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_A_03</title></rect>
+<rect x="678.750000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_A_04</title></rect>
+<rect x="675.000000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_A_05</title></rect>
+<rect x="667.500000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_B_01</title></rect>
+<rect x="663.750000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_B_02</title></rect>
+<rect x="660.000000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_B_03</title></rect>
+<rect x="656.250000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_B_04</title></rect>
+<rect x="652.500000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_B_05</title></rect>
+<rect x="637.500000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_C_01</title></rect>
+<rect x="633.750000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_C_02</title></rect>
+<rect x="630.000000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_C_03</title></rect>
+<rect x="626.250000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_C_04</title></rect>
+<rect x="622.500000" y="128.500000" width="3.750000" height="18.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_StepE_C_05</title></rect>
+<rect x="642.750000" y="77.500000" width="4.500000" height="15.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_E_Base</title></rect>
+<rect x="642.750000" y="77.500000" width="4.500000" height="15.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_E_Bar</title></rect>
+<rect x="492.750000" y="77.500000" width="4.500000" height="15.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_W_Base</title></rect>
+<rect x="492.750000" y="77.500000" width="4.500000" height="15.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_W_Bar</title></rect>
+<rect x="714.000000" y="947.500000" width="4.500000" height="15.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Rack_Base</title></rect>
+<rect x="714.000000" y="947.500000" width="4.500000" height="15.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Rack_Bar</title></rect>
+<rect x="421.500000" y="947.500000" width="4.500000" height="15.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Rack_Base</title></rect>
+<rect x="421.500000" y="947.500000" width="4.500000" height="15.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Rack_Bar</title></rect>
+<rect x="669.000000" y="493.750000" width="4.500000" height="15.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_E_Base</title></rect>
+<rect x="669.000000" y="493.750000" width="4.500000" height="15.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_E_Bar</title></rect>
+<rect x="466.500000" y="493.750000" width="4.500000" height="15.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_W_Base</title></rect>
+<rect x="466.500000" y="493.750000" width="4.500000" height="15.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_W_Bar</title></rect>
+<rect x="628.125000" y="149.500000" width="3.750000" height="13.500000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_E_Beam</title></rect>
+<rect x="508.125000" y="149.500000" width="3.750000" height="13.500000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_W_Beam</title></rect>
+<rect x="690.375000" y="171.625000" width="6.750000" height="6.750000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_Drum</title></rect>
+<rect x="442.875000" y="171.625000" width="6.750000" height="6.750000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_Drum</title></rect>
+<rect x="948.000000" y="118.000000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Rail</title></rect>
+<rect x="948.000000" y="140.500000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Rail</title></rect>
+<rect x="970.500000" y="118.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Rail</title></rect>
+<rect x="948.000000" y="118.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Rail</title></rect>
+<rect x="948.000000" y="898.000000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Rail</title></rect>
+<rect x="948.000000" y="920.500000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Rail</title></rect>
+<rect x="970.500000" y="898.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Rail</title></rect>
+<rect x="948.000000" y="898.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Rail</title></rect>
+<rect x="168.000000" y="118.000000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Rail</title></rect>
+<rect x="168.000000" y="140.500000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Rail</title></rect>
+<rect x="190.500000" y="118.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Rail</title></rect>
+<rect x="168.000000" y="118.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Rail</title></rect>
+<rect x="168.000000" y="898.000000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Rail</title></rect>
+<rect x="168.000000" y="920.500000" width="24.000000" height="1.500000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Rail</title></rect>
+<rect x="190.500000" y="898.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Rail</title></rect>
+<rect x="168.000000" y="898.000000" width="1.500000" height="24.000000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Rail</title></rect>
+<rect x="686.250000" y="151.000000" width="7.500000" height="3.000000" fill="#64748b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Stele_E</title></rect>
+<rect x="446.250000" y="151.000000" width="7.500000" height="3.000000" fill="#64748b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Stele_W</title></rect>
+<rect x="627.375000" y="154.187500" width="5.250000" height="4.125000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_E_Drum</title></rect>
+<rect x="507.375000" y="154.187500" width="5.250000" height="4.125000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_W_Drum</title></rect>
+<rect x="507.750000" y="85.750000" width="4.500000" height="4.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_0_Base</title></rect>
+<rect x="537.750000" y="85.750000" width="4.500000" height="4.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_1_Base</title></rect>
+<rect x="567.750000" y="85.750000" width="4.500000" height="4.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_2_Base</title></rect>
+<rect x="597.750000" y="85.750000" width="4.500000" height="4.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_3_Base</title></rect>
+<rect x="627.750000" y="85.750000" width="4.500000" height="4.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_4_Base</title></rect>
+<rect x="740.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_0</title></rect>
+<rect x="755.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_1</title></rect>
+<rect x="770.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_2</title></rect>
+<rect x="785.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_3</title></rect>
+<rect x="800.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_4</title></rect>
+<rect x="815.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_5</title></rect>
+<rect x="830.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_6</title></rect>
+<rect x="845.250000" y="106.750000" width="4.500000" height="4.500000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Warrior_7</title></rect>
+<rect x="387.750000" y="315.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_0_Base</title></rect>
+<rect x="477.750000" y="315.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_1_Base</title></rect>
+<rect x="567.750000" y="315.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_2_Base</title></rect>
+<rect x="657.750000" y="315.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_3_Base</title></rect>
+<rect x="747.750000" y="315.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_4_Base</title></rect>
+<rect x="207.750000" y="965.500000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_0_Base</title></rect>
+<rect x="297.750000" y="965.500000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_1_Base</title></rect>
+<rect x="837.750000" y="965.500000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_2_Base</title></rect>
+<rect x="927.750000" y="965.500000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_3_Base</title></rect>
+<rect x="207.750000" y="70.000000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_4_Base</title></rect>
+<rect x="387.750000" y="70.000000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_5_Base</title></rect>
+<rect x="747.750000" y="70.000000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_6_Base</title></rect>
+<rect x="927.750000" y="70.000000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_7_Base</title></rect>
+<rect x="1015.500000" y="832.750000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_8_Base</title></rect>
+<rect x="1015.500000" y="675.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_9_Base</title></rect>
+<rect x="1015.500000" y="360.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_10_Base</title></rect>
+<rect x="1015.500000" y="202.750000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_11_Base</title></rect>
+<rect x="120.000000" y="832.750000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_12_Base</title></rect>
+<rect x="120.000000" y="675.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_13_Base</title></rect>
+<rect x="120.000000" y="360.250000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_14_Base</title></rect>
+<rect x="120.000000" y="202.750000" width="4.500000" height="4.500000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_15_Base</title></rect>
+<rect x="521.250000" y="965.875000" width="3.750000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GatePost_S_L</title></rect>
+<rect x="615.000000" y="965.875000" width="3.750000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GatePost_S_R</title></rect>
+<rect x="1015.875000" y="535.000000" width="3.750000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GatePost_E_L</title></rect>
+<rect x="1015.875000" y="501.250000" width="3.750000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GatePost_E_R</title></rect>
+<rect x="120.375000" y="535.000000" width="3.750000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GatePost_W_L</title></rect>
+<rect x="120.375000" y="501.250000" width="3.750000" height="3.750000" fill="#cbb994" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_GatePost_W_R</title></rect>
+<rect x="604.125000" y="965.875000" width="3.750000" height="3.750000" fill="#6b7280" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Arch_Paifang_Post_3</title></rect>
+<rect x="532.125000" y="965.875000" width="3.750000" height="3.750000" fill="#6b7280" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Arch_Paifang_Post_1</title></rect>
+<rect x="691.875000" y="173.125000" width="3.750000" height="3.750000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_Stand</title></rect>
+<rect x="444.375000" y="173.125000" width="3.750000" height="3.750000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_Stand</title></rect>
+<rect x="570.750000" y="111.025000" width="22.500000" height="0.800000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_ShuaiFlag_Flag</title></rect>
+<rect x="220.500000" y="271.937500" width="9.000000" height="1.125000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_JinPao_Robe</title></rect>
+<rect x="686.625000" y="179.125000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_Post_11</title></rect>
+<rect x="686.625000" y="167.875000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_Post_13</title></rect>
+<rect x="697.875000" y="179.125000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_Post_31</title></rect>
+<rect x="697.875000" y="167.875000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_E_Post_33</title></rect>
+<rect x="439.125000" y="179.125000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_Post_11</title></rect>
+<rect x="439.125000" y="167.875000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_Post_13</title></rect>
+<rect x="450.375000" y="179.125000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_Post_31</title></rect>
+<rect x="450.375000" y="167.875000" width="3.000000" height="3.000000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumPavilion_W_Post_33</title></rect>
+<rect x="568.500000" y="109.750000" width="3.000000" height="3.000000" fill="#b45309" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Jiangtai_ShuaiFlag_Pole</title></rect>
+<rect x="735.375000" y="166.000000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Post_0</title></rect>
+<rect x="735.375000" y="151.000000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Post_1</title></rect>
+<rect x="735.375000" y="136.000000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Post_2</title></rect>
+<rect x="735.375000" y="121.000000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Post_3</title></rect>
+<rect x="735.375000" y="106.000000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Hall_Post_4</title></rect>
+<rect x="649.125000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Post_0</title></rect>
+<rect x="675.375000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Post_1</title></rect>
+<rect x="701.625000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Post_2</title></rect>
+<rect x="727.875000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Post_3</title></rect>
+<rect x="754.125000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Post_4</title></rect>
+<rect x="780.375000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Post_5</title></rect>
+<rect x="356.625000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Post_0</title></rect>
+<rect x="382.875000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Post_1</title></rect>
+<rect x="409.125000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Post_2</title></rect>
+<rect x="435.375000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Post_3</title></rect>
+<rect x="461.625000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Post_4</title></rect>
+<rect x="487.875000" y="915.625000" width="3.000000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Post_5</title></rect>
+<rect x="390.750000" y="317.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_0_Flag</title></rect>
+<rect x="480.750000" y="317.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_1_Flag</title></rect>
+<rect x="570.750000" y="317.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_2_Flag</title></rect>
+<rect x="660.750000" y="317.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_3_Flag</title></rect>
+<rect x="750.750000" y="317.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_4_Flag</title></rect>
+<rect x="630.750000" y="887.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FlagStand_E_Flag</title></rect>
+<rect x="510.750000" y="887.275000" width="13.500000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FlagStand_W_Flag</title></rect>
+<rect x="212.625000" y="413.875000" width="2.250000" height="2.250000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Shed_Post_0_0</title></rect>
+<rect x="212.625000" y="353.875000" width="2.250000" height="2.250000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Shed_Post_0_1</title></rect>
+<rect x="227.625000" y="413.875000" width="2.250000" height="2.250000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Shed_Post_1_0</title></rect>
+<rect x="227.625000" y="353.875000" width="2.250000" height="2.250000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_Shed_Post_1_1</title></rect>
+<rect x="223.875000" y="271.375000" width="2.250000" height="2.250000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_JinPao_Pole</title></rect>
+<rect x="628.875000" y="886.375000" width="2.250000" height="2.250000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FlagStand_E_Pole</title></rect>
+<rect x="508.875000" y="886.375000" width="2.250000" height="2.250000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_FlagStand_W_Pole</title></rect>
+<rect x="210.750000" y="967.525000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_0_Flag</title></rect>
+<rect x="300.750000" y="967.525000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_1_Flag</title></rect>
+<rect x="840.750000" y="967.525000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_2_Flag</title></rect>
+<rect x="930.750000" y="967.525000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_3_Flag</title></rect>
+<rect x="210.750000" y="72.025000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_4_Flag</title></rect>
+<rect x="390.750000" y="72.025000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_5_Flag</title></rect>
+<rect x="750.750000" y="72.025000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_6_Flag</title></rect>
+<rect x="930.750000" y="72.025000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_7_Flag</title></rect>
+<rect x="1018.500000" y="834.775000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_8_Flag</title></rect>
+<rect x="1018.500000" y="677.275000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_9_Flag</title></rect>
+<rect x="1018.500000" y="362.275000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_10_Flag</title></rect>
+<rect x="1018.500000" y="204.775000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_11_Flag</title></rect>
+<rect x="123.000000" y="834.775000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_12_Flag</title></rect>
+<rect x="123.000000" y="677.275000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_13_Flag</title></rect>
+<rect x="123.000000" y="362.275000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_14_Flag</title></rect>
+<rect x="123.000000" y="204.775000" width="11.250000" height="0.800000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_15_Flag</title></rect>
+<rect x="958.875000" y="128.875000" width="2.250000" height="2.250000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_FlagPole</title></rect>
+<rect x="958.875000" y="908.875000" width="2.250000" height="2.250000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_FlagPole</title></rect>
+<rect x="178.875000" y="128.875000" width="2.250000" height="2.250000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_FlagPole</title></rect>
+<rect x="178.875000" y="908.875000" width="2.250000" height="2.250000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_FlagPole</title></rect>
+<rect x="510.750000" y="87.775000" width="9.000000" height="0.800000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_0_Flag</title></rect>
+<rect x="540.750000" y="87.775000" width="9.000000" height="0.800000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_1_Flag</title></rect>
+<rect x="570.750000" y="87.775000" width="9.000000" height="0.800000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_2_Flag</title></rect>
+<rect x="600.750000" y="87.775000" width="9.000000" height="0.800000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_3_Flag</title></rect>
+<rect x="630.750000" y="87.775000" width="9.000000" height="0.800000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_4_Flag</title></rect>
+<rect x="960.750000" y="129.775000" width="9.000000" height="0.800000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_EN_Flag</title></rect>
+<rect x="960.750000" y="909.775000" width="9.000000" height="0.800000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_ES_Flag</title></rect>
+<rect x="180.750000" y="129.775000" width="9.000000" height="0.800000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WN_Flag</title></rect>
+<rect x="180.750000" y="909.775000" width="9.000000" height="0.800000" fill="#4a55a2" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Wanglou_WS_Flag</title></rect>
+<rect x="162.937500" y="451.562500" width="1.875000" height="1.875000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_0_Stake</title></rect>
+<rect x="162.937500" y="384.062500" width="1.875000" height="1.875000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_1_Stake</title></rect>
+<rect x="162.937500" y="316.562500" width="1.875000" height="1.875000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_2_Stake</title></rect>
+<rect x="629.100000" y="162.100000" width="1.800000" height="1.800000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_E_Post_N</title></rect>
+<rect x="629.100000" y="148.600000" width="1.800000" height="1.800000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_E_Post_S</title></rect>
+<rect x="509.100000" y="162.100000" width="1.800000" height="1.800000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_W_Post_N</title></rect>
+<rect x="509.100000" y="148.600000" width="1.800000" height="1.800000" fill="#7c2d12" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_DrumStand_W_Post_S</title></rect>
+<rect x="164.700000" y="450.062500" width="0.800000" height="4.875000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_0_Face</title></rect>
+<rect x="164.700000" y="382.562500" width="0.800000" height="4.875000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_1_Face</title></rect>
+<rect x="164.700000" y="315.062500" width="0.800000" height="4.875000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_2_Face</title></rect>
+<rect x="509.250000" y="87.250000" width="1.500000" height="1.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_0_Pole</title></rect>
+<rect x="539.250000" y="87.250000" width="1.500000" height="1.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_1_Pole</title></rect>
+<rect x="569.250000" y="87.250000" width="1.500000" height="1.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_2_Pole</title></rect>
+<rect x="599.250000" y="87.250000" width="1.500000" height="1.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_3_Pole</title></rect>
+<rect x="629.250000" y="87.250000" width="1.500000" height="1.500000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Flag_4_Pole</title></rect>
+<rect x="644.700000" y="89.125000" width="0.800000" height="3.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_E_Blade_0</title></rect>
+<rect x="644.700000" y="83.500000" width="0.800000" height="3.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_E_Blade_1</title></rect>
+<rect x="644.700000" y="77.875000" width="0.800000" height="3.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_E_Blade_2</title></rect>
+<rect x="494.700000" y="89.125000" width="0.800000" height="3.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_W_Blade_0</title></rect>
+<rect x="494.700000" y="83.500000" width="0.800000" height="3.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_W_Blade_1</title></rect>
+<rect x="494.700000" y="77.875000" width="0.800000" height="3.000000" fill="#9aa5b1" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_NorthGap_Rack_W_Blade_2</title></rect>
+<rect x="715.950000" y="959.125000" width="0.800000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Rack_Blade_0</title></rect>
+<rect x="715.950000" y="953.500000" width="0.800000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Rack_Blade_1</title></rect>
+<rect x="715.950000" y="947.875000" width="0.800000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_E_Rack_Blade_2</title></rect>
+<rect x="423.450000" y="959.125000" width="0.800000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Rack_Blade_0</title></rect>
+<rect x="423.450000" y="953.500000" width="0.800000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Rack_Blade_1</title></rect>
+<rect x="423.450000" y="947.875000" width="0.800000" height="3.000000" fill="#8b5a2b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Gallery_W_Rack_Blade_2</title></rect>
+<rect x="670.950000" y="505.375000" width="0.800000" height="3.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_E_Blade_0</title></rect>
+<rect x="670.950000" y="499.750000" width="0.800000" height="3.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_E_Blade_1</title></rect>
+<rect x="670.950000" y="494.125000" width="0.800000" height="3.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_E_Blade_2</title></rect>
+<rect x="468.450000" y="505.375000" width="0.800000" height="3.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_W_Blade_0</title></rect>
+<rect x="468.450000" y="499.750000" width="0.800000" height="3.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_W_Blade_1</title></rect>
+<rect x="468.450000" y="494.125000" width="0.800000" height="3.000000" fill="#374151" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_WeaponRack_W_Blade_2</title></rect>
+<rect x="389.437500" y="316.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_0_Pole</title></rect>
+<rect x="479.437500" y="316.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_1_Pole</title></rect>
+<rect x="569.437500" y="316.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_2_Pole</title></rect>
+<rect x="659.437500" y="316.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_3_Pole</title></rect>
+<rect x="749.437500" y="316.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wufang_4_Pole</title></rect>
+<rect x="209.437500" y="967.187500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_0_Pole</title></rect>
+<rect x="299.437500" y="967.187500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_1_Pole</title></rect>
+<rect x="839.437500" y="967.187500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_2_Pole</title></rect>
+<rect x="929.437500" y="967.187500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_3_Pole</title></rect>
+<rect x="209.437500" y="71.687500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_4_Pole</title></rect>
+<rect x="389.437500" y="71.687500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_5_Pole</title></rect>
+<rect x="749.437500" y="71.687500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_6_Pole</title></rect>
+<rect x="929.437500" y="71.687500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_7_Pole</title></rect>
+<rect x="1017.187500" y="834.437500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_8_Pole</title></rect>
+<rect x="1017.187500" y="676.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_9_Pole</title></rect>
+<rect x="1017.187500" y="361.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_10_Pole</title></rect>
+<rect x="1017.187500" y="204.437500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_11_Pole</title></rect>
+<rect x="121.687500" y="834.437500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_12_Pole</title></rect>
+<rect x="121.687500" y="676.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_13_Pole</title></rect>
+<rect x="121.687500" y="361.937500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_14_Pole</title></rect>
+<rect x="121.687500" y="204.437500" width="1.125000" height="1.125000" fill="#c0392b" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Flag_Wall_15_Pole</title></rect>
+<rect x="165.375000" y="451.750000" width="0.800000" height="1.500000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_0_Heart</title></rect>
+<rect x="165.375000" y="384.250000" width="0.800000" height="1.500000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_1_Heart</title></rect>
+<rect x="165.375000" y="316.750000" width="0.800000" height="1.500000" fill="#1e7e46" opacity="0.55" stroke="#4b5563" stroke-width="0.4"><title>SM_Target_2_Heart</title></rect>
+<text x="570.000000" y="186.250000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">拜将坛(三层)</text>
+<text x="570.000000" y="103.750000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">演武厅(北端)</text>
+<text x="716.250000" y="940.000000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">廊庑E</text>
+<text x="423.750000" y="940.000000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">廊庑W</text>
+<text x="165.000000" y="385.000000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">靶场(圆草靶×3)</text>
+<text x="570.000000" y="967.750000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">南门+牌坊</text>
+<text x="570.000000" y="670.000000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">出生点▲</text>
+<text x="570.000000" y="317.500000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">五方旗</text>
+<text x="960.000000" y="130.000000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">望楼×4</text>
+<text x="682.500000" y="231.250000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">鼓亭</text>
+<text x="225.000000" y="272.500000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">锦袍杆</text>
+<text x="570.000000" y="917.500000" font-size="13" fill="#1f2937" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke">▼</text>
+<text x="1050" y="90" font-size="14" font-weight="bold">图例</text>
+<rect x="1050" y="110" width="14" height="14" fill="#cbb994"/><text x="1070" y="121" font-size="12">墙/门</text>
+<rect x="1050" y="134" width="14" height="14" fill="#e9e4d6"/><text x="1070" y="145" font-size="12">地面</text>
+<rect x="1050" y="158" width="14" height="14" fill="#b45309"/><text x="1070" y="169" font-size="12">拜将坛</text>
+<rect x="1050" y="182" width="14" height="14" fill="#8b5a2b"/><text x="1070" y="193" font-size="12">厅/廊</text>
+<rect x="1050" y="206" width="14" height="14" fill="#c0392b"/><text x="1070" y="217" font-size="12">旗</text>
+<rect x="1050" y="230" width="14" height="14" fill="#1e7e46"/><text x="1070" y="241" font-size="12">靶/锦袍</text>
+<rect x="1050" y="254" width="14" height="14" fill="#4a55a2"/><text x="1070" y="265" font-size="12">望楼</text>
+<rect x="1050" y="278" width="14" height="14" fill="#7c2d12"/><text x="1070" y="289" font-size="12">鼓</text>
+<rect x="1050" y="302" width="14" height="14" fill="#64748b"/><text x="1070" y="313" font-size="12">碑</text>
+<rect x="1050" y="326" width="14" height="14" fill="#374151"/><text x="1070" y="337" font-size="12">兵器架</text>
+<rect x="1050" y="350" width="14" height="14" fill="#6b7280"/><text x="1070" y="361" font-size="12">牌坊</text>
+<rect x="1050" y="374" width="14" height="14" fill="#9aa5b1"/><text x="1070" y="385" font-size="12">其他</text>
+<text x="1050" y="410" font-size="11" fill="#666">比例尺 30m ┊ 北▲上</text>
+<line x1="120" y1="1010" x2="345" y2="1010" stroke="#333" stroke-width="2"/><text x="120" y="1030" font-size="11">30m</text>
+</svg>
+<figcaption>俯视平面 · 北朝上 · 每个矩形=一个场景组件的实测包围盒，与场景严格一致，悬停可看组件名；
+另附 <code>scene_topdown.png</code> 为引擎正交俯拍实景（同向北上，与平面图互证）</figcaption>
+</figure>
+<h2>模块总表（21 个模块 · 资产/锚点/史料）</h2>
+<table><tr><th>id</th><th>名称</th><th>类别</th><th>锚点(cm)</th><th>尺寸(cm)</th><th>史料/出处</th><th>功能</th></tr>
+| floor | 校场地坪 | 结构 | (0,0) | 12000x12000 | — | 承载全场景；1m 网格提供 VR 尺度感与深度参照 |
+| walls | 围墙系统 | 结构 | (0,0) | 12000x12000 | 营垒垣墙 | 场地边界+围合感 |
+| gates | 三出辕门 | 结构 | (0,-5970) | 1300x100 | 《武经总要·讲武》"四出为和门"；v5.6 取三出（北端为演武厅，北门撤除——厅背堵门缺陷） | 出入动线：南主门 12m+东西辕门 4m；北墙连续由厅收尾 |
+| paifang | 南门牌坊 | 结构 | (0,-5970) | 1000x50 | 演武场"部分设牌坊" | 主门仪式门面 |
+| altar | 三层拜将坛 | 仪式 | (0,5000) | 2800x1400 | 平乐观大坛(188)+拜将坛遗址 | 点将/授印/颁奖高点+北端背景板（v5.8 中轴后移 9m，北缝军旗器械架遮挡；v5.8c 面积扩至 28x14、顶层护栏/点将桌/三鼓撤除、南主梯加宽 800/600、二层东南西南角立鼓x2 可敲） |
+| east_stairs | 坛东梯 | 结构 | (1400,5100) | 250x240 | v5.8 用户设计：面向演武厅的登坛线；v5.8b 用户"别缩短"回退与南主梯同规格（15 步 33.3cm、跑深 250/段） | 选将后登坛受令动线；三段贴东立面，步高 33.3cm 同南主梯 |
+| drum_pavilions | 鼓亭×2 | 仪式 | (1650,4600) | 220x220 | 平乐观"亲执枹鼓" | 指挥鼓点（坛脚东西各一，不占坛面服务路线） |
+| command_deck | 坛面鼓旗组 | 仪式 | (800,4850) | 2200x1100 | v5.8c：顶层三鼓/点将桌撤除；v5.8d 用户"立鼓是立着的圆饼"改堂鼓式立盘鼓x2（M02 打击交互） | 立盘鼓x2 二层东南/西南角（立式双面盘鼓，皮心高 1.25m 可敲）+帅旗 10m 居中 |
+| steles | 碑石×2 | 仪式 | (1600,4900) | 100x40 | 拜将坛台脚立碑 | 场景叙事锚点 |
+| hall | 演武厅（选将殿） | 建筑 | (3000,5100) | 1600x1000 | 唐"阅武堂"/宋"演武亭"；v5.8 用户拍板：单体敞殿 16x10 东邻坛、西门朝坛（厅面向西望场心与南半场无遮挡） | 选将场景（M02 接机制：厅内北墙将位陈列 x8）+点将/受令；形态可切换：汉风木构殿/匈奴穹庐帐/明式歇山（灰盒只锁位置占地） |
+| galleries | 南门廊庑×2 | 建筑 | (1950,-5600) | 2600x700 | 演武场"合院建筑" | 兵士整备/列队/遮阳候命（v5.7 内设长凳+兵器架+ARMORY 标注，修"像马厩"） |
+| archery | 西靶场 | 功能 | (-5480,1800) | 450x2400 | 铜雀台比射红心(演义56回)；圆草靶形制(2026-09-10 已在线补验：WA 标准 dia122/草靶雏形/厚15-25cm) | 射术玩法区：3 圆草靶(木桩+麦秆色薄靶盘 dia1.3m 厚8cm+贴面红心 dia0.4m 厚3cm 桩穿盘，出墙影区)+地面射道标线+射位棚(距靶7m) |
+| jinpao | 锦袍杆 | 功能 | (-4600,3300) | 150x150 | 铜雀台夺袍 | 彩头锚点：胜利机制挂点（先中红心得彩头；基座+挂袍式） |
+| wufang | 五方旗阵 | 仪式 | (0,2700) | 4800x100 | 五方五色旗制 | 方位识别/仪式感 |
+| flagstands | 对旗杆台×2 | 仪式 | (800,-4900) | 200x200 | — | 南门仪仗 |
+| wall_flags | 军旗墙顶阵×16 | 氛围 | (0,5970) | 11940x60 | — | 营垒气势；全部墙顶立杆+统一东风（东墙旗飘出墙外上空，城楼旗式样） |
+| towers | 望楼×4 | 结构 | (5200,5200) | 300x300 | 箭楼形制 | 制高点/警戒塔（跑马道角落例外位） |
+| racks | 兵器架×2 | 功能 | (1350,250) | 60x200 | 教场兵器房 | 武器拾取点包装 |
+| spawns | 出生/对手/武器点 | 机制 | (0,-2000) | 100x100 | — | PK 出生(0,±2000 面向场心)+武器拾取(±1200,0) |
+| lighting | 光照组 | 渲染 | (0,0) | 0x0 | 官方模板配方 | 太阳10lux 5600K -38°/天光实时捕获/雾0.0002/大气/几何天空球 |
+| texts | 灰盒标注组 | 辅助 | (0,-1600) | 0x0 | — | 读图标注（8 处白字） |
+</table>
+<h2>资产清单（M02/M03 换皮生产）</h2>
+<table><tr><th>模块</th><th>目标资产</th><th>说明</th><th>阶段</th><th>类别</th></tr>
+| 校场地坪 | 材质：夯土/沙场 PBR 贴图 | 承载全场景；1m 网格提供 VR 尺度感与深度参照 | M02 白模 | 结构 |
+| 围墙系统 | 材质：砖石墙体+压顶 | 场地边界+围合感 | M02 白模 | 结构 |
+| 三出辕门 | 模型：木构辕门+门旗 | 出入动线：南主门 12m+东西辕门 4m；北墙连续由厅收尾 | M02 白模 | 结构 |
+| 南门牌坊 | 模型：木牌坊+匾额 | 主门仪式门面 | M03 | 结构 |
+| 三层拜将坛 | 材质：夯土+石包边 | 点将/授印/颁奖高点+北端背景板（v5.8 中轴后移 9m，北缝军旗器械架遮挡； | M02 白模 | 仪式 |
+| 坛东梯 | 材质：石阶 | 选将后登坛受令动线；三段贴东立面，步高 33.3cm 同南主梯 | M02 白模 | 结构 |
+| 鼓亭×2 | 模型：木构鼓亭+战鼓 | 指挥鼓点（坛脚东西各一，不占坛面服务路线） | M02 白模 | 仪式 |
+| 坛面鼓旗组 | 模型：立盘鼓+鼓架+帅旗 | 立盘鼓x2 二层东南/西南角（立式双面盘鼓，皮心高 1.25m 可敲）+帅旗 1 | M02 白模 | 仪式 |
+| 碑石×2 | 模型：石碑+碑文贴图 | 场景叙事锚点 | M03 | 仪式 |
+| 演武厅（选将殿） | 模型：木构殿+将位基座x8 | 选将场景（M02 接机制：厅内北墙将位陈列 x8）+点将/受令；形态可切换：汉风 | M02 白模 | 建筑 |
+| 南门廊庑×2 | 模型：木构廊庑+长凳+兵器架 | 兵士整备/列队/遮阳候命（v5.7 内设长凳+兵器架+ARMORY 标注，修"像 | M02 白模 | 建筑 |
+| 西靶场 | 模型：草靶圆盘/红心盘/棚架/地面标线 | 射术玩法区：3 圆草靶(木桩+麦秆色薄靶盘 dia1.3m 厚8cm+贴面红心  | M02 白模 | 功能 |
+| 锦袍杆 | 模型：红锦袍 | 彩头锚点：胜利机制挂点（先中红心得彩头；基座+挂袍式） | M03 机制 | 功能 |
+| 五方旗阵 | 模型：五色军旗 | 方位识别/仪式感 | M02 白模 | 仪式 |
+| 对旗杆台×2 | 模型：大纛旗 | 南门仪仗 | M03 | 仪式 |
+| 军旗墙顶阵×16 | 模型：军旗布幔 | 营垒气势；全部墙顶立杆+统一东风（东墙旗飘出墙外上空，城楼旗式样） | M02 白模 | 氛围 |
+| 望楼×4 | 模型：木构塔楼 | 制高点/警戒塔（跑马道角落例外位） | M02 白模 | 结构 |
+| 兵器架×2 | 模型：木架+陈列兵器 | 武器拾取点包装 | M03 | 功能 |
+| 出生/对手/武器点 | 标记：出生特效/光柱 | PK 出生(0,±2000 面向场心)+武器拾取(±1200,0) | M03 机制 | 机制 |
+| 光照组 | —（配方已定稿） | 太阳10lux 5600K -38°/天光实时捕获/雾0.0002/大气/几何天 | — | 渲染 |
+| 灰盒标注组 | 替换：场景标识牌/木牌 | 读图标注（8 处白字） | M02 白模 | 辅助 |
+</table>
+<h2>渲染与光照（定稿配方）</h2>
+<p>太阳 10lux/5600K/pitch-38° + 天光 0.8 实时捕获 + 淡蓝灰薄雾(density 0.0002) + 大气 + 官方模板几何天空球
+（本项目游戏路径不渲染大气通道，几何天空是两条渲染路径通吃的解法）。</p>
+<h2>已知观察项（P1"天空渲染专查"跟踪）</h2>
+<p>1. HMD-less VR pawn 平视近场渲染怪癖；2. pawn 视图冷色调（SceneCapture/编辑器正常）；3. PIE 抓拍通道偶发粘编辑器视口。</p>
+<h2>变更记录</h2>
+## 变更记录
+
+- **v5.8d（本次，用户"立鼓是立起来的圆饼，你这还是坐在地上的鼓"）**：二层立鼓重制——v5.8c 的立式
+  圆桶+顶盖读作"坐地桶"，改为**堂鼓式立盘鼓**：底座+双立柱+承梁，鼓身=透镜圆盘 dia140 t55 竖放
+  （双面均是鼓皮，面朝南北），皮心高台面 1.25m。props 384→388。其余不变。
+- **v5.8c（用户 4 条）**：①**顶层清理**：护栏整体删除（"围墙好奇怪，直接删掉"）；点将桌删除
+  （用户问"立方体干啥的"=点将桌，点将职能已移选将殿）；顶层三面战鼓删除；帅旗居中重摆。
+  ②**南主梯加宽**（"不够气派"）：A 段 500→800、B/C 段 300→600。③**坛体扩大**（"面积该再扩大，
+  否则二层放鼓没位置站人"）：三层 24x12.5/18x10/12x6 → **28x14 / 22x11 / 14x7**（高度不变 170/340/500，
+  北立面 5700 距北墙 2.45m）；碑石外移 (±1600,4900)、鼓亭外移 (±1650,4600) 避让新坛体。
+  ④**二层东南/西南角立鼓x2**（要"立起来可以敲的鼓"）：堂鼓坐架立放（基座+立式鼓身 dia110 + 顶面鼓皮
+  dia120，皮面高约 1.48m 可敲），M02 接打击交互；点位 (±800,4850) 距 C 梯 5m、距坛缘 3m 留站人空间。
+  props 388→384（-护栏6 -桌1 -三鼓3 +立鼓6）；save True+R；Docs 五件同代；Nav 复测全绿+新增二层→立鼓链。
+- **v5.8b（用户"东侧楼梯太奇怪了，别缩短"）**：坛东梯回退与南主梯**同规格**——15 步 x 33.3cm 步高
+  x 50cm 跑深（v5.8 首版为省进深用 25cm 跑深，坡度过陡读作奇怪构件），坡度与南主梯一致，差别只剩
+  位置（东面朝厅）与宽度 240；高度基准/护栏开口/寻路链路不变，Docs 五件同代重生成。
+- **v5.8（用户"按图动工"+要求文档同步）**：**北侧布局重排——用户方案实施**：
+  ①**拜将坛中轴后移 9m**（中心 y4100→5000，坛后缘 5625 距北墙 3.2m）作北端背景板，1v1 中轴保持对称，
+  南向登台进深放开到 43m；②**演武厅重建为单体敞殿 16x10 @ (3000,5100)**（v5.6b 两翼敞棚拆除——用户
+  "敞篷确实不合适"），东邻坛、西门朝坛，面向西望场心与南半场无遮挡；厅内北墙=将位陈列 x8 基座+标注
+  WARRIOR SELECT（M02 选将机制位）；③**坛东短梯（带职能回归）**：用户设计"面向演武厅这侧设短一点
+  的楼梯"——三段贴东立面 15 步（34/34/32cm，低于 Nav35 限制；v5.5b 教训：42cm 档 NavMesh 拒连风险），
+  跑深 375/段、宽 2.4m，短于南主梯；选将动线=出厅西门→东短梯登坛→坛顶受令→南主梯下场；④**坛后
+  北缝遮挡**：军旗x5+器械架x2 封 y5625..5945 袋状死区（用户"留几米或用物体遮挡"取后者）；⑤鼓亭x2/
+  碑石x2 随坛北移并避让东梯；⑥东侧护栏留东梯口（南 0.5m+北 3m 段）。验证：props 对账 353→387；
+  Nav 新链路（厅内选将位/厅→东梯→坛顶/坛顶→南主梯→场心/厅前到达）+存量链路复测；Docs 五件同代重生。
+- **v5.7**：①**靶面朝向 90° 根修**（disc 扁轴在 Y=盘面侧对射手，v5.6 注释误写"朝东西"；用户看到的"蛋"
+  是 8cm 盘缘的透镜轮廓，"浮球"是红心缘的视差脱开）：disc 增 yaw 参数，靶盘/红心 yaw=90 面朝东对射手，
+  盘厚 30→8cm、红心贴面凸 2cm——正对射手见完整圆盘+盘心红心；**判读教训：证据图核验必须先验朝向假设**；
+  ②**将台东侧服务踏步撤除**（用户"侧边突然多了个楼梯，怎么引入"）：v5.5 无职能服务线读作多余侧梯，
+  登坛只走南主台阶，东侧护栏恢复整段（v5.8 因用户设计"面向厅的东短梯"带职能回归）；③**廊庑功能化**
+  （用户"以为是马厩"）：空柱廊加长凳×3+兵器架×1+标注 ARMORY，语义=兵士整备/列队/候命廊；
+  ④**演武厅视线答复**（用户"厅在将台后面被遮挡怎么看演武，你怎么规划的"）：如实答复——观武位=
+  将台顶（5m 全场无遮挡，这正是将台的功能；从厅内地面看确实被坛挡，几何如此），厅=主帅居停/军议/
+  受贺（"厅后于台"布置）；厅与坛谁移位=布局级决策，已列三方案（将台东移/维持/厅升台基）请用户拍板，
+  本轮北侧布局不动。
+- **v5.6b**：①**鼓亭悬空根修**（用户截图"两个鼓亭悬空"）：v5.3 鼓亭移坛脚时 z 基准漏改——
+  柱/顶板/鼓架/鼓全套仍按坛面基准 T1_H 起建，整亭浮空 1m；现全部落地（柱底 0、鼓坐鼓架 90..180），
+  柱加粗 30→40；②**演武厅两翼敞棚化**（用户"半封闭小房间看不懂"）：5.5m 高实墙房改 1.2m 矮墙敞棚
+  （看棚/廊庑式样）+翼内长案（将佐观武席）+TEXT 标注；柱列 3→6 根并修正柱顶 520 与顶板底 550 脱空 30cm；
+  ③**md 文档恢复**（用户"资产清单 md 和场景介绍 md 怎么没了"）：scene_overview.md + asset_checklist.md
+  恢复生成，与 html/json/俯拍 png 同代同戳（v5.6 三文件制误删，致歉——"清旧文件"应清"旧代次"而非"md 正文"）；
+  ④考据补验（用户实测搜索栈已恢复）：WA 标准圆靶 dia122cm/草靶雏形/厚 15-25cm 与本场 dia130×30 吻合 ✓；
+  唐"阅武堂"/宋"演武亭"=厅堂式设施 ✓（百科词条）；"北端面南"通制未逐条核到原文，如实标注。
+- **v5.6**：①靶子改**圆草靶**制（用户"正常靶子是圆的"）：木桩+直径1.3m 草靶圆盘+直径0.4m 红心圆盘，
+  桩穿盘安装（接触保证），东移出墙影区（太阳西照墙投影带实测远超估算——射位线视角复核定案）；靶面麦秆色+
+  微自发光 0.35、红心正红（灰盒唯一着色件，背光带里也一眼读出"这是靶子"；M02 换真材质时移除）——
+  同时根除旧"红心板悬空 1.25m"被读作华盖的缺陷（用户"两个华盖悬空"）；实现记录：StaticMeshActor 的
+  pitch 旋转在本构建不生效（六法实测全败），圆盘改 Sphere 非均匀缩放（立式透镜盘）绕过；
+  ②北辕门撤除（用户"演武厅挨着门正常吗"：北门在厅背后=堵死的门无人能用，撤除后北墙连续、北端由厅收尾，
+  合"北堂南向"讲武通制；厅位本身=历史有据：唐阅武厅/宋演武亭置场北端面南；若需北出口可改门东/西移）；
+  ③平面图改为**由关卡组件实测包围盒生成**（用户"平面图对不上"：每组件一个矩形，与场景严格一致），
+  HTML 内嵌；④Docs/Scene 精简为三文件（html/json/实测俯视图 png），旧 md/svg/raw 自动清理
+  （用户"谁知道哪个最新"）。
+- **v5.5**：①坛组南移 2.75m，坛↔演武厅间距 1.5→4.25m（用户"堆一起"）；②服务坡道撤出演武厅
+  （厅内通道复原，用户"人怎么进去"），改为坛东侧翼 B/C 两段服务踏步（贴坛壁，全在坛 footprint 内）；
+  ③靶场重排：靶垛贴西墙做靶墙+红心板+地面 3 条射道标线，射位棚距靶 10m（用户"靶子放哪"）；
+  ④锦袍杆加基座+挂袍式（用户"很高的竖着的是啥"）；⑤16 面墙旗全部回墙顶+统一东风，东墙旗飘出墙外上空
+  （修上一轮"落地旗"错误方案）；⑥文档改版：scene_plan.html 自包含主文档 + scene_topdown.png 实测正交俯视图
+  （用户"生成的图完全不可用"）。
+- **v5.4**：全场景旗面统一东风（一律 +X）；旗面厚度 2m→6cm（真正的"扁旗"，此前是厚盒子——用户反馈"正常的旗帜是扁的"）。
+- **v5.3**：一层坛进深 11→12.5m（南立面 3750）——v5.2 把 B 段台阶下三步悬到坛外空中（B 段需 250cm 坛面进深，
+  立面到二层立面只剩 100cm），寻路正确拒登；现 B 段全落坛面，与北演武厅仍保持 1.5m 间距。
+- **v5.2**：旗面改侧挂（不再穿杆居中）；撤鼓台、三鼓直接落台面（修"鼓垫太高/与护栏重叠"）；新增 Docs/Scene 四件套自动生成。
+- **v5.1**：三层坛（24×14/18×10/12×6）+三段台阶（15 步 0.34m）+北服务坡道穿演武厅中央通道；鼓亭×2；
+  演武厅（双翼 7×8×5.5+中央 2m 通道）；西靶场 3 靶+射位棚+锦袍杆；南门牌坊；碑石×2；兵器架×2；
+  军旗 16 上墙顶净出 8m 跑马环道；对旗杆台移 (±800,-4900)。修复：SM_Cylinder 底面枢轴（v1~v4 全体杆件悬空半高）；
+  南主门两侧 5.7m 墙洞（跳段判据缺陷）。考据：平乐观 188 年讲武/拜将坛遗址/演武场通制/铜雀台夺袍。
+- **v4**：场地 70→120×120m；直角 SM_Cube 地砖 30.4m 互埋（ChamferCube 圆角缝+发丝黑缝双教训）；
+  将台改中央台阶（15 步）+后服务坡道；南门廊庑改 26×7×4.5m 柱廊对；门墙搭接 20cm。
+- **v3**：初版规制校场（70×70 分块地面/3m 墙四门/16×10×4 将台/五方旗/望楼/雾与天空球配方）。
+
+</body></html>
