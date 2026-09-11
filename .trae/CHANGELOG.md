@@ -1,5 +1,22 @@
 # ChangeLog
 
+## 2026-09-12（跨零点自指：门禁判红与据实修复 / 备份提交收口）
+
+> **本段属据实补记，不是为过检而改写日期**：`4b89763` 与 `d9fac2a` 的 committer 时间为 `2026-09-12 00:00:33` / `00:00:56`，而 CHANGELOG 顶部原为 `2026-09-11`，触发门禁项「CHANGELOG 不滞后于提交」判**失败**。两个提交、LFS 核验与门禁事故**确实都发生在 09-12 凌晨**。
+
+- **两个备份提交已推送**（快进，**无强推**）：
+  - `4b89763fbe80697b2dc0c1ea024f5f2fe8896c15`（parent `10f0100`）· **17 files changed，+1177 / −127** · `4 D`（`.agent-teams` 4 件移出索引）+ `8 M` + `5 A`（`Docs/Scene/`，含 `scene_topdown.png` 2,853,439 B **非 LFS**）
+  - `d9fac2a66ff40021813f83ba7d5b3c1d72d736bd`（parent `4b89763`）· **5 files changed，+78 / −7** · 执行会话中间态资产快照（v5.8d 地图 / `BP_VRCharacter` / `环首刀` / 根 `STATUS.json` note / `session-20260908-002`）· **性质 = 备份层，不等于验收**
+  - 三方同 SHA：`HEAD` = `origin/master` = `git ls-remote` = `d9fac2a…`；`git lfs fsck` OK；工作区 porcelain = **0** 条
+- **暂存校验全部通过**：`git ls-files -- .agent-teams` = **0**（磁盘 4/4 仍在，只动索引）；显式 `git add` 17 条 = 计划数（**计划外 0 / 漏 0**）；**暂存 blob 中 AFS 令牌命中 = 0**、含 `keys` 路径提示 = True；提交二暂存 5 条同法核验。
+- **⛔ 门禁在提交后判红（本机 + 干净浅克隆 + CI 三处一致）**：`30 项 / 通过 28 / 警告 1 / 失败 1 / EXIT=1`；CI run **`#36`**(`4b89763`) 与 **`#37`**(`d9fac2a`)「治理校验 CI 门禁」**任务级 `failure`**、步骤级「治理一致性校验（严格模式）」**`failure`**；「看板部署」两次 `success`。**步骤日志端点 403 ⇒ conclusion 已核验、日志正文未核验。**
+- **根因 = 门禁项自指（非仓库缺陷）**：「CHANGELOG 不滞后于提交」的输入之一是 **HEAD 自身的提交日期**（`dashboard/check-integrity.py:783-806`，`top >= head` 且 `head = git log -1 --format=%cs`）⇒ **任何跨本地零点后的提交都会自我判红，且提交前那一跑必然绿、无法预知**。**这是「本地绿 ≠ CI 绿」的一个自指分支：绿的前提被「提交」这个动作本身破坏。**
+  **裁定**（详见 `execution/CR-20260911-001` §10）：**判据不放宽、不加特例**（为过检改写日期数字属造假，禁止）；**新增提交前检查项** —— 跨零点提交前先确认 CHANGELOG 顶部日期 ≥ 当日，不足则先补写**当日如实条目**；`check-integrity.py` 本轮**不改**（保持封版 `77269 B / A280C20A…`）。已写入 `governance/SessionCommands.md`「判据补充（2026-09-12）」。
+- **LFS：「`push --all` 零输出」再次不可判（第二种方法实证远端完整）**：`git push` 无 `Uploading LFS objects` 行、`git lfs push --all origin` **连跑两次均 0 行**、`fsck` OK —— 遂改用第二种方法：**全新干净浅克隆**（`GIT_LFS_SKIP_SMUDGE=1`）内 `git lfs fetch origin --include=<3 路径>`，store `0 → 3 个对象 / 28,880,650 B`，`checkout` 落地字节与指针 size **逐一精确相符**（`730,370` / `108,682` / `28,041,598`），克隆内 369 个 LFS 跟踪文件**仅 3 个实体化、366 个仍为指针**。**⇒ 远端确实持有这 3 个新对象。零输出的原因未查明，不推测**（未验证假设：`git push` 的 git-lfs pre-push 钩子已先行上传）。**TD-018 判据据此收紧**：不得以 `lfs push --all` 输出为空作判据，**唯一可靠判据 = 干净克隆内 `lfs fetch` + 落地字节核对**。
+- **同批新增仪器陷阱**：`git lfs checkout` 自报 `Checking out LFS objects: 100% (369/369), 197 MB`，而**实测仅 3 个被实体化** —— **工具的聚合自报数字不可作判据，必须回读现场。**
+- **`v5.umap` 守卫值作废**：旧 `673,326 B / 63AFECDF… @ 09-10 21:44:17` → 现行 **`730,370 B` / `SHA256 836E68C5C5140FB5BFB89D6F1DE276DF8F75BB631BAA5266ACD4D976A570239FB9` / `2026-09-11 23:27:31`**。任何以旧值做的下游比对须更新。
+- **镜像项未回退（实测原文）**：`根 ↔ 任务包 STATUS.json 镜像`（7 任务 status/claimedBy/updatedAt 全一致）、`STATUS.json 与任务登记册一致`（7 任务全一致）、`五方任务状态一致`（7 任务跨 5 方一致）、`无密钥令牌泄漏`（该项自述仅覆盖 5 类模式，**通过 ≠ 无凭据泄漏**）—— **根 `STATUS.json` 的 note 改动未导致镜像项失效。**
+
 ## 2026-09-11 晚（用户裁定回填：密钥移出 / M01-T007 撤销 / 演武场口径 / Saved 清理）
 
 - **AFS 密钥移出版本控制**（`CR-20260911-002` 由「未实施」转**已实施**）：`Config/DefaultEngine.ini` 的 `SecurityToken`（32 位十六进制）按用户裁定「**不轮换，仅移出版本控制**」移至项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\keys\afs-security-token.txt`；原行改为空值 + 4 行警示注释；**回读校验「明文值残留 = False」**（实测，非推断）。**⚠ 该值仍是一把有效钥匙**：自 `98b2eb7`（2026-08-09）起存在于公开仓库**全部历史提交**中，未轮换 ⇒ 本次性质是「**停止继续泄露**」，**不是消除已发生的暴露**；`bCompileAFSProject` 仍为 `False`（AFS 未编译，当前无可利用面），**启用 AFS 前须先轮换**。
