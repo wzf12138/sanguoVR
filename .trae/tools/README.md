@@ -38,6 +38,18 @@
 - **NTFS 权限脚本**（`Set-TraeGovernanceAcl.ps1`、`Unlock-TraeAssets.ps1`、`Unlock-GripPolish.ps1`）：按 `AGENTS.md` 文件边界留在项目外 `D:/AWork/TraeAdmin/VRSanguoYanWuchang/`，**不搬入**。
 - **一次性排障脚本**（`repair_status_json5.js`、`verify2.js`、`verify3.js`）：2026-09-10 根 STATUS.json 事故用的一次性工具，不属项目工具脚本。
 
+## verify-claims.py — 判据执行器（任务 M00-T007）
+
+`execution/CR-20260912-001-judgement-tool.md` §4 的**唯一实现**：声明式 YAML 判据 → 五态输出（通过 / 未通过 / 未取到数 / 不成立 / 跳过）+ fail-closed 退出码 0/1/2/3。它**不产出项目产物**，本身即判据执行器。
+
+| 脚本 | 字节 | SHA256[:16] | mtime | 作用 |
+|---|---|---|---|---|
+| `verify-claims.py` | 93,546 | `B975FAFD250F0BF8` | 2026-09-12 16:03:07 | 执行 YAML 判据（`contains` / `count_regex` / `shape` / `sha256` / `exec`），逐条打印量具口径、**测量时点**、候选数、双算法数值与三口径判定，并按计数机械推出退出码 |
+
+**必填声明（2026-09-12 规格 §4.3 第 18 条落地）**：每条判据必须声明**测量时点**（逐条 `at:`，或顶层 `measure_at:` 作默认，逐条覆盖顶层）；未声明 ⇒ 该判据文件判为**不合法**（退出码 3、**不执行任何判据**）——依据「未声明时点的读数一律不采信」。`exec` 判据的外部输出在参与读数前**必须结构化**：工具剥离 ANSI 转义后再匹配，并用 `stdout_int_regex`（**恰好 1 个**捕获组）+ `expect_int` 做显式类型转换；多值 / 集合 / 空值一律抛错（`ShapeAnomaly` / `EmptyMeasurement`），**不得**把集合交给格式化或比较（`System.Object[]` 同族）。三条现实原型见报告 `.trae/execution/reports/tasks/M00-T007.md` §八。
+
+**运行前提**：Python 3.10（`D:\App\trae\Traedata\TRAE SOLO CN\ModularData\ai-agent\vm\tools\python\python.exe`，**不在 PATH**）+ `pyyaml`；须 `PYTHONIOENCODING=utf-8`；须 `python -B`（否则会在本目录落 `__pycache__`）；在项目根执行 `python -B .trae/tools/verify-claims.py <claims.yaml> [--project-root <dir>] [--json <path>] [--allow-unknown] [--quiet] [--self-test]`；一次性的夹具与 `--json` 产物写项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\tmp`（**有意为之**，符合临时文件规则）。
+
 ## 新增脚本的准入
 
 1. 先判断它属于上表哪一类；判"一次性"的不得入库。
