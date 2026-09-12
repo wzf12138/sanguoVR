@@ -2,7 +2,7 @@
 
 ## 默认设置
 
-默认使用战术瞬移与渐进式转向。平滑移动为可选项并保留统一接口，不能成为完成教程或正式战斗的强制条件。
+默认使用战术瞬移与渐进式转向。**平滑移动是一期正式能力**（见 [`../knowledge/Design/MovementAndFullBodyIK.md`](../knowledge/Design/MovementAndFullBodyIK.md)、[`../registers/04-requirement-traceability-register.md`](../registers/04-requirement-traceability-register.md) REQ-011），须可切换、可用并保留统一接口；**默认关闭**，不作完成教程或正式战斗的强制条件。
 
 ## 瞬移约束
 

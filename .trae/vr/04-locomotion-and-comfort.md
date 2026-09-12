@@ -14,7 +14,7 @@
 
 ## 平滑移动
 
-通过 `IMovementMode` 预留，作为可选舒适度设置而非一期默认玩法。平滑移动需要视野收缩、速度限制和独立测试；后续 `MountMovement` 使用同一接口，但一期不实现骑马。
+**是一期正式能力，不得以「预留接口」替代**（见 [`../knowledge/Design/MovementAndFullBodyIK.md`](../knowledge/Design/MovementAndFullBodyIK.md)、[`../registers/04-requirement-traceability-register.md`](../registers/04-requirement-traceability-register.md) REQ-011、DEC-004）。玩家可在舒适度设置中与战术瞬移**选择或组合使用**；**默认关闭**（默认使用战术瞬移），不作完成教程或正式战斗的强制条件。实现须含视野收缩、速度限制与独立测试；后续 `MountMovement` 使用同一接口，但一期不实现骑马。
 
 ## 空间重置
 

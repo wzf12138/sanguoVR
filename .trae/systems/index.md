@@ -53,7 +53,7 @@
 | 类型 | 建议类名 | 资产前缀 | 关键字段 |
 |---|---|---|---|
 | 武器定义 | `UVRWeaponDefinition` | `DA_Weapon_` | 类别、质量、抓点、伤害曲线、反馈 |
-| 护甲定义 | `UVRArmorDefinition` | `DA_Armor_` | 部位、防护、耐久、破损 |
+| 护甲定义 | `UVRArmorDefinition` | `DA_Armor_` | 部位、防护（**无耐久 / 无破损字段**，见 `../knowledge/GameMasterPlan.md` §生命与护甲、`../knowledge/Design/HealthAndArmor.md`） |
 | 兵种定义 | `UVRUnitDefinition` | `DA_Unit_` | 职责、装备、行为参数 |
 | 武将定义 | `UVRCommanderDefinition` | `DA_Commander_` | 身份、风格、能力、语音 |
 | 比赛规则 | `UVRMatchRuleSet` | `DA_Match_` | 队伍规模、胜负、时间、重生 |
