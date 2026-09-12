@@ -24,7 +24,7 @@
 - `Content/VRSanguo/Dev/L_Prototype_1v1.umap`
 
 > ## ⚠ 本节尺寸数值为 v1 规划历史值（2026-09-12 加注）
-> 本任务最初规划为 **20m × 20m** 测试场地；**实际建成的关卡为 `L_Prototype_1v1_v5.umap`，现行尺寸 120m × 120m**（用户 2026-09-11 确认满意，**但尺寸仍可能调整，非最终决策**）。唯一权威表述见 `execution/CR-20260911-001-governance-consistency-repair.md` **§9.3**。
+> 本任务最初规划为 **20m × 20m** 测试场地；**实际建成的关卡为 `L_Prototype_1v1_v5.umap`，尺寸 120m × 120m**。**用户 2026-09-12 裁定该尺寸升为规格标准**（原话：「**A 把 120×120 写进规格书当标准，场地太小施展不开**」）—— 已写入 `knowledge/Production/LevelDesignSpec.md` 与 `registers/01-decision-register.md` **DEC-014**。权威裁定正文见 `execution/CR-20260911-001-governance-consistency-repair.md` **§9.6**。
 > - **⇒ 本节（Step 1–5）内的 20m、掩体尺寸、出生点坐标等数值均为历史值，不得作为验收依据。** **验收一律以关卡实测为准**（见下方「验收清单」同批加注）。
 > - **⇒ 历史记录不回溯改写**：`execution/sessions/`、`reports/`、`CHANGELOG.md` 内的 `70×70` 等数值**属当时属实的历史值**，保持原样。
 > - **⚠ 已知待用户裁定项**：`knowledge/Production/LevelDesignSpec.md` 的「核心指标」表（表头 `3v3 默认 / 2v2 / 4v4`；可活动区域 = **3v3 默认 50×50 / 2v2 35×35 / 4v4 70×70**）**与现行 120×120 冲突** —— **实际关卡是规格中最大目标（4v4 的 70×70）的 1.7 倍**；且**该表没有 1v1 条目**，**本任务（1v1）的尺寸从未被规格定义**，这正是原任务书自造「20m × 20m」的根源。属产品级尺寸决策，**待用户拍板后回写**。
