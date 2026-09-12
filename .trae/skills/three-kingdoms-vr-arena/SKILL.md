@@ -64,6 +64,10 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 
 短指令以 `SessionCommands.md` 为准。意图不明确时进入只读模式。
 
+**何时该推、何时必须先问用户、何时一律不推 —— 见 `SessionCommands.md` §推送 ·「何时推送（推送决策）」（该小节是唯一权威正文）。新会话无需询问，依该表自行判断即可。**
+
+**副本与可追溯纪律 —— 见根级 `AGENTS.md` §副本与可追溯（规则 29–32）：唯一权威副本 = 项目工作区 + git 远端，禁止本地多处备份，不允许长期存在无人认领的副本或分支。**
+
 推送因网络阻塞反复失败（443 超时 / Connection was reset）时**不要空推，也不得在直连失败后就判定"不可达"**——本项目已实测：直连 `github.com:443` 会超时（`git ls-remote` 120s 无返回），而**经本机代理同一时刻可达**（`git -c http.proxy=… ls-remote` exit=0，`Invoke-WebRequest -Proxy … -Method Head` 返回 HTTP 200）。按 `SessionCommands.md` §推送·网络恢复流程 执行：先以 TCP 短超时探测候选代理端口（`7890` / `7897` / `10809` / `1080` / `8118`），命中后以 **`git -c http.proxy=http://127.0.0.1:<活端口> push origin master`** 单次内联方式推送（**严禁 `git config http.proxy` 持久化写入仓库配置**）；仅当全部候选端口均不可达时，才如实报告"推送不可达"并等待用户确认。
 
 ## active 完整门禁路径
