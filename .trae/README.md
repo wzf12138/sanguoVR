@@ -13,6 +13,8 @@
 - 治理仪表板: https://wzf12138.github.io/sanguoVR/
 - 变更管理: `governance/policy.md`
 - 架构决策: `knowledge/GameMasterPlan.md`
+- 新会话短指令: `governance/SessionCommands.md`（指令 + 索引）
+- 操作纪律正文: `governance/operation-discipline.md`（判据与量具 / 报告与文书 / 推送 / 暂存边界 / 分级停手 / 决策授权）
 
 ## CI 门禁
 

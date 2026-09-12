@@ -27,6 +27,7 @@
 2. [执行模型](governance/ExecutionModel.md)
 3. [审核协议](governance/ReviewProtocol.md)
 4. [新会话短指令](governance/SessionCommands.md)
+5. [操作纪律正文](governance/operation-discipline.md)（判据与量具 / 报告与文书 / 推送 / 暂存边界 / 分级停手 / 决策授权）
 
 ## 规则与唯一 Skill
 

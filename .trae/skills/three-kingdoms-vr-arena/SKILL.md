@@ -30,7 +30,8 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 1. `.trae/governance/DecisionModel.md`
 2. `.trae/governance/ExecutionModel.md`
 3. `.trae/governance/ReviewProtocol.md`
-4. `.trae/governance/SessionCommands.md`
+4. `.trae/governance/SessionCommands.md`（短指令与索引）
+5. `.trae/governance/operation-discipline.md`（操作纪律正文：判据与量具 / 报告与文书 / 推送 / 暂存边界 / 分级停手 / 决策授权）
 
 操作模型服从四份治理契约，不得反向修改治理权威正文。
 
@@ -58,17 +59,17 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 | 决策下一步、规划、生成任务、登记风险 | 决策模式 | `DecisionModel.md` |
 | 执行当前任务、开始或继续实施 | 执行模式 | `ExecutionModel.md` |
 | 审核任务、验收结果或里程碑 | 审核模式 | `ReviewProtocol.md` |
-| 推送/git push/上传git/提交并推送 | 推送模式 | `SessionCommands.md` §推送 |
+| 推送/git push/上传git/提交并推送 | 推送模式 | `operation-discipline.md` §推送 |
 | 状态检查、解释、咨询、分析 | 只读模式 | 不修改文件 |
 | 修改治理、规则、Skill、总纲或其他锁定事实源 | 变更申请模式 | `change-request-template.md` |
 
 短指令以 `SessionCommands.md` 为准。意图不明确时进入只读模式。
 
-**何时该推、何时必须先问用户、何时一律不推 —— 见 `SessionCommands.md` §推送 ·「何时推送（推送决策）」（该小节是唯一权威正文）。新会话无需询问，依该表自行判断即可。**
+**何时该推、何时必须先问用户、何时一律不推 —— 见 `operation-discipline.md` §推送 ·「何时推送（推送决策）」（该小节是唯一权威正文）。新会话无需询问，依该表自行判断即可。**
 
 **副本与可追溯纪律 —— 见根级 `AGENTS.md` §副本与可追溯（规则 29–32）：唯一权威副本 = 项目工作区 + git 远端，禁止本地多处备份，不允许长期存在无人认领的副本或分支。**
 
-推送因网络阻塞反复失败（443 超时 / Connection was reset）时**不要空推，也不得在直连失败后就判定"不可达"**——本项目已实测：直连 `github.com:443` 会超时（`git ls-remote` 120s 无返回），而**经本机代理同一时刻可达**（`git -c http.proxy=… ls-remote` exit=0，`Invoke-WebRequest -Proxy … -Method Head` 返回 HTTP 200）。按 `SessionCommands.md` §推送·网络恢复流程 执行：先以 TCP 短超时探测候选代理端口（`7890` / `7897` / `10809` / `1080` / `8118`），命中后以 **`git -c http.proxy=http://127.0.0.1:<活端口> push origin master`** 单次内联方式推送（**严禁 `git config http.proxy` 持久化写入仓库配置**）；仅当全部候选端口均不可达时，才如实报告"推送不可达"并等待用户确认。
+推送因网络阻塞反复失败（443 超时 / Connection was reset）时**不要空推，也不得在直连失败后就判定"不可达"**——本项目已实测：直连 `github.com:443` 会超时（`git ls-remote` 120s 无返回），而**经本机代理同一时刻可达**（`git -c http.proxy=… ls-remote` exit=0，`Invoke-WebRequest -Proxy … -Method Head` 返回 HTTP 200）。按 `operation-discipline.md` §推送·网络恢复流程 执行：先以 TCP 短超时探测候选代理端口（`7890` / `7897` / `10809` / `1080` / `8118`），命中后以 **`git -c http.proxy=http://127.0.0.1:<活端口> push origin master`** 单次内联方式推送（**严禁 `git config http.proxy` 持久化写入仓库配置**）；仅当全部候选端口均不可达时，才如实报告"推送不可达"并等待用户确认。
 
 ## active 完整门禁路径
 
@@ -110,5 +111,5 @@ description: "执行 VR 三国演武场的集中式治理、事实源定位、�
 - active 五件套、任务详情和里程碑包按完整路径核验。
 - 索引、manifest、integrity、登记册与变更记录和实际文件一致。
 - `.trae/skills/` 下仅本文件具有有效 YAML frontmatter。
-- 治理一致性校验 `dashboard/check-integrity.py` 可运行且 `exit=0`（Python 绝对路径与命令见 `SessionCommands.md` §校验）。**且「绿」必须在两套环境下都成立**：本机项目根 **+** 项目外**干净浅克隆**（`--depth 1` + `GIT_LFS_SKIP_SMUDGE=1`）。**只在开发机跑绿就宣称门禁通过 = 无效声明**——2026-09-11 事故：本机 `EXIT=0` 的提交在 CI 判红，根因是白名单**通配项**被误当存在性断言，而构建产物目录（`Intermediate/`/`Binaries/`/`Saved/`/`DerivedDataCache/`）在干净检出里必然不存在。
+- 治理一致性校验 `dashboard/check-integrity.py` 可运行且 `exit=0`（Python 绝对路径与命令见 `operation-discipline.md` §校验）。**且「绿」必须在两套环境下都成立**：本机项目根 **+** 项目外**干净浅克隆**（`--depth 1` + `GIT_LFS_SKIP_SMUDGE=1`）。**只在开发机跑绿就宣称门禁通过 = 无效声明**——2026-09-11 事故：本机 `EXIT=0` 的提交在 CI 判红，根因是白名单**通配项**被误当存在性断言，而构建产物目录（`Intermediate/`/`Binaries/`/`Saved/`/`DerivedDataCache/`）在干净检出里必然不存在。
 - **「已推送」必须分两层陈述，不得用一层替代另一层**：备份层 = 对象是否真的到达 origin（`git ls-remote` 实测同 SHA + LFS 对象上传 + `lfs fsck`）；验收层 = CI 是否绿（工作流任务级**与**步骤级均 success）。两层各用独立证据支撑；只绿一层时必须写明缺哪一层。
