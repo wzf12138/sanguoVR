@@ -1,0 +1,20 @@
+# M00-T007 白名单
+# 所有路径相对于项目根目录 VRSanguoYanWuchang/
+# 工具本体（新增）
+.trae/tools/verify-claims.py
+# 工具索引（修改现有文件，新增一行）
+.trae/tools/README.md
+# 报告与状态
+.trae/execution/reports/tasks/M00-T007.md
+.trae/execution/active/M00-T007/STATUS.json
+.trae/execution/active/STATUS.json
+.trae/registers/09-verification-register.md
+.trae/CHANGELOG.md
+# ⚠ 白名单外（明确禁止，违反即停止）：
+#   .trae/skills/three-kingdoms-vr-arena/SKILL.md   ← 锁定级；挂钩由决策侧在验收通过后亲自执行
+#   AGENTS.md                                        ← 受控；挂钩由决策侧执行
+#   dashboard/check-integrity.py                     ← 冻结中；接入须另行批准
+#   .trae/governance/**                              ← 治理正文
+#   .trae/execution/CR-20260912-001-judgement-tool.md ← 规格正文（只读引用，不得修改）
+#   Content/**  Source/**  Config/**  Plugins/**     ← 工程资产（一概不碰）
+#   其他任务的任务包 / 报告 / 登记册

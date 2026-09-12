@@ -11,6 +11,7 @@
 | M00-T005 | 系统骨架与数据驱动边界 | approved（2026-08-15：审核批准。CHECKS 修正后全部通过，M01 接管运行时验证+VRPawn 挂载） | 22 个 C++ 文件编译通过；7 接口/8 DA/状态机/能力组件/TestDummy + L_SkeletonTest 关卡 |
 | M00-T006 | 自动化、诊断与交付门禁 | approved（2026-08-19：审核批准。12/12 测试通过、V-006 已验证；遗留场景规划表终版 M01 接管） | 6 个自动化测试文件（VRDataAssetSpec/VRInterfaceSpec/VRGameFlowSpec）；12/12 通过（8 DA + 2 GameFlow + 2 接口）；8 日志分类验证；性能基线（stat 命令 + LogVRSanguoPerf）；场景规划初版（1v1/武器训练/4v4）；Win64 与 Android 门禁通过（Android 含 APK 打包）；工具链修复：UEBridgeMCP bUseUnity=false（用户批准）、VRExpansionPlugin 换官方 5.6-Locked + SceneProxy override（用户批准）；报告 `execution/reports/tasks/M00-T006.md` |
 | M00-DOC-001 | 治理文档最终收口 | approved | 合并重复事实源、迁移引用、删除清单与完整性报告 |
+| M00-T007 | 判据工具「核对执行器」 | **ready**（2026-09-12 新建；用户批准立项）——**本项目首个 `ready` 任务**。实现「判据自身不可信」同族立法（当日 18 例、实测失误 10 起）的机械化载体；根因 = 判据每次都靠人手临时写脚本。**用户关切**：「后面可能换人的，我怕到别人那里就忘了」⇒ 靠 ① 工具自动摆在眼前 ② 机器不放行 | 交付：`.trae/tools/verify-claims.py`（工具本体）+ `.trae/tools/README.md`（索引行）+ 报告 `execution/reports/tasks/M00-T007.md`；**验收判据 = 规格 §7 的 TC-01~TC-13 全绿**（全绿方可挂钩）；**白名单仅 2 个工具文件** —— 唯一 Skill（锁定）、`AGENTS.md`、`dashboard/check-integrity.py`（冻结）、一切工程资产**均明确禁止改动**，**挂钩由决策侧在 TC 全绿后亲自执行** |
 | M01-T001 | 武器抓取与 VRE 集成 | in_progress（2026-08-30 认领 session-20260830-001：自建 VRE 角色+GameMode 设为项目默认、握持 socket 复核、标记球附着修复；抓握键→GripObject 路线已决策（路线 A + Grip 键，TD-013 登记）；待用户 PICO 真机验证 TC-01~06） | BP_WeaponBase 蓝图、BP_TestSword、BP_VRCharacter、HandSocket 握持姿势、关卡放置、实施指南 `execution/reports/tasks/M01-T001.md` |
 | M01-T002 | 伤害结算与命中保护 | 待生成 | 依赖：M01-T001 approved；预估：3h；交付：伤害组件、命中判定、防误伤保护、VRPawn 生命接口 |
 | M01-T003 | 挥砍检测与格挡 | 待生成 | 依赖：M01-T002；预估：3h；交付：挥砍检测算法、格挡组件、轨迹采样与统一生命联动 |
@@ -22,5 +23,7 @@
 | M02-PREP-002 | 编辑器自动化工具链迁移 db-lyon/ue-mcp | approved（2026-08-31 用户验收：v1.3.0 首轮编译失败 blocked → manager 授权续命重试 → 横向探测历史版本选定 **v1.0.87**（MIT）+ 1 行 UE5.6 门控补丁，UBT 编译通过；TC-01/02/03 全过（蓝图测试副本写读一致、UEBridgeMCP 退役后无缺失模块、L_SkeletonTest 冒烟正常）；TD-010 偿还（GPL 风险消除）；manager 证据抽查通过；证据 `Saved/Evidence/M02-PREP-002/`） | 新桥插件部署+编译、蓝图写读验证（测试副本，验证后已删除）、UEBridgeMCP 退役（.disabled 保留）、TD-010 更新 |
 
 任务进入 `approved` 前由用户或授权审批人验收；状态变化同步 `.trae/CHANGELOG.md` 与本表。
+
+> **编号说明（2026-09-12）**：`M00-T007`（判据工具）与**已撤销**的 `M01-T007`（Direct Preview 验证）**分属不同里程碑编号空间，无冲突、无复用**。`M01-T007` 的编号保留约束（**不得复用**、TD-011 复验须另立新编号）**仍然有效，不受本行影响**。
 
 > M01 规划任务说明：T002/T003/T004/T006/T007 已在 `execution/M01-CombatSlice.md` 中规划，待 T001 approved 后逐批生成任务包；当前以「待生成」状态进入登记册，看板按 planned 显示。**2026-09-11 更正**：规划任务的展示不因任何单任务的状态而被阻塞；原记「T001 blocked 不阻塞其规划展示」的依据（T001 当时 blocked）已失效——T001 现为 in_progress。

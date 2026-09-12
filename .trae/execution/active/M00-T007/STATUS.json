@@ -1,0 +1,10 @@
+{
+  "_note": "本地便利副本。任务状态唯一权威为 .trae/execution/active/STATUS.json（根 STATUS.json）。冲突时以根 STATUS.json 为准。",
+  "taskId": "M00-T007",
+  "milestone": "M00",
+  "status": "ready",
+  "claimedBy": null,
+  "startedAt": "2026-09-12",
+  "updatedAt": "2026-09-12",
+  "info": "新建（2026-09-12）。用户已批准立项（原话见 CR-20260912-001 §1）。实现判据工具 verify-claims.py，验收 = 规格 §7 的 TC-01~TC-13 全绿。白名单仅 2 个工具文件；唯一 Skill / AGENTS.md / 门禁 / 一切工程资产均明确禁止改动。"
+}

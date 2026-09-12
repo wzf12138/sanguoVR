@@ -62,6 +62,15 @@
       "startedAt": "2026-08-31",
       "updatedAt": "2026-08-31",
       "note": "迁移完成（manager 授权续命后重试成功）：db-lyon/ue-mcp v1.0.87（MIT）桥插件部署+UBT 编译通过（1 行 5.6 版本门控补丁修复 SetSourceString 3参→2参，全量 Rebuild + 增量 Build Result: Succeeded）；TC-02 蓝图测试副本写读验证通过（create→add_node×2→connect_pins→compile→read_graph_summary 读回与写入一致，验证后已删除测试副本）；TC-03 通过（UEBridgeMCP 退役：目录改名 .disabled + .uproject 移除，重启无缺失模块错误）；冒烟通过（L_SkeletonTest 加载成功）。TD-010 已偿还（GPL-3.0 插件退役）。证据：Saved/Evidence/M02-PREP-002/（5 份）+ Saved/Logs。待用户审核。"
+    },
+    {
+      "taskId": "M00-T007",
+      "milestone": "M00",
+      "status": "ready",
+      "claimedBy": null,
+      "startedAt": "2026-09-12",
+      "updatedAt": "2026-09-12",
+      "note": "新建（2026-09-12，决策侧）。用户已批准立项（原话见 CR-20260912-001 §1）。实现判据工具 verify-claims.py，验收 = 规格 §7 的 TC-01~TC-13 全绿。白名单仅 2 个工具文件（.trae/tools/verify-claims.py 新建 + .trae/tools/README.md 索引行）；唯一 Skill / AGENTS.md / dashboard/check-integrity.py / 一切工程资产明确禁止改动，挂钩由决策侧在 TC 全绿后亲自执行。"
     }
   ]
 }
