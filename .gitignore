@@ -94,3 +94,6 @@ architecture-assessment.html
 # AI tool session runtime (not project content)
 .agent-teams/
 .dsh-uploads/
+# DSH skill 发现入口（目录联接，指向 .trae/skills/；正文单一副本在 .trae/skills/，见 SKILL.md）
+.agents/
+.dsh/

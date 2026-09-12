@@ -73,10 +73,12 @@
 
 | 主题 | 权威正文（唯一） |
 |---|---|
-| 何时推送 / 网络恢复流程 / AFS 密钥 | `operation-discipline.md` §推送 |
-| 清单外异常口径（口径 ③~⑦） | `operation-discipline.md` §清单外异常口径 |
-| 判据与文书纪律（量具声明块 / 锚点即内容 / 禁止事项 / 分级停手） | `operation-discipline.md` §判据与文书纪律 |
-| 决策授权 | `operation-discipline.md` §决策授权 |
+| 何时推送 / 网络恢复流程 / CI 取证 | `push-and-network.md` |
+| 清单外异常口径（口径 ③~⑦） | `exception-taxonomy.md` |
+| 判据纪律（量具声明块 / 三态 / 停手分级 / 顺序与剔除规则） | `judgement-discipline.md` |
+| 文书纪律（锚点即内容 / 标题形态 / 渲染层书写） | `writing-discipline.md` |
+| 决策授权 / 安全默认（含 AFS 密钥） | `operation-discipline.md` |
+| 规则 ⇄ 门禁覆盖关系（哪条规则靠机器守、哪条靠人守） | `rule-gate-matrix.md` |
 | 判据工具实现规格（条款与 TC） | [`../execution/CR-20260912-001-judgement-tool.md`](../execution/CR-20260912-001-judgement-tool.md) |
 | 项目规则正文（含副本与可追溯 29–32） | 根级 [`AGENTS.md`](../../AGENTS.md) |
 | 治理权威链 / 文件控制等级 / 状态词表 | [`policy.md`](policy.md) |

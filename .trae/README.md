@@ -14,7 +14,7 @@
 - 变更管理: `governance/policy.md`
 - 架构决策: `knowledge/GameMasterPlan.md`
 - 新会话短指令: `governance/SessionCommands.md`（指令 + 索引）
-- 操作纪律正文: `governance/operation-discipline.md`（判据与量具 / 报告与文书 / 推送 / 暂存边界 / 分级停手 / 决策授权）
+- 操作纪律索引: `governance/operation-discipline.md`（决策授权 / 安全默认） → `governance/push-and-network.md`（推送与取证）、`governance/judgement-discipline.md`（判据纪律）、`governance/writing-discipline.md`（文书纪律）、`governance/exception-taxonomy.md`（清单外异常口径）、`governance/rule-gate-matrix.md`（规则⇄门禁映射）
 
 ## CI 门禁
 

@@ -27,7 +27,7 @@
 2. [执行模型](governance/ExecutionModel.md)
 3. [审核协议](governance/ReviewProtocol.md)
 4. [新会话短指令](governance/SessionCommands.md)
-5. [操作纪律正文](governance/operation-discipline.md)（判据与量具 / 报告与文书 / 推送 / 暂存边界 / 分级停手 / 决策授权）
+5. [操作纪律索引](governance/operation-discipline.md)（决策授权 / 安全默认） → [推送与取证](governance/push-and-network.md)、[判据纪律](governance/judgement-discipline.md)、[文书纪律](governance/writing-discipline.md)、[清单外异常口径](governance/exception-taxonomy.md)、[规则⇄门禁映射](governance/rule-gate-matrix.md)
 
 ## 规则与唯一 Skill
 
