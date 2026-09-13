@@ -2278,11 +2278,8 @@ TSharedPtr<FJsonValue> FAssetHandlers::SetStringTableEntry(const TSharedPtr<FJso
 	const bool bExisted = StringTable->GetStringTable()->GetSourceString(EntryKey, PreviousSourceString);
 
 	StringTable->Modify(true);
-#if WITH_EDITORONLY_DATA && (ENGINE_MAJOR_VERSION > 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 7))
-	StringTable->GetMutableStringTable()->SetSourceString(EntryKey, SourceString, FString());
-#else
+	// UE5.6: FStringTable::SetSourceString 只有 (Key, SourceString) 双参签名（无 editor-only 三参重载）
 	StringTable->GetMutableStringTable()->SetSourceString(EntryKey, SourceString);
-#endif
 	SaveAssetPackage(StringTable);
 
 	auto Result = MCPSuccess();

@@ -60,3 +60,32 @@
 
 **⇒ 放行前提（每次推送均须满足，无一例外）**：① 门禁**提交前后各一次** `EXIT=0`；② 清单**固定且逐条点名**（**严禁 `git add -A` / `.` / `-u`**）；③ 暂存集**严格等于清单**（显式断言）；④ **三方同 SHA**（本机 == `origin/master` == 干净浅克隆）；⑤ 报告**分两层**（备份层 = 对象到达 origin / 验收层 = CI 绿），**不得用一层替代另一层**。
 **⇒ 与「唯一权威副本」联动（`AGENTS.md` 规则 29–32）**：**推送是"防丢"的唯一手段** —— **推送可逆、删除不可逆**，**两者授权等级不同，不得互相推导**（见上「推论」）。
+
+## 活资产只读白名单（AGENTS.md 规则 33 的细节与工具）
+
+**规则正文只在 `AGENTS.md` 规则 33；本节是它的清单与工具落点。**
+
+### 永远不得置只读的资产
+
+| 资产 | 说明 |
+|---|---|
+| `Content/VRSanguo/Dev/L_SkeletonTest.umap` | M01-T001 关卡 |
+| `Content/VRSanguo/Dev/L_Prototype_1v1_v5.umap` | M01-T005 坛景关卡 |
+| `Content/VRSanguo/VR/BP_VRCharacter.uasset` | 角色蓝图（输入 / 手指弯曲落点） |
+| `Content/VRSanguo/VR/BP_VRGameMode.uasset` | 游戏模式蓝图 |
+| `Content/VRSanguo/VR/Mesh/`（整目录） | 含环首刀两版，握持 socket 落点 |
+| `Content/VRTemplate/Input/`（整目录） | 含 5 个 IMC 输入映射 |
+
+### 工具层
+
+项目外 `D:\AWork\TraeAdmin\VRSanguoYanWuchang\` 下两个脚本内置同一白名单，**`-Restore`（重锁）跳过白名单**：
+
+- `Unlock-TraeAssets.ps1` —— 目标 `Content/VRTemplate/Input`、`BP_VRCharacter.uasset`
+- `Unlock-GripPolish.ps1` —— 目标 `Content/VRSanguo/VR/Mesh`、`L_SkeletonTest.umap`
+
+**2026-09-13 修复两处缺陷**（原文件备份 `.bak-20260913`）：
+
+1. **`-ErrorAction SilentlyContinue` 误传原生命令。** 该参数是 PowerShell 公共参数，`attrib.exe` / `icacls.exe` 不解析，会被原样当作 argv 传入 ⇒ 命令报「unknown option」失败，而 `| Out-Null` 吞掉报错 ⇒ **脚本照常打印 `LOCKED`/`UNLOCKED` 而实际什么都没做**（共 4 处：两脚本各 2 处）。**修法**：去掉该参数，改用 `Invoke-Native` 检查 `$LASTEXITCODE`。
+2. **无回读断言。** 声称成功必须证明成功。**修法**：每次操作后复读 `IsReadOnly`，与期望不符即 `throw`。
+
+**⇒ 归族**：两处缺陷与 `judgement-discipline.md` §3.22 同族 —— **机制不同（原生参数误传 + 管道吞错），后果相同（声称成功而实际失败）**。

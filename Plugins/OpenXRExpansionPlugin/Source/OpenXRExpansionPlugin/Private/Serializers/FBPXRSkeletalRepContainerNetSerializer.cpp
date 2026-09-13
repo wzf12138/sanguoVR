@@ -161,7 +161,7 @@ namespace UE::Net
             const QuantizedType& Source = *reinterpret_cast<const QuantizedType*>(Args.Source);
             FNetBitStreamWriter* Writer = Context.GetBitStreamWriter();
 
-            // write header bytes (small fields) — do as bytes for compactness
+            // write header bytes (small fields) ï¿½ do as bytes for compactness
             Writer->WriteBits(Source.TargetHand, 8);
             Writer->WriteBits(Source.bAllowDeformingMesh, 1);
             Writer->WriteBits(Source.bEnableUE4HandRepSavings, 1);
@@ -213,7 +213,7 @@ namespace UE::Net
             QuantizedType& Target = *reinterpret_cast<QuantizedType*>(Args.Target);
             FNetBitStreamReader* Reader = Context.GetBitStreamReader();
 
-            // write header bytes (small fields) — do as bytes for compactness
+            // write header bytes (small fields) ï¿½ do as bytes for compactness
             
             Target.TargetHand = Reader->ReadBits(8);
             Target.bAllowDeformingMesh = Reader->ReadBits(1);
